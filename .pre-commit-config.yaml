@@ -30,3 +30,10 @@ repos:
       - id: detect-secrets
         args: ['--all-files']
         exclude: .secrets.baseline
+  
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: <git sha or tag>
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+
