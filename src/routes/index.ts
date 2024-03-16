@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
-
-//const router = express.Router();
-
+import usersRoutes from "./users";
 const router = Router();
+
+router.use("/users", usersRoutes);
 
 router.get("/", (req: Request, res: Response) => {
 	res.send("Index routes works!");
