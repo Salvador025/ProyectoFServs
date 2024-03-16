@@ -1,11 +1,13 @@
 import { Router, Request, Response } from "express";
+import boardsRoutes from "./boards.routes";
 import usersRoutes from "./users";
 const router = Router();
-
-router.use("/users", usersRoutes);
 
 router.get("/", (req: Request, res: Response) => {
 	res.send("Index routes works!");
 });
+
+router.use("/users", usersRoutes);
+router.use("/boards", boardsRoutes);
 
 export default router;
