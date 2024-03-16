@@ -3,7 +3,7 @@ import { message, danger, fail, warn } from "danger";
 const modifiedMD = danger.git.modified_files.join("- ");
 message("Changed Files in this PR: \n - " + modifiedMD);
 
-// Function to check the commit message format according to Conventional Commits
+// Function to check the commit message format according to Conventional Commits.
 function checkCommitMessageFormat(commit) {
 	const lines = commit.message.split("\n");
 	const [title, emptyLine, ...description] = lines;
