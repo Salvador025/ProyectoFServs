@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js",
+    "dev": "cross-env Node_ENV=dev nodemon src/index.ts",
+    "local": "ts-node src/index.ts",
+    "build": "rimraf dist && tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "prepare": "husky install"
   },
@@ -24,12 +28,18 @@
     "eslit": "^6.0.0",
     "husky": "^8.0.0",
     "lint-staged": "^15.2.2",
-    "mongoose": "^8.2.2",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "prettier-eslint": "^16.3.0",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "mongoose": "^8.2.2",
+    "dotenv": "^16.4.5",
+    "cross-env": "^7.0.3",
+    "express": "^4.18.3",
+    "jsonwebtoken": "^9.0.2"
   }
 }

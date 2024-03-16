@@ -10,10 +10,10 @@ Link to the issue that will be closed by merging this pull request (if applicabl
 
 ## Type of Change
 
--   [ ] Bug fix (non-breaking change which fixes an issue)
--   [ ] New feature (non-breaking change which adds functionality)
--   [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
--   [ ] This change requires a documentation update
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] This change requires a documentation update
 
 ## How Has This Been Tested?
 
@@ -21,14 +21,14 @@ Describe the tests that you ran to verify your changes. Please also note any rel
 
 ## Checklist:
 
--   [ ] My code follows the code style of this project.
--   [ ] I have added tests to cover my changes.
--   [ ] All new and existing tests passed.
--   [ ] My change requires a change to the documentation.
--   [ ] I have updated the documentation accordingly.
--   [ ] I have checked that there isn't any other open pull requests for the same update/change.
--   [ ] I have commented my code, particularly in hard-to-understand areas.
--   [ ] My changes generate no new warnings.
+- [ ] My code follows the code style of this project.
+- [ ] I have added tests to cover my changes.
+- [ ] All new and existing tests passed.
+- [ ] My change requires a change to the documentation.
+- [ ] I have updated the documentation accordingly.
+- [ ] I have checked that there isn't any other open pull requests for the same update/change.
+- [ ] I have commented my code, particularly in hard-to-understand areas.
+- [ ] My changes generate no new warnings.
 
 ## Additional Notes
 
