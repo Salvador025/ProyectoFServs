@@ -1,12 +1,9 @@
 {
-    "compilerOptions": {
-        "target": "ES2016",
-        "outDir": "./dist",
-        "module": "NodeNext",
-        "esModuleInterop": true
-    },
-    "include": [
-        "./src/**/*.ts"
-    ]
-    
+	"compilerOptions": {
+		"target": "ES2016",
+		"outDir": "./dist",
+		"module": "NodeNext",
+		"esModuleInterop": true
+	},
+	"include": ["./src/**/*.ts"]
 }
