@@ -17,8 +17,7 @@ repos:
         name: TypeScript compiler
         entry: tsc
         language: system
-        files: \.(ts|tsx)$  
-
+        files: \.(ts|tsx)$
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
@@ -30,10 +29,9 @@ repos:
     hooks:
       - id: detect-secrets
         exclude: .secrets.baseline
-  
+
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v3.1.0
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
-
