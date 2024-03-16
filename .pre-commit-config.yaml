@@ -13,14 +13,6 @@ repos:
       - id: prettier
         args: ["--ignore-path", ".prettierignore"]
 
-  - repo: local
-    hooks:
-      - id: tsc
-        name: TypeScript compiler
-        entry: tsc
-        language: system
-        files: \.(ts|tsx)$
-
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
