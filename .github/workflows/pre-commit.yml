@@ -17,7 +17,7 @@ jobs:
           node-version: "14"
 
       # Install Node.js dependencies
-      #- run: npm install
+      - run: npm install @typescript-eslint/eslint-plugin@latest --save-dev
 
       - name: List directory structure
         run: ls -alh
