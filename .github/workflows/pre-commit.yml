@@ -19,6 +19,12 @@ jobs:
       # Install Node.js dependencies
       - run: npm install
 
+      - name: List directory structure
+        run: ls -alh
+
+      - name: Run ESLint
+        run: eslint . --ignore-path .eslintignore
+
       - uses: actions/setup-python@v3
 
       - uses: pre-commit/action@v3.0.0
