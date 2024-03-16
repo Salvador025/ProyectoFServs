@@ -1,2 +1,18 @@
 ### Sing Up ###
-GET http//localhost:3000/api/v1/users/sign_up
+POST http://localhost:3000/users/signup
+Content-Type: application/json
+
+{
+    "name": "jose",
+    "email": "jose@test.com",
+    "password": "test"
+}
+
+### Login ###
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+    "email": "jose@test.com",
+    "password": "test"
+}
