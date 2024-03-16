@@ -5,11 +5,13 @@ repos:
       - id: eslint
         files: \.(js|jsx|ts|tsx)$
         exclude: \.spec\.(js|jsx|ts|tsx)$
+        args: ["--ignore-path", ".eslintignore"]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
+        args: ["--ignore-path", ".prettierignore"]
 
   - repo: local
     hooks:
