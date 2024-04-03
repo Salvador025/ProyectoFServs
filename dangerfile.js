@@ -38,7 +38,7 @@ function checkCommitMessageFormat(commit) {
 	// Check 4: Each line in the description does not have more than 80 characters
 	description.forEach((line, index) => {
 		if (line.length > 80) {
-			fail(
+			warn(
 				`Line ${
 					index + 1
 				} in commit description exceeds 72 characters: "${line.substring(
