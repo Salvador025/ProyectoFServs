@@ -14,6 +14,7 @@ describe("code", () => {
 describe("decode", () => {
 	it("should return decoded token if valid", () => {
 		const token =
+			// cspell: disable-next-line
 			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTcxMjE4ODgwNH0.E-Yiml2gLBA6oK9BuFF850-2I7AxpBdgD8iJAMWMcZA"; // pragma: allowlist secret
 		const decodedToken = decode(token);
 		expect(decodedToken).toEqual({
