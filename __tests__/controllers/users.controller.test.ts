@@ -11,7 +11,7 @@ jest.mock("../../src/models/user", () => ({
 	findOne: jest.fn().mockResolvedValue(
 		Promise.resolve({
 			name: "TestUser",
-			password: "password123",
+			password: "password123", // pragma: allowlist secret
 			email: "test@example.com",
 		}),
 	),
@@ -34,7 +34,7 @@ describe("UsersController", () => {
 		req = {
 			body: {
 				name: "TestUser",
-				password: "password123",
+				password: "password123", // pragma: allowlist secret
 				email: "test@example.com",
 			},
 		};
@@ -54,7 +54,7 @@ describe("UsersController", () => {
 			// Assert
 			expect(user.create).toHaveBeenCalledWith({
 				name: "TestUser",
-				password: "hashed_password",
+				password: "hashed_password", // pragma: allowlist secret
 				email: "test@example.com",
 			});
 			expect(res.status).toHaveBeenCalledWith(ResponseStatus.CREATED);
@@ -63,18 +63,6 @@ describe("UsersController", () => {
 
 		/* 	it("should handle 'email already exists' error", async () => {
 			// Arrange
-			const req: Partial<Request> = {
-				body: {
-					name: "TestUser",
-					password: "password123",
-					email: "test@example.com",
-				},
-			};
-
-			const res: Partial<Response> = {
-				status: jest.fn().mockReturnThis(),
-				send: jest.fn().mockReturnThis(),
-			};
 
 			const createMock = user.create as jest.Mock;
 			createMock.mockRejectedValueOnce({ code: 11000 });
@@ -89,18 +77,6 @@ describe("UsersController", () => {
 
 		/* it("should handle validation errors", async () => {
 			// Arrange
-			const req: Partial<Request> = {
-				body: {
-					name: "TestUser",
-					password: "password123",
-					email: "test@example.com",
-				},
-			};
-
-			const res: Partial<Response> = {
-				status: jest.fn().mockReturnThis(),
-				send: jest.fn().mockReturnThis(),
-			};
 
 			const createMock = user.create as jest.Mock;
 			const validationError = new Error("Validation error");
@@ -117,18 +93,6 @@ describe("UsersController", () => {
 
 		it("should handle generic errors", async () => {
 			// Arrange
-			const req: Partial<Request> = {
-				body: {
-					name: "TestUser",
-					password: "password123",
-					email: "test@example.com",
-				},
-			};
-
-			const res: Partial<Response> = {
-				status: jest.fn().mockReturnThis(),
-				send: jest.fn().mockReturnThis(),
-			};
 
 			const createMock = user.create as jest.Mock;
 			createMock.mockRejectedValueOnce(new Error("Generic error"));
@@ -156,7 +120,7 @@ describe("UsersController", () => {
 			// Assert
 			expect(user.findOne).toHaveBeenCalledWith({
 				email: "test@example.com",
-				password: "hashed_password",
+				password: "hashed_password", // pragma: allowlist secret
 			});
 			expect(createToken).toHaveBeenCalled();
 			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
