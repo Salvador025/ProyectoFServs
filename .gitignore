@@ -11,5 +11,6 @@ pnpm-lock.yaml
 .env
 
 .venv/
+.venv/
 
 coverage/
