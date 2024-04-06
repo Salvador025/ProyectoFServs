@@ -1,4 +1,5 @@
 import { Request } from "express";
+
 export type InputToken = {
 	name: string;
 	email: string;

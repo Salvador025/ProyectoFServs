@@ -9,7 +9,7 @@
     "dev": "cross-env Node_ENV=dev nodemon src/index.ts",
     "local": "ts-node src/index.ts",
     "build": "rimraf dist && tsc",
-    "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "lint": "eslint \"**/*.ts\" --fix",
     "prepare": "husky install"
   },
   "keywords": [],
