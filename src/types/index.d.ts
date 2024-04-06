@@ -1,4 +1,5 @@
 import { Request } from "express";
+import Roles from "./roles";
 
 export type InputToken = {
 	name: string;
@@ -15,7 +16,7 @@ export interface User {
 	name: string;
 	password: string;
 	email: string;
-	role: string;
+	role: Roles;
 }
 
 export interface RequestUser extends Request {
