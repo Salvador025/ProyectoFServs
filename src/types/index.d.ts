@@ -6,12 +6,6 @@ export type InputToken = {
 	email: string;
 };
 
-export interface DecodedToken {
-	email: string;
-	iat: number;
-	name: string;
-}
-
 export interface User {
 	name: string;
 	password: string;

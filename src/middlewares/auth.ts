@@ -3,9 +3,10 @@ import ResponseStatus from "../types/response-codes";
 import { decode } from "../utils/create-token";
 import user from "../models/user";
 import { RequestUser } from "../types";
+import { JwtPayload } from "jsonwebtoken";
 
 export default (req: RequestUser, res: Response, next: NextFunction) => {
-	const token: string = (req as Request).query.token as string;
+	const token: string = (req as Request).headers.token as string;
 	if (!token) {
 		res.status(ResponseStatus.UNAUTHORIZED).send("Unauthorized");
 		return;
@@ -17,7 +18,7 @@ export default (req: RequestUser, res: Response, next: NextFunction) => {
 	}
 
 	user
-		.findOne({ email: data.email })
+		.findOne({ email: (data as JwtPayload).email })
 		.then((user) => {
 			if (!user) {
 				res.status(ResponseStatus.UNAUTHORIZED).send("Unauthorized");
