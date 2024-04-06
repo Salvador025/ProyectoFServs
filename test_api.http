@@ -3,9 +3,10 @@ POST http://localhost:3000/users/signup
 Content-Type: application/json
 
 {
-    "name": "",
-    "email": "",
-    "password": ""
+    "name": "test",
+    "username": "testuser",
+    "email": "test2@test.com",
+    "password": "123"
 }
 
 ### Login ###
@@ -13,6 +14,15 @@ POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-    "email": "",
-    "password": ""
+    "email": "test2@test.com",
+    "password": "123"
 }
+
+### Get User ###
+GET http://localhost:3000/users/testuser
+token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20iLCJpYXQiOjE3MTI0MjcxNzB9.KRwSsQzHGN_AoXX7HNzxB8NtHDSMQQpwUJ1hstS-KTA
+
+
+### Update User Profile Picture ###
+POST http://localhost:3000/users/testuser/uploadProfilePicture
+token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdDFAdGVzdC5jb20iLCJpYXQiOjE3MTIzODUxNjB9.nu4bZjbwQOX4khwalOinTbod_PCh25H0Jy4wb7WAJUE
