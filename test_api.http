@@ -4,8 +4,9 @@ Content-Type: application/json
 
 {
     "name": "",
+    "username": "",
     "email": "",
-    "password": ""
+    "password": "",
 }
 
 ### Login ###
@@ -16,3 +17,12 @@ Content-Type: application/json
     "email": "",
     "password": ""
 }
+
+### Get User ###
+GET http://localhost:3000/users/testuser
+token : 
+
+
+### Update User Profile Picture ###
+POST http://localhost:3000/users/testuser/uploadProfilePicture
+token : 

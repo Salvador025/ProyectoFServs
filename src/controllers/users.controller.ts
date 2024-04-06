@@ -9,6 +9,7 @@ class UsersController {
 	signUp(req: Request, res: Response) {
 		const data = {
 			name: req.body.name,
+			username: req.body.username,
 			password: hashPassword(req.body.password),
 			email: req.body.email,
 		};
