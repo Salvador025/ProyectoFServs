@@ -1,16 +1,16 @@
 ### Sing Up ###
-POST http://localhost:3000/users/signup
+POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
     "name": "",
     "username": "",
     "email": "",
-    "password": "",
+    "password": ""
 }
 
 ### Login ###
-POST http://localhost:3000/users/login
+POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
@@ -22,7 +22,26 @@ Content-Type: application/json
 GET http://localhost:3000/users/testuser
 token : 
 
+### Update role ###
+PUT http://localhost:3000/users/updateRole
+token : 
+Content-Type: application/json
+
+{
+    "role": "creator"
+}
+### Update User Profile ###
+GET http://localhost:3000/settings/profile/
+token : 
 
 ### Update User Profile Picture ###
-POST http://localhost:3000/users/testuser/uploadProfilePicture
+POST http://localhost:3000/settings/profile/uploadProfilePicture
+token : 
+
+### Get user boards ###
+GET http://localhost:3000/boards/testuser
+token : 
+
+### Create Board ###
+POST http://localhost:3000/boards/testuser
 token : 
