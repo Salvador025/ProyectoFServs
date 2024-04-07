@@ -1,14 +1,21 @@
 import { Router, Request, Response } from "express";
-import auth from "../middlewares/auth";
+import usersController from "../controllers/users.controller";
+import upload from "../middlewares/upload-s3";
 
 const router = Router();
 
-router.get("/profile", auth, (req: Request, res: Response) =>
+router.get("/", (req: Request, res: Response) => {
+	res.send("Settings routes works!");
+});
+
+router.get("/profile", (req: Request, res: Response) =>
 	res.send("Settings page"),
 );
 
-router.post("/profile/uploadProfilePicture", (req: Request, res: Response) =>
-	res.send("Profile picture uploaded"),
+router.post(
+	"/profile/uploadProfilePicture",
+	upload.single("profilePicture"),
+	usersController.uploadProfilePicture,
 );
 
 export default router;
