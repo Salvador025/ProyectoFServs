@@ -6,6 +6,15 @@ import marketplaceRoutes from "./marketplace";
 
 const router = Router();
 
+//swagger for index board
+/**
+ * @swagger
+ * /:
+ *  get:
+ *   summary: Index route
+ *   tags: [Index]
+ *   description: Index route
+ */
 router.get("/", (req: Request, res: Response) => {
 	res.send("Index routes works!");
 });

@@ -61,7 +61,7 @@ router.post("/login", usersController.logIn);
  *    400:
  *     description: bad request
  */
-router.get("/:username", auth, (req: RequestUser, res: Response) =>
+router.get("/users/:username", auth, (req: RequestUser, res: Response) =>
 	res.send(req.user),
 );
 
