@@ -29,7 +29,7 @@ const router = Router();
 
 /**
  * @swagger
- * /signup:
+ * /auth/signup:
  *  post:
  *   description: register new user
  *   tags: [Auth]
@@ -51,23 +51,34 @@ router.post("/signup", usersController.signUp);
 
 /**
  * @swagger
- * /signup:
+ * /auth/login:
  *  post:
- *   description: register new user
+ *   description: user login
  *   tags: [Auth]
  *   requestBody:
- *    required: true
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/User'
+ *       type: object
+ *       properties:
+ *        email:
+ *         type: string
+ *         format: email
+ *        password:
+ *         type: string
  *   responses:
  *    200:
- *     description: new user registered successfully
+ *     description: authentication token
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/User'
+ *        properties:
+ *         token:
+ *          type: string
+ *    400:
+ *     description: bad request (missing parameter)
+ *    401:
+ *     description: unauthorized (wrong credentials)
  */
 router.post("/login", usersController.logIn);
 
