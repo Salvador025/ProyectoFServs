@@ -30,11 +30,11 @@ token :
 
 ### Get User ###
 GET http://localhost:3000/settings/profile
-token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdDFAdGVzdC5jb20iLCJpYXQiOjE3MTI0NTM4MTl9.ub7XUn7dMpwImNw6FOWi0b3oJCwJE02zfx8snh3E8Io
+token : 
 
 ### Upload Profile Picture ###
 POST http://localhost:3000/settings/profile/uploadProfilePicture
-token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdDFAdGVzdC5jb20iLCJpYXQiOjE3MTI0NTM4MTl9.ub7XUn7dMpwImNw6FOWi0b3oJCwJE02zfx8snh3E8Io
+token : 
 Content-Type: multipart/form-data; boundary=mi-boundary
 
 --mi-boundary
