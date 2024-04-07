@@ -18,7 +18,7 @@ router.get("/", (req: Request, res: Response) => {
 //swagger to get a especific board
 /**
  * @swagger
- * /get board/{id}:
+ * /marketplace/:id:
  *  get:
  *   summary: Get a especific board
  *   tags: [Marketplace]
@@ -33,7 +33,7 @@ router.get("/:id", (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /download/{id}:
+ * /marketplace/:id/download
  *  get:
  *   summary: Download a board
  *   tags: [Marketplace]
