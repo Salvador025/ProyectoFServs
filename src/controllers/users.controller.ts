@@ -3,7 +3,8 @@ import { Request, Response } from "express";
 import hashPassword from "../utils/hash-password";
 import ResponseStatus from "../types/response-codes";
 import { code as createToken } from "../utils/create-token";
-import { InputToken } from "../types";
+import { InputToken, RequestUser } from "../types";
+import Roles from "../types/roles";
 
 class UsersController {
 	signUp(req: Request, res: Response) {
@@ -56,6 +57,24 @@ class UsersController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
+				console.error(error);
+			});
+	}
+
+	changeRole(req: RequestUser, res: Response) {
+		const { email } = req.user;
+		const role = req.body.role;
+		if (!Object.values(Roles).includes(role)) {
+			res.status(ResponseStatus.BAD_REQUEST).send("Invalid role");
+			return;
+		}
+		user
+			.updateOne({ email }, { role })
+			.then(() => {
+				res.status(ResponseStatus.SUCCESS).send("Role changed");
+			})
+			.catch((error) => {
+				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
 				console.error(error);
 			});
 	}

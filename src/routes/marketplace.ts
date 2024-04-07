@@ -6,7 +6,6 @@ router.get("/", (req: Request, res: Response) => {
 	res.send("Marketplace routes works!");
 });
 
-//route to get a especific board
 router.get("/:id", (req: Request, res: Response) => {
 	res.send(`Marketplace route for board ${req.params.id}`);
 });

@@ -1,8 +1,10 @@
 import { Router, Request, Response } from "express";
-import boardsRoutes from "./boards";
+import authRoutes from "./auth";
 import usersRoutes from "./users";
-import auth from "../middlewares/auth";
+import boardsRoutes from "./boards";
+import settingsRoute from "./settings";
 import marketplaceRoutes from "./marketplace";
+import auth from "../middlewares/auth";
 
 const router = Router();
 
@@ -10,8 +12,10 @@ router.get("/", (req: Request, res: Response) => {
 	res.send("Index routes works!");
 });
 
-router.use("/marketplace", auth, marketplaceRoutes);
-router.use("/users", usersRoutes);
+router.use("/auth", authRoutes);
+router.use("/users", auth, usersRoutes);
 router.use("/boards", auth, boardsRoutes);
+router.use("/settings", auth, settingsRoute);
+router.use("/marketplace", auth, marketplaceRoutes);
 
 export default router;
