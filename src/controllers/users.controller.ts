@@ -78,6 +78,10 @@ class UsersController {
 				console.error(error);
 			});
 	}
+
+	uploadProfilePicture(req: RequestUser, res: Response) {
+		res.status(ResponseStatus.SUCCESS).send("Profile picture uploaded");
+	}
 }
 
 export default new UsersController();

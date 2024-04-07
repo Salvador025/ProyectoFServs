@@ -1,13 +1,27 @@
 import { Router, Request, Response } from "express";
-import auth from "../middlewares/auth";
+import usersController from "../controllers/users.controller";
+import upload from "../middlewares/upload-s3";
 
 const router = Router();
 
-//swagger for upload profile picture
+/**
+ * @swagger
+ * /profile:
+ *  get:
+ *   summary: Profile page
+ *   tags: [Settings]
+ *   description: Profile page of the user
+ *   responses:
+ *    200:
+ *     description: Profile page
+ */
+router.get("/profile", (req: Request, res: Response) =>
+	res.send("Settings page"),
+);
 
 /**
  * @swagger
- * /uploadProfilePicture:
+ * /profile/uploadProfilePicture:
  *  post:
  *   summary: Upload profile picture
  *   tags: [Settings]
@@ -24,16 +38,9 @@ const router = Router();
  *     description: Profile picture uploaded
  */
 router.post(
-	"/:username/uploadProfilePicture",
-	auth,
-	(req: Request, res: Response) => res.send("Profile picture uploaded"),
-);
-router.get("/profile", auth, (req: Request, res: Response) =>
-	res.send("Settings page"),
-);
-
-router.post("/profile/uploadProfilePicture", (req: Request, res: Response) =>
-	res.send("Profile picture uploaded"),
+	"/profile/uploadProfilePicture",
+	upload.single("profilePicture"),
+	usersController.uploadProfilePicture,
 );
 
 export default router;

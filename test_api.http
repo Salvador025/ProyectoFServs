@@ -34,9 +34,17 @@ Content-Type: application/json
 GET http://localhost:3000/settings/profile/
 token : 
 
-### Update User Profile Picture ###
+### Upload Profile Picture ###
 POST http://localhost:3000/settings/profile/uploadProfilePicture
 token : 
+Content-Type: multipart/form-data; boundary=mi-boundary
+
+--mi-boundary
+Content-Disposition: form-data; name="profilePicture"; filename="testPic.jpg"
+Content-Type: image/jpeg
+
+< ./testPic.jpg
+--mi-boundary--
 
 ### Get user boards ###
 GET http://localhost:3000/boards/testuser
@@ -45,3 +53,4 @@ token :
 ### Create Board ###
 POST http://localhost:3000/boards/testuser
 token : 
+
