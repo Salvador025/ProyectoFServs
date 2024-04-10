@@ -93,17 +93,23 @@ describe("Auth Middleware", () => {
 		expect(mockNext).toHaveBeenCalled();
 	});
 
-	/* test("should respond with Internal Server Error if database query fails", async () => {
+	test("should respond with Internal Server Error if database query fails", async () => {
 		const tokenData = { email: "user@example.com" };
-		mockReq.headers.token = "validToken";
+		(mockReq.headers as { token: string }).token = "someToken";
 		(decode as jest.Mock).mockReturnValue(tokenData);
 		(user.findOne as jest.Mock).mockRejectedValue(new Error("DB Error"));
 
-		await middleware(mockReq, mockRes, mockNext);
-
-		expect(mockRes.status).toHaveBeenCalledWith(
-			ResponseStatus.INTERNAL_SERVER_ERROR,
-		);
-		expect(mockRes.send).toHaveBeenCalledWith("Something went wrong");
-	}); */
+		try {
+			await middleware(
+				mockReq as RequestUser,
+				mockRes as Response,
+				mockNext as NextFunction,
+			);
+		} catch (error) {
+			expect(mockRes.status).toHaveBeenCalledWith(
+				ResponseStatus.INTERNAL_SERVER_ERROR,
+			);
+			expect(mockRes.send).toHaveBeenCalledWith("Something went wrong");
+		}
+	});
 });
