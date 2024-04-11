@@ -13,6 +13,7 @@ const s3 = new S3Client({
 const s3Storage = multerS3({
 	s3: s3,
 	bucket: process.env.BUCKET_NAME,
+	acl: "public-read",
 	metadata: (req, file, cb) => {
 		cb(null, { ...file });
 	},

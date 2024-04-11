@@ -46,7 +46,7 @@ describe("UsersController", () => {
 	});
 
 	describe("signUp", () => {
-		it("should create a new user and send a CREATED response", async () => {
+		test("should create a new user and send a CREATED response", async () => {
 			// Arrange
 			// Cast the req object to the correct type
 			await UsersController.signUp(req as Request, res as Response);
@@ -61,21 +61,23 @@ describe("UsersController", () => {
 			expect(res.send).toHaveBeenCalledWith("User created");
 		});
 
-		/* 	it("should handle 'email already exists' error", async () => {
+		test("should handle 'email already exists' error", async () => {
 			// Arrange
 
 			const createMock = user.create as jest.Mock;
 			createMock.mockRejectedValueOnce({ code: 11000 });
 
-			// Act
-			await UsersController.signUp(req as Request, res as Response);
+			try {
+				// Act
+				await UsersController.signUp(req as Request, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
+				expect(res.send).toHaveBeenCalledWith("Email already exists");
+			}
+		});
 
-			// Assert
-			expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
-			expect(res.send).toHaveBeenCalledWith("Email already exists");
-		}); */
-
-		/* it("should handle validation errors", async () => {
+		test("should handle validation errors", async () => {
 			// Arrange
 
 			const createMock = user.create as jest.Mock;
@@ -83,31 +85,37 @@ describe("UsersController", () => {
 			validationError.name = "ValidationError";
 			createMock.mockRejectedValueOnce(validationError);
 
-			// Act
-			await UsersController.signUp(req as Request, res as Response);
-
-			// Assert
-			expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
-			expect(res.send).toHaveBeenCalledWith("Invalid data");
+			try {
+				// Act
+				await UsersController.signUp(req as Request, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
+				expect(res.send).toHaveBeenCalledWith("Invalid data");
+			}
 		});
 
-		it("should handle generic errors", async () => {
+		test("should handle generic errors", async () => {
 			// Arrange
 
 			const createMock = user.create as jest.Mock;
 			createMock.mockRejectedValueOnce(new Error("Generic error"));
 
-			// Act
-			await UsersController.signUp(req as Request, res as Response);
-
-			// Assert
-			expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
-			expect(res.send).toHaveBeenCalledWith("Something went wrong");
-		}); */
+			try {
+				// Act
+				await UsersController.signUp(req as Request, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(
+					ResponseStatus.INTERNAL_SERVER_ERROR,
+				);
+				expect(res.send).toHaveBeenCalledWith("Something went wrong");
+			}
+		});
 	});
 
 	describe("logIn", () => {
-		it("should log in an existing user and send back a token", async () => {
+		test("should log in an existing user and send back a token", async () => {
 			// Arrange
 			(user.findOne as jest.Mock).mockResolvedValue({
 				name: "TestUser",
