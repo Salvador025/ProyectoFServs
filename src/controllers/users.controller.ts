@@ -21,7 +21,9 @@ class UsersController {
 			})
 			.catch((error) => {
 				if (error.code === 11000) {
-					res.status(ResponseStatus.BAD_REQUEST).send("Email already exists");
+					res
+						.status(ResponseStatus.BAD_REQUEST)
+						.send("Email already or Username already exists");
 					return;
 				}
 				if (error.name === "ValidationError") {
@@ -79,9 +81,20 @@ class UsersController {
 			});
 	}
 
-	uploadProfilePicture(req: RequestUser, res: Response) {
-		console.log(req.file);
-		res.status(ResponseStatus.SUCCESS).send("req.file");
+	uploadProfilePicture(
+		req: RequestUser & { file: { location: string } },
+		res: Response,
+	) {
+		req.user.image = req.file.location;
+		user
+			.updateOne({ email: req.user.email }, { image: req.file.location })
+			.then(() => {
+				res.status(ResponseStatus.SUCCESS).send("Profile picture uploaded");
+			})
+			.catch((error) => {
+				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
+				console.error(error);
+			});
 	}
 }
 
