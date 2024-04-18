@@ -80,7 +80,8 @@ class UsersController {
 	}
 
 	uploadProfilePicture(req: RequestUser, res: Response) {
-		res.status(ResponseStatus.SUCCESS).send("Profile picture uploaded");
+		console.log(req.file);
+		res.status(ResponseStatus.SUCCESS).send("req.file");
 	}
 }
 

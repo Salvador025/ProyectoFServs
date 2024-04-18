@@ -1,3 +1,6 @@
+@file =testPic.png
+@token= 
+
 ### Sing Up ###
 POST http://localhost:3000/auth/signup
 Content-Type: application/json
@@ -14,13 +17,13 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "email": "",
-    "password": ""
+    "email": "test1@test.com",
+    "password": "123"
 }
 
 ### Get User ###
 GET http://localhost:3000/users/testuser
-token : 
+token : {{token}}
 
 ### Update role ###
 PUT http://localhost:3000/users/updateRole
@@ -32,25 +35,25 @@ Content-Type: application/json
 }
 ### Update User Profile ###
 GET http://localhost:3000/settings/profile/
-token : 
+token : {{token}}
 
 ### Upload Profile Picture ###
 POST http://localhost:3000/settings/profile/uploadProfilePicture
-token : 
+token : {{token}}
 Content-Type: multipart/form-data; boundary=mi-boundary
 
 --mi-boundary
-Content-Disposition: form-data; name="profilePicture"; filename="testPic.jpg"
+Content-Disposition: form-data; name="profilePicture"; filename="{{file}}"
 Content-Type: image/jpeg
 
-< ./testPic.jpg
+< ./{{file}}
 --mi-boundary--
 
 ### Get user boards ###
 GET http://localhost:3000/boards/testuser
-token : 
+token : {{token}}
 
 ### Create Board ###
 POST http://localhost:3000/boards/testuser
-token : 
+token : {{token}}
 

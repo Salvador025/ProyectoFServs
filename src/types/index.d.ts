@@ -12,6 +12,7 @@ export interface User {
 	password: string;
 	email: string;
 	role: Roles;
+	image?: string;
 }
 
 export interface RequestUser extends Request {

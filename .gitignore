@@ -21,4 +21,4 @@ dist/
 
 # extra
 .DS_Store
-testPic.jpg
+testPic*
