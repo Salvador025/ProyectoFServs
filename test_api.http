@@ -1,5 +1,5 @@
 @base_url = http://localhost:3000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdDFAdGVzdC5jb20iLCJpYXQiOjE3MTI3NjgwODJ9.gkQTB3xdm9NzwWq45c6tOeJAoZq09exX1ulhi8zF2BQ
+@token =
 
 ### Sing Up ###
 POST {{base_url}}/auth/signup
