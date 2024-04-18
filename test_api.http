@@ -1,5 +1,7 @@
+@base_url = http://localhost:3000
+@token = 
 ### Sing Up ###
-POST http://localhost:3000/auth/signup
+POST {{base_url}}/auth/signup
 Content-Type: application/json
 
 {
@@ -10,33 +12,33 @@ Content-Type: application/json
 }
 
 ### Login ###
-POST http://localhost:3000/auth/login
+POST {{base_url}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "",
-    "password": ""
+    "email": "test1@test.com",
+    "password": "123"
 }
 
 ### Get User ###
-GET http://localhost:3000/users/testuser
-token : 
+GET {{base_url}}/users/testuser
+token : {{token}}
 
 ### Update role ###
-PUT http://localhost:3000/users/updateRole
-token : 
+PUT {{base_url}}/users/updateRole
+token : {{token}} 
 Content-Type: application/json
 
 {
     "role": "creator"
 }
 ### Update User Profile ###
-GET http://localhost:3000/settings/profile/
-token : 
+GET {{base_url}}/settings/profile/
+token : {{token}}
 
 ### Upload Profile Picture ###
-POST http://localhost:3000/settings/profile/uploadProfilePicture
-token : 
+POST {{base_url}}/settings/profile/uploadProfilePicture
+token : {{token}}
 Content-Type: multipart/form-data; boundary=mi-boundary
 
 --mi-boundary
@@ -47,10 +49,9 @@ Content-Type: image/jpeg
 --mi-boundary--
 
 ### Get user boards ###
-GET http://localhost:3000/boards/testuser
-token : 
+GET {{base_url}}/boards/testuser
+token : {{token}}
 
 ### Create Board ###
-POST http://localhost:3000/boards/testuser
-token : 
-
+POST {{base_url}}/boards/testuser
+token : {{token}}
