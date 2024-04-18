@@ -1,7 +1,8 @@
 
-@file =testPic.png
+@file =testPic.jpg
 @base_url = http://localhost:3000
 @token = 
+
 ### Sing Up ###
 POST {{base_url}}/auth/signup
 Content-Type: application/json
@@ -18,8 +19,8 @@ POST {{base_url}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "test1@test.com",
-    "password": "123"
+    "email": "",
+    "password": ""
 }
 
 ### Get User ###
