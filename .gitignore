@@ -6,11 +6,19 @@ node_modules/
 .pnpm-debug.log
 pnpm-lock.yaml
 
+# vscode
 .vscode/
 
+# environment
 .env
-
-.venv/
 .venv/
 
+# coverage
 coverage/
+
+# build
+dist/
+
+# extra
+.DS_Store
+testPic.jpg

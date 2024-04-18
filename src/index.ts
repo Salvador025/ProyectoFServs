@@ -3,13 +3,20 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 import routes from "./routes";
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
 
 const port = process.env.PORT || 4000;
 
+import { swaggerConfig } from "./../swagger.config";
+
 app.use(express.json());
 app.use(routes);
+
+const swaggerDocs = swaggerJsDoc(swaggerConfig);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 async function start() {
 	const db_url = process.env.DB_IRL;
