@@ -1,7 +1,8 @@
 import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import session from "express-session";
 import { Express } from "express";
+import session from "express-session";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import googleController from "../controllers/google.controller";
 
 export const googleAuth = (app: Express) => {
 	passport.use(
@@ -12,8 +13,8 @@ export const googleAuth = (app: Express) => {
 				callbackURL: process.env.GOOGLE_CALLBACK_URL,
 			},
 			(accessToken, refreshToken, profile, cb) => {
-				console.log("User profile:", profile);
-				return cb(null, profile);
+				const token = googleController.createUser(profile);
+				return cb(null, { profile, token });
 			},
 		),
 	);
