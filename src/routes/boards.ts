@@ -28,7 +28,7 @@ router.get("/:username", (req: Request, res: Response) => {
  */
 router.post(
 	"/:username",
-	roles(Roles.Creator, Roles.Admin),
+	roles(Roles.CREATOR, Roles.ADMIN),
 	(req: Request, res: Response) => {
 		res.send("Board created");
 	},
@@ -58,7 +58,7 @@ router.get("/:username/:id", (req: Request, res: Response) => {
  */
 router.put(
 	"/:username/:id",
-	roles(Roles.Creator, Roles.Admin),
+	roles(Roles.CREATOR, Roles.ADMIN),
 	(req: Request, res: Response) => {
 		res.send(`Board ${req.params.id} updated`);
 	},
@@ -76,7 +76,7 @@ router.put(
  */
 router.delete(
 	"/:username/:id",
-	roles(Roles.Creator, Roles.Admin),
+	roles(Roles.CREATOR, Roles.ADMIN),
 	(req: Request, res: Response) => {
 		res.send(`Board ${req.params.id} deleted`);
 	},
