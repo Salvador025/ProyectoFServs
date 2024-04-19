@@ -1,13 +1,13 @@
 import { Schema, model } from "mongoose";
 
-const boardsSchema = new Schema({
+const schema = new Schema({
 	name: {
 		type: String,
 		required: true,
 		unique: true,
 	},
 	owner: {
-		type: Schema.Types.ObjectId,
+		type: String,
 		required: true,
 	},
 	direction: {
@@ -16,4 +16,4 @@ const boardsSchema = new Schema({
 	},
 });
 
-export default model("users", boardsSchema);
+export default model("board", schema);
