@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import roles from "../middlewares/roles";
 import Roles from "../types/roles";
+import { uploadBoard } from "../middlewares/upload-s3";
 
 const router = Router();
 
@@ -29,6 +30,7 @@ router.get("/:username", (req: Request, res: Response) => {
 router.post(
 	"/:username",
 	roles(Roles.CREATOR, Roles.ADMIN),
+	uploadBoard.single("Board"),
 	(req: Request, res: Response) => {
 		res.send("Board created");
 	},

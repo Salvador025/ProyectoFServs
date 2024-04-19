@@ -22,6 +22,22 @@ const s3StorageProfile = multerS3({
 	},
 });
 
+const s3StorageBoard = multerS3({
+	s3: s3,
+	bucket: process.env.BUCKET_NAME,
+	acl: "public-read",
+	metadata: (req, file, cb) => {
+		cb(null, { ...file });
+	},
+	key: (req, file, cb) => {
+		cb(null, `board-${Date.now()}-${file.originalname}`);
+	},
+});
+
 export const uploadProfile = multer({
 	storage: s3StorageProfile,
+});
+
+export const uploadBoard = multer({
+	storage: s3StorageBoard,
 });
