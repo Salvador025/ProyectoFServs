@@ -13,8 +13,10 @@ export const googleAuth = (app: Express) => {
 				callbackURL: process.env.GOOGLE_CALLBACK_URL,
 			},
 			(accessToken, refreshToken, profile, cb) => {
-				const token = googleController.createUser(profile);
-				return cb(null, { profile, token });
+				googleController.createUser(profile).then((token) => {
+					const user = { ...profile, token };
+					cb(null, user);
+				});
 			},
 		),
 	);
