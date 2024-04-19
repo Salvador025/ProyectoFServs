@@ -16,7 +16,13 @@ export interface User {
 	image?: string;
 }
 
-interface UserToken extends Profile {
+export interface Boards {
+	name: string;
+	owner: string;
+	direction: string;
+}
+
+export interface UserToken extends Profile {
 	token: string;
 }
 
