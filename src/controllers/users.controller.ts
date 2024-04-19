@@ -30,7 +30,9 @@ class UsersController {
 					res.status(ResponseStatus.BAD_REQUEST).send("Invalid data");
 					return;
 				}
-				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
+				res
+					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
+					.send("Something went wrong");
 				console.error(error);
 			});
 	}
