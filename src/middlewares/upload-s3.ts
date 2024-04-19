@@ -10,7 +10,7 @@ const s3 = new S3Client({
 	},
 });
 
-const s3Storage = multerS3({
+const s3StorageProfile = multerS3({
 	s3: s3,
 	bucket: process.env.BUCKET_NAME,
 	acl: "public-read",
@@ -18,12 +18,10 @@ const s3Storage = multerS3({
 		cb(null, { ...file });
 	},
 	key: (req, file, cb) => {
-		cb(null, file.originalname);
+		cb(null, `profile-${Date.now()}-${file.originalname}`);
 	},
 });
 
-const upload = multer({
-	storage: s3Storage,
+export const uploadProfile = multer({
+	storage: s3StorageProfile,
 });
-
-export default upload;

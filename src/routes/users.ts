@@ -2,6 +2,7 @@ import { Router, Response } from "express";
 import auth from "../middlewares/auth";
 
 import { RequestUser } from "../types";
+import usersController from "../controllers/users.controller";
 const router = Router();
 
 /**
@@ -16,8 +17,10 @@ const router = Router();
  *    400:
  *     description: bad request
  */
-router.get("/users/:username", auth, (req: RequestUser, res: Response) =>
+router.get("/:username", auth, (req: RequestUser, res: Response) =>
 	res.send(req.user),
 );
+
+router.put("/updateRole", auth, usersController.changeRole);
 
 export default router;

@@ -1,5 +1,8 @@
+
+@file =testPic.jpg
 @base_url = http://localhost:3000
 @token = 
+
 ### Sing Up ###
 POST {{base_url}}/auth/signup
 Content-Type: application/json
@@ -16,11 +19,12 @@ POST {{base_url}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "test1@test.com",
-    "password": "123"
+    "email": "",
+    "password": ""
 }
 
 ### Get User ###
+
 GET {{base_url}}/users/testuser
 token : {{token}}
 
@@ -32,6 +36,7 @@ Content-Type: application/json
 {
     "role": "creator"
 }
+
 ### Update User Profile ###
 GET {{base_url}}/settings/profile/
 token : {{token}}
@@ -42,10 +47,10 @@ token : {{token}}
 Content-Type: multipart/form-data; boundary=mi-boundary
 
 --mi-boundary
-Content-Disposition: form-data; name="profilePicture"; filename="testPic.jpg"
+Content-Disposition: form-data; name="profilePicture"; filename="{{file}}"
 Content-Type: image/jpeg
 
-< ./testPic.jpg
+< ./{{file}}
 --mi-boundary--
 
 ### Get user boards ###

@@ -25,6 +25,9 @@ const schema = new Schema({
 		enum: Object.values(Roles),
 		default: "user",
 	},
+	image: {
+		type: String,
+	},
 });
 
 export default model("User", schema);
