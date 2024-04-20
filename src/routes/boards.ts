@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import roles from "../middlewares/roles";
 import Roles from "../types/roles";
+import boardsController from "../controllers/boards.controller";
 import { uploadBoard } from "../middlewares/upload-s3";
 
 const router = Router();
@@ -31,9 +32,7 @@ router.post(
 	"/:username",
 	roles(Roles.CREATOR, Roles.ADMIN),
 	uploadBoard.single("Board"),
-	(req: Request, res: Response) => {
-		res.send("Board created");
-	},
+	boardsController.createBoard,
 );
 
 /**

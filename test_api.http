@@ -24,7 +24,6 @@ Content-Type: application/json
 }
 
 ### Get User ###
-
 GET {{base_url}}/users/testuser
 token : {{token}}
 
@@ -60,3 +59,11 @@ token : {{token}}
 ### Create Board ###
 POST {{base_url}}/boards/testuser
 token : {{token}}
+Content-Type: multipart/form-data; boundary=mi-boundary
+
+--mi-boundary
+Content-Disposition: form-data; name="Board"; filename="{{file}}"
+Content-Type: image/jpeg
+
+< ./{{file}}
+--mi-boundary--
