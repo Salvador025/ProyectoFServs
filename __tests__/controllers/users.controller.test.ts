@@ -18,6 +18,7 @@ jest.mock("../../src/models/user", () => ({
 			email: "test@example.com",
 		}),
 	),
+	updateOne: jest.fn().mockResolvedValue(Promise.resolve("")),
 }));
 
 jest.mock("../../src/utils/hash-password", () =>
@@ -206,9 +207,12 @@ describe("UsersController", () => {
 				status: jest.fn().mockReturnThis(),
 				send: jest.fn().mockReturnThis(),
 			};
+			(user.updateOne as jest.Mock).mockResolvedValue(
+				Promise.resolve("Role changed"),
+			);
 		});
 		test("should change the role of a user", async () => {
-			user.updateOne = jest.fn().mockResolvedValue({
+			(user.updateOne as jest.Mock).mockResolvedValue({
 				name: "TestUser",
 				username: "testuser",
 				email: "test@example.com",
@@ -235,9 +239,9 @@ describe("UsersController", () => {
 
 		test("should handle generic errors", async () => {
 			// Arrange
-
-			const updateOneMock = user.updateOne as jest.Mock;
-			updateOneMock.mockRejectedValueOnce(new Error("Generic error"));
+			(user.updateOne as jest.Mock).mockRejectedValue(
+				new Error("Generic error"),
+			);
 			try {
 				// Act
 				await UsersController.changeRole(req as RequestUser, res as Response);
@@ -280,11 +284,14 @@ describe("UsersController", () => {
 				status: jest.fn().mockReturnThis(),
 				send: jest.fn().mockReturnThis(),
 			};
+			(user.updateOne as jest.Mock).mockResolvedValue(
+				Promise.resolve("image Upload"),
+			);
 		});
 
 		test("should upload profile picture and send a SUCCESS response", async () => {
 			// Arrange
-			user.updateOne as jest.Mock;
+			(user.updateOne as jest.Mock).mockResolvedValue({});
 
 			await UsersController.uploadProfilePicture(
 				req as RequestUser & { file: { location: string } },
@@ -302,8 +309,9 @@ describe("UsersController", () => {
 
 		test("should handle errors and send a BAD_REQUEST response", async () => {
 			// Arrange
-			const updateOneMock = user.updateOne as jest.Mock;
-			updateOneMock.mockRejectedValueOnce(new Error("Generic error"));
+			(user.updateOne as jest.Mock).mockRejectedValue(
+				new Error("Generic error"),
+			);
 
 			try {
 				// Act
