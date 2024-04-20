@@ -4,6 +4,9 @@ import UsersController from "../../src/controllers/users.controller";
 import user from "../../src/models/user";
 import ResponseStatus from "../../src/types/response-codes";
 import { code as createToken } from "../../src/utils/create-token";
+// import { RequestUser, User } from "../../src/types";
+// import Roles from "../../src/types/roles";
+// import { Readable } from "stream";
 
 // Mock the external dependencies
 jest.mock("../../src/models/user", () => ({
@@ -26,26 +29,26 @@ jest.mock("../../src/utils/create-token", () => ({
 }));
 
 describe("UsersController", () => {
-	let req: Partial<Request>;
-	let res: Partial<Response>;
-
-	// Mock the Express req and res objects before each test
-	beforeEach(() => {
-		req = {
-			body: {
-				name: "TestUser",
-				password: "password123", // pragma: allowlist secret
-				email: "test@example.com",
-			},
-		};
-
-		res = {
-			status: jest.fn().mockReturnThis(),
-			send: jest.fn().mockReturnThis(),
-		};
-	});
-
 	describe("signUp", () => {
+		let req: Partial<Request>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				body: {
+					name: "TestUser",
+					password: "password123", // pragma: allowlist secret
+					email: "test@example.com",
+				},
+			};
+
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+			};
+		});
+
 		test("should create a new user and send a CREATED response", async () => {
 			// Arrange
 			// Cast the req object to the correct type
@@ -115,6 +118,24 @@ describe("UsersController", () => {
 	});
 
 	describe("logIn", () => {
+		let req: Partial<Request>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				body: {
+					name: "TestUser",
+					password: "password123", // pragma: allowlist secret
+					email: "test@example.com",
+				},
+			};
+
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+			};
+		});
 		test("should log in an existing user and send back a token", async () => {
 			// Arrange
 			(user.findOne as jest.Mock).mockResolvedValue({
@@ -133,6 +154,34 @@ describe("UsersController", () => {
 			expect(createToken).toHaveBeenCalled();
 			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
 			expect(res.send).toHaveBeenCalledWith({ token: "token" });
+		});
+
+		test("should handle invalid credentials", async () => {
+			// Arrange
+			(user.findOne as jest.Mock).mockResolvedValue(null);
+
+			// Act
+			await UsersController.logIn(req as Request, res as Response);
+
+			// Assert
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.UNAUTHORIZED);
+			expect(res.send).toHaveBeenCalledWith("Invalid credentials");
+		});
+
+		test("should handle generic errors", async () => {
+			// Arrange
+			(user.findOne as jest.Mock).mockRejectedValue(new Error("Generic error"));
+
+			// Act
+			try {
+				await UsersController.logIn(req as Request, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(
+					ResponseStatus.INTERNAL_SERVER_ERROR,
+				);
+				expect(res.send).toHaveBeenCalledWith("Something went wrong");
+			}
 		});
 	});
 });
