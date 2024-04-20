@@ -8,13 +8,11 @@ class BoardsController {
 		req: RequestUser & { file: { location: string } },
 		res: Response,
 	) {
-		console.log(req.file);
 		const data: Boards = {
 			name: req.file.originalname,
 			owner: req.user.username,
 			direction: req.file.location,
 		};
-		console.log(data);
 		boards
 			.create(data)
 			.then((board) => {
