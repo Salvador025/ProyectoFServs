@@ -4,8 +4,8 @@ import UsersController from "../../src/controllers/users.controller";
 import user from "../../src/models/user";
 import ResponseStatus from "../../src/types/response-codes";
 import { code as createToken } from "../../src/utils/create-token";
-// import { RequestUser, User } from "../../src/types";
-// import Roles from "../../src/types/roles";
+import { RequestUser } from "../../src/types";
+import Roles from "../../src/types/roles";
 // import { Readable } from "stream";
 
 // Mock the external dependencies
@@ -180,6 +180,70 @@ describe("UsersController", () => {
 				expect(res.status).toHaveBeenCalledWith(
 					ResponseStatus.INTERNAL_SERVER_ERROR,
 				);
+				expect(res.send).toHaveBeenCalledWith("Something went wrong");
+			}
+		});
+	});
+
+	describe("changeRole", () => {
+		let req: Partial<RequestUser>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: {
+					name: "TestUser",
+					username: "testuser",
+					email: "test@example.com",
+					role: Roles.USER,
+				},
+				body: {
+					role: "admin",
+				},
+			};
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+			};
+		});
+		test("should change the role of a user", async () => {
+			user.updateOne = jest.fn().mockResolvedValue({
+				name: "TestUser",
+				username: "testuser",
+				email: "test@example.com",
+			});
+
+			await UsersController.changeRole(req as RequestUser, res as Response);
+
+			// Assert
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Role changed");
+		});
+
+		test("should handle invalid role", async () => {
+			// Arrange
+			req.body.role = "invalid_role";
+
+			// Act
+			await UsersController.changeRole(req as RequestUser, res as Response);
+
+			// Assert
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
+			expect(res.send).toHaveBeenCalledWith("Invalid role");
+		});
+
+		test("should handle generic errors", async () => {
+			// Arrange
+
+			const updateOneMock = user.updateOne as jest.Mock;
+			updateOneMock.mockRejectedValueOnce(new Error("Generic error"));
+			try {
+				// Act
+				await UsersController.changeRole(req as RequestUser, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
 				expect(res.send).toHaveBeenCalledWith("Something went wrong");
 			}
 		});
