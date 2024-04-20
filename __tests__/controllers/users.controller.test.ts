@@ -4,9 +4,9 @@ import UsersController from "../../src/controllers/users.controller";
 import user from "../../src/models/user";
 import ResponseStatus from "../../src/types/response-codes";
 import { code as createToken } from "../../src/utils/create-token";
-import { RequestUser } from "../../src/types";
+import { RequestUser, User } from "../../src/types";
 import Roles from "../../src/types/roles";
-// import { Readable } from "stream";
+import { Readable } from "stream";
 
 // Mock the external dependencies
 jest.mock("../../src/models/user", () => ({
@@ -241,6 +241,76 @@ describe("UsersController", () => {
 			try {
 				// Act
 				await UsersController.changeRole(req as RequestUser, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
+				expect(res.send).toHaveBeenCalledWith("Something went wrong");
+			}
+		});
+	});
+
+	describe("uploadProfilePicture", () => {
+		let req: Partial<RequestUser & { file: { location: string } }>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: {
+					name: "TestUser",
+					username: "testuser",
+					email: "test@example.com",
+					role: Roles.USER,
+				},
+				file: {
+					fieldname: "",
+					originalname: "",
+					encoding: "",
+					mimetype: "",
+					size: 0,
+					destination: "",
+					filename: "",
+					path: "",
+					buffer: Buffer.from([]),
+					location: "profile_picture.jpg",
+					stream: new Readable(),
+				},
+			};
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+			};
+		});
+
+		test("should upload profile picture and send a SUCCESS response", async () => {
+			// Arrange
+			user.updateOne as jest.Mock;
+
+			await UsersController.uploadProfilePicture(
+				req as RequestUser & { file: { location: string } },
+				res as Response,
+			);
+			// Assert
+			expect((req.user as User).image).toBe("profile_picture.jpg");
+			expect(user.updateOne).toHaveBeenCalledWith(
+				{ email: "test@example.com" },
+				{ image: "profile_picture.jpg" },
+			);
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Profile picture uploaded");
+		});
+
+		test("should handle errors and send a BAD_REQUEST response", async () => {
+			// Arrange
+			const updateOneMock = user.updateOne as jest.Mock;
+			updateOneMock.mockRejectedValueOnce(new Error("Generic error"));
+
+			try {
+				// Act
+				await UsersController.uploadProfilePicture(
+					req as RequestUser & { file: { location: string } },
+					res as Response,
+				);
 			} catch (error) {
 				// Assert
 				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
