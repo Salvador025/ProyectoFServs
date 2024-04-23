@@ -19,16 +19,12 @@ POST {{base_url}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "",
-    "password": ""
+    "email": "test1@test.com",
+    "password": "123"
 }
 
-### Get User ###
-GET {{base_url}}/users/testuser
-token : {{token}}
-
 ### Update role ###
-PUT {{base_url}}/users/updateRole
+PUT {{base_url}}/settings/updateRole
 token : {{token}} 
 Content-Type: application/json
 
@@ -36,8 +32,22 @@ Content-Type: application/json
     "role": "creator"
 }
 
-### Update User Profile ###
+### Get User Profile ###
 GET {{base_url}}/settings/profile/
+token : {{token}}
+
+### Update User Profile ###
+PUT {{base_url}}/settings/profile/
+token : {{token}}
+Content-Type: application/json
+
+{
+    "name": "",
+    "passsword": ""
+}
+
+### Delete User Profile ###
+DELETE {{base_url}}/settings/profile/
 token : {{token}}
 
 ### Upload Profile Picture ###
