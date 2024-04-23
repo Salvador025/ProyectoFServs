@@ -1,6 +1,5 @@
 import { Router, Request, Response } from "express";
 import authRoutes from "./auth";
-import usersRoutes from "./users";
 import boardsRoutes from "./boards";
 import googleRoutes from "./google";
 import settingsRoute from "./settings";
@@ -23,7 +22,6 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 router.use("/auth", authRoutes);
-router.use("/users", auth, usersRoutes);
 router.use("/auth/google", googleRoutes);
 router.use("/boards", auth, boardsRoutes);
 router.use("/settings", auth, settingsRoute);
