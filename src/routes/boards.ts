@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import roles from "../middlewares/roles";
 import Roles from "../types/roles";
 import boardsController from "../controllers/boards.controller";
@@ -8,19 +8,27 @@ const router = Router();
 
 /**
  * @swagger
+ * /boards:
+ *  get:
+ *   summary: All boards
+ *   tags: [boards]
+ *   description: Get all boards
+ */
+router.get("/", boardsController.getBoards);
+
+/**
+ * @swagger
  * /boards/:username:
  *  get:
  *   summary: User boards
  *   tags: [boards]
  *   description: Get all boards of a user
  */
-router.get("/:username", (req: Request, res: Response) => {
-	res.send(`User ${req.params.username} boards`);
-});
+router.get("/:username", boardsController.getBoardsUser);
 
 /**
  * @swagger
- * /boards/:username:
+ * /boards:
  *  post:
  *   description: create new board
  *   tags: [boards]
@@ -29,7 +37,7 @@ router.get("/:username", (req: Request, res: Response) => {
  *     description: new user registered successfully
  */
 router.post(
-	"/:username",
+	"/",
 	roles(Roles.CREATOR, Roles.ADMIN),
 	uploadBoard.single("Board"),
 	boardsController.createBoard,
@@ -37,19 +45,17 @@ router.post(
 
 /**
  * @swagger
- * /boards/:username/:id:
+ * /boards/:username/:name:
  *  get:
  *   summary: Board
  *   tags: [boards]
- *   description: Get board by id
+ *   description: Get board by name
  */
-router.get("/:username/:id", (req: Request, res: Response) => {
-	res.send(`Board ${req.params.id}`);
-});
+router.get("/:username/:name", boardsController.getBoard);
 
 /**
  * @swagger
- * /boards/:username/:id:
+ * /boards/:name:
  *  put:
  *   description: update board
  *   tags: [boards]
@@ -58,11 +64,10 @@ router.get("/:username/:id", (req: Request, res: Response) => {
  *     description: board updated successfully
  */
 router.put(
-	"/:username/:id",
+	"/:name",
 	roles(Roles.CREATOR, Roles.ADMIN),
-	(req: Request, res: Response) => {
-		res.send(`Board ${req.params.id} updated`);
-	},
+	uploadBoard.single("Board"),
+	boardsController.updateBoard,
 );
 
 /**
@@ -76,11 +81,9 @@ router.put(
  *     description: board deleted successfully
  */
 router.delete(
-	"/:username/:id",
+	"/:name",
 	roles(Roles.CREATOR, Roles.ADMIN),
-	(req: Request, res: Response) => {
-		res.send(`Board ${req.params.id} deleted`);
-	},
+	boardsController.deleteBoard,
 );
 
 export default router;
