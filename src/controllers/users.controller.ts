@@ -98,6 +98,49 @@ class UsersController {
 				console.error(error);
 			});
 	}
+
+	getProfile(req: RequestUser, res: Response) {
+		const data = {
+			email: req.user.email,
+			username: req.user.username,
+			name: req.user.name,
+			role: req.user.role,
+			image: req.user.image,
+		};
+		res.status(ResponseStatus.SUCCESS).json(data);
+	}
+
+	updateProfile(req: RequestUser, res: Response) {
+		const { email } = req.user;
+		const data = {
+			name: req.body.name,
+			password: hashPassword(req.body.password),
+		};
+		console.log(data);
+
+		user
+			.updateOne({ email }, data)
+			.then(() => {
+				res.status(ResponseStatus.SUCCESS).send("Profile updated");
+			})
+			.catch((error) => {
+				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
+				console.error(error);
+			});
+	}
+
+	deleteProfile(req: RequestUser, res: Response) {
+		const { email } = req.user;
+		user
+			.deleteOne({ email })
+			.then(() => {
+				res.status(ResponseStatus.SUCCESS).send("Profile deleted");
+			})
+			.catch((error) => {
+				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
+				console.error(error);
+			});
+	}
 }
 
 export default new UsersController();
