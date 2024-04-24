@@ -1,5 +1,5 @@
 
-@file =testPic.jpg
+@file =testPic1.jpg
 @base_url = http://localhost:3000
 @token = 
 
@@ -22,6 +22,10 @@ Content-Type: application/json
     "email": "test1@test.com",
     "password": "123"
 }
+
+### Get User ###
+GET {{base_url}}/users/testuser
+token : {{token}}
 
 ### Update role ###
 PUT {{base_url}}/settings/updateRole
@@ -62,12 +66,11 @@ Content-Type: image/jpeg
 < ./{{file}}
 --mi-boundary--
 
-### Get user boards ###
-GET {{base_url}}/boards/testuser
-token : {{token}}
+
+
 
 ### Create Board ###
-POST {{base_url}}/boards/testuser
+POST {{base_url}}/boards
 token : {{token}}
 Content-Type: multipart/form-data; boundary=mi-boundary
 
@@ -77,3 +80,31 @@ Content-Type: image/jpeg
 
 < ./{{file}}
 --mi-boundary--
+
+###Get All Boards ###
+GET {{base_url}}/boards
+token : {{token}}
+
+### Get user boards ###
+GET {{base_url}}/boards/testUser
+token : {{token}}
+
+### Get board ###
+GET {{base_url}}/boards/testUser/testPic1
+token : {{token}}
+
+### Update board ###
+PUT {{base_url}}/boards/testPic1
+token : {{token}}
+Content-Type: multipart/form-data; boundary=mi-boundary
+
+--mi-boundary
+Content-Disposition: form-data; name="Board"; filename="{{file}}"
+Content-Type: image/jpeg
+
+< ./{{file}}
+--mi-boundary--
+
+### Delete board ###
+DELETE {{base_url}}/boards/testPic1
+token : {{token}}

@@ -4,6 +4,7 @@ import { decode } from "../utils/create-token";
 import user from "../models/user";
 import { RequestUser } from "../types";
 import { JwtPayload } from "jsonwebtoken";
+import UnauthorizedError from "../utils/UnauthorizedError";
 
 export default (req: RequestUser, res: Response, next: NextFunction) => {
 	const token: string = (req as Request).headers.token as string;
@@ -21,13 +22,16 @@ export default (req: RequestUser, res: Response, next: NextFunction) => {
 		.findOne({ email: (data as JwtPayload).email })
 		.then((user) => {
 			if (!user) {
-				res.status(ResponseStatus.UNAUTHORIZED).send("Unauthorized");
-				return;
+				throw new UnauthorizedError("Unauthorized");
 			}
 			req.user = user;
 			next();
 		})
 		.catch((error) => {
+			if (error instanceof UnauthorizedError) {
+				res.status(ResponseStatus.UNAUTHORIZED).send("Unauthorized");
+				return;
+			}
 			res
 				.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 				.send("Something went wrong");

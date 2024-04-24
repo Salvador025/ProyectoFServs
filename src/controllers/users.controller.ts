@@ -5,6 +5,7 @@ import ResponseStatus from "../types/response-codes";
 import { code as createToken } from "../utils/create-token";
 import { InputToken, RequestUser } from "../types";
 import Roles from "../types/roles";
+import UnauthorizedError from "../utils/UnauthorizedError";
 
 class UsersController {
 	signUp(req: Request, res: Response) {
@@ -46,18 +47,21 @@ class UsersController {
 		user
 			.findOne(data)
 			.then((user) => {
-				if (user) {
-					const data: InputToken = {
-						name: user.name,
-						email: user.email,
-					};
-					const token = createToken(data);
-					res.status(ResponseStatus.SUCCESS).send({ token });
-				} else {
-					res.status(ResponseStatus.UNAUTHORIZED).send("Invalid credentials");
+				if (!user) {
+					throw new UnauthorizedError("Unauthorized");
 				}
+				const data: InputToken = {
+					name: user.name,
+					email: user.email,
+				};
+				const token = createToken(data);
+				res.status(ResponseStatus.SUCCESS).send({ token });
 			})
 			.catch((error) => {
+				if (error instanceof UnauthorizedError) {
+					res.status(ResponseStatus.UNAUTHORIZED).send("Unauthorized");
+					return;
+				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
