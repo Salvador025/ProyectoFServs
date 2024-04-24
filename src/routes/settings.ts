@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import usersController from "../controllers/users.controller";
 import { uploadProfile } from "../middlewares/upload-s3";
 
@@ -15,9 +15,7 @@ const router = Router();
  *    200:
  *     description: Profile page
  */
-router.get("/profile", (req: Request, res: Response) =>
-	res.send("Settings page"),
-);
+router.get("/profile", usersController.getProfile);
 
 /**
  * @swagger
@@ -37,10 +35,16 @@ router.get("/profile", (req: Request, res: Response) =>
  *    200:
  *     description: Profile picture uploaded
  */
-router.post(
+router.put(
 	"/profile/uploadProfilePicture",
 	uploadProfile.single("profilePicture"),
 	usersController.uploadProfilePicture,
 );
+
+router.put("/updateRole", usersController.changeRole);
+
+router.put("/profile", usersController.updateProfile);
+
+router.delete("/profile", usersController.deleteProfile);
 
 export default router;
