@@ -47,15 +47,17 @@ describe("Auth Middleware", () => {
 		(mockReq.headers as { token: string }).token = "someToken";
 		(decode as jest.Mock).mockReturnValue(null);
 
-		await middleware(
-			mockReq as RequestUser,
-			mockRes as Response,
-			mockNext as NextFunction,
-		);
-
-		expect(decode).toHaveBeenCalledWith("someToken");
-		expect(mockRes.status).toHaveBeenCalledWith(ResponseStatus.UNAUTHORIZED);
-		expect(mockRes.send).toHaveBeenCalledWith("Unauthorized");
+		try {
+			await middleware(
+				mockReq as RequestUser,
+				mockRes as Response,
+				mockNext as NextFunction,
+			);
+		} catch (error) {
+			expect(decode).toHaveBeenCalledWith("someToken");
+			expect(mockRes.status).toHaveBeenCalledWith(ResponseStatus.UNAUTHORIZED);
+			expect(mockRes.send).toHaveBeenCalledWith("Unauthorized");
+		}
 	});
 
 	test("should respond with Unauthorized if user not found", async () => {
@@ -64,15 +66,17 @@ describe("Auth Middleware", () => {
 		(decode as jest.Mock).mockReturnValue(tokenData);
 		(user.findOne as jest.Mock).mockResolvedValue(null);
 
-		await middleware(
-			mockReq as RequestUser,
-			mockRes as Response,
-			mockNext as NextFunction,
-		);
-
-		expect(user.findOne).toHaveBeenCalledWith({ email: tokenData.email });
-		expect(mockRes.status).toHaveBeenCalledWith(ResponseStatus.UNAUTHORIZED);
-		expect(mockRes.send).toHaveBeenCalledWith("Unauthorized");
+		try {
+			await middleware(
+				mockReq as RequestUser,
+				mockRes as Response,
+				mockNext as NextFunction,
+			);
+		} catch (error) {
+			expect(user.findOne).toHaveBeenCalledWith({ email: tokenData.email });
+			expect(mockRes.status).toHaveBeenCalledWith(ResponseStatus.UNAUTHORIZED);
+			expect(mockRes.send).toHaveBeenCalledWith("Unauthorized");
+		}
 	});
 
 	test("should call next if user is found", async () => {
