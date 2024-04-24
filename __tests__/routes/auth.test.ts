@@ -26,7 +26,7 @@ describe("Auth Routes", () => {
 				name: "John Doe",
 				email: "john.doe@example.com",
 				username: "JohnDoe",
-				password: "securePassword123",
+				password: "securePassword123", // pragma: allowlist secret
 			};
 
 			const response = await request(app).post("/auth/signup").send(newUser);
@@ -45,7 +45,7 @@ describe("Auth Routes", () => {
 
 			const userCredentials = {
 				email: "john.doe@example.com",
-				password: "securePassword123",
+				password: "securePassword123", // pragma: allowlist secret
 			};
 
 			const response = await request(app)
