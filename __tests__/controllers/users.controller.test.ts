@@ -20,6 +20,7 @@ jest.mock("../../src/models/user", () => ({
 		}),
 	),
 	updateOne: jest.fn().mockResolvedValue(Promise.resolve("")),
+	deleteOne: jest.fn().mockResolvedValue(Promise.resolve("")),
 }));
 
 jest.mock("../../src/utils/hash-password", () =>
@@ -85,9 +86,7 @@ describe("UsersController", () => {
 			const validationError = new Error("Validation error");
 			validationError.name = "ValidationError";
 
-			(user.create as jest.Mock).mockRejectedValue(
-				new Error("Validation error"),
-			);
+			(user.create as jest.Mock).mockRejectedValue(validationError);
 
 			try {
 				// Act
@@ -373,13 +372,7 @@ describe("UsersController", () => {
 		// Mock the Express req and res objects before each test
 		beforeEach(() => {
 			req = {
-				user: {
-					email: "test@example.com",
-					username: "testUser",
-					name: "TestUser",
-					role: Roles.USER,
-					image: "profile_picture.jpg",
-				},
+				user: { email: "test@example.com" },
 				body: {
 					name: "New Name",
 					password: "new_password", // pragma: allowlist secret
@@ -421,6 +414,62 @@ describe("UsersController", () => {
 				);
 			} catch (error) {
 				// Assert
+				expect(res.status).toHaveBeenCalledWith(
+					ResponseStatus.INTERNAL_SERVER_ERROR,
+				);
+				expect(res.send).toHaveBeenCalledWith("Something went wrong");
+			}
+		});
+	});
+
+	describe("deleteProfile", () => {
+		let req: Partial<Request>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: { email: "test@example.com" },
+			};
+
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+			};
+		});
+
+		test("should delete user profile and send a SUCCESS response", async () => {
+			// Arrange
+			(user.deleteOne as jest.Mock).mockResolvedValue(Promise.resolve());
+
+			// Act
+			await UsersController.deleteProfile(req as RequestUser, res as Response);
+
+			// Assert
+			expect(user.deleteOne).toHaveBeenCalledWith({
+				email: "test@example.com",
+			});
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Profile deleted");
+		});
+
+		test("should handle generic errors", async () => {
+			// Arrange
+			(user.deleteOne as jest.Mock).mockRejectedValue(
+				new Error("Generic error"),
+			);
+
+			try {
+				// Act
+				await UsersController.deleteProfile(
+					req as RequestUser,
+					res as Response,
+				);
+			} catch (error) {
+				// Assert
+				expect(user.deleteOne).toHaveBeenCalledWith({
+					email: "test@example.com",
+				});
 				expect(res.status).toHaveBeenCalledWith(
 					ResponseStatus.INTERNAL_SERVER_ERROR,
 				);
