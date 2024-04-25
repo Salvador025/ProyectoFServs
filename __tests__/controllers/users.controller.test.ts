@@ -88,8 +88,6 @@ describe("UsersController", () => {
 			(user.create as jest.Mock).mockRejectedValue(
 				new Error("Validation error"),
 			);
-			// const createMock = user.create as jest.Mock;
-			// createMock.mockRejectedValueOnce(validationError);
 
 			try {
 				// Act
@@ -103,9 +101,7 @@ describe("UsersController", () => {
 
 		test("should handle generic errors", async () => {
 			// Arrange
-
-			const createMock = user.create as jest.Mock;
-			createMock.mockRejectedValueOnce(new Error("Generic error"));
+			(user.create as jest.Mock).mockRejectedValue(new Error("Generic error"));
 
 			try {
 				// Act
