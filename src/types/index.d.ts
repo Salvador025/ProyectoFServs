@@ -29,3 +29,8 @@ export interface UserToken extends Profile {
 export interface RequestUser extends Request {
 	user?: User;
 }
+
+declare global {
+	function consoleLog(msg: string): void;
+	function consoleError(msg: Error | string): void;
+}
