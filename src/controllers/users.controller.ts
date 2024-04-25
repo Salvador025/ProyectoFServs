@@ -34,7 +34,7 @@ class UsersController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
-				console.error(error);
+				consoleError(error);
 			});
 	}
 
@@ -65,7 +65,7 @@ class UsersController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
-				console.error(error);
+				consoleError(error);
 			});
 	}
 
@@ -85,7 +85,7 @@ class UsersController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
-				console.error(error);
+				consoleError(error);
 			});
 	}
 
@@ -103,7 +103,7 @@ class UsersController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
-				console.error(error);
+				consoleError(error);
 			});
 	}
 
@@ -124,7 +124,6 @@ class UsersController {
 			name: req.body.name,
 			password: hashPassword(req.body.password),
 		};
-		console.log(data);
 
 		user
 			.updateOne({ email }, data)
@@ -135,7 +134,7 @@ class UsersController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
-				console.error(error);
+				consoleError(error);
 			});
 	}
 
@@ -150,7 +149,7 @@ class UsersController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
-				console.error(error);
+				consoleError(error);
 			});
 	}
 }

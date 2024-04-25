@@ -30,7 +30,7 @@ class googleController {
 					resolve(token);
 				})
 				.catch((err) => {
-					console.error(err);
+					consoleError(err);
 					reject(err);
 				});
 		});
