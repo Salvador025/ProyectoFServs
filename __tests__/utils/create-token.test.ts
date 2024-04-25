@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import { decode, code } from "../../src/utils/create-token";
 import { InputToken } from "../../src/types";
+import setUpLogs from "../../src/utils/logs";
+setUpLogs();
 
 describe("code", () => {
 	it("should return a valid token", () => {
