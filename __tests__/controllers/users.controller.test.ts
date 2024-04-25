@@ -328,4 +328,41 @@ describe("UsersController", () => {
 			}
 		});
 	});
+
+	describe("getProfile", () => {
+		let req: Partial<Request>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: {
+					email: "test@example.com",
+					username: "testUser",
+					name: "TestUser",
+					role: Roles.USER,
+					image: "profile_picture.jpg",
+				},
+			};
+
+			res = {
+				status: jest.fn().mockReturnThis(),
+				json: jest.fn().mockReturnThis(),
+			};
+		});
+		test("should get user profile and send a SUCCESS response", async () => {
+			// Act
+			UsersController.getProfile(req as RequestUser, res as Response);
+
+			// Assert
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.json).toHaveBeenCalledWith({
+				email: "test@example.com",
+				username: "testUser",
+				name: "TestUser",
+				role: Roles.USER,
+				image: "profile_picture.jpg",
+			});
+		});
+	});
 });
