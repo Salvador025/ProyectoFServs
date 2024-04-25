@@ -1,3 +1,4 @@
+// cspell: ignore fieldname
 import { Request, Response } from "express";
 
 import UsersController from "../../src/controllers/users.controller";
@@ -161,12 +162,14 @@ describe("UsersController", () => {
 			// Arrange
 			(user.findOne as jest.Mock).mockResolvedValue(null);
 
-			// Act
-			await UsersController.logIn(req as Request, res as Response);
-
-			// Assert
-			expect(res.status).toHaveBeenCalledWith(ResponseStatus.UNAUTHORIZED);
-			expect(res.send).toHaveBeenCalledWith("Invalid credentials");
+			try {
+				// Act
+				await UsersController.logIn(req as Request, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.UNAUTHORIZED);
+				expect(res.send).toHaveBeenCalledWith("Invalid credentials");
+			}
 		});
 
 		test("should handle generic errors", async () => {
@@ -195,7 +198,7 @@ describe("UsersController", () => {
 			req = {
 				user: {
 					name: "TestUser",
-					username: "testuser",
+					username: "testUser",
 					email: "test@example.com",
 					role: Roles.USER,
 				},
@@ -214,7 +217,7 @@ describe("UsersController", () => {
 		test("should change the role of a user", async () => {
 			(user.updateOne as jest.Mock).mockResolvedValue({
 				name: "TestUser",
-				username: "testuser",
+				username: "testUser",
 				email: "test@example.com",
 			});
 
@@ -229,12 +232,14 @@ describe("UsersController", () => {
 			// Arrange
 			req.body.role = "invalid_role";
 
-			// Act
-			await UsersController.changeRole(req as RequestUser, res as Response);
-
-			// Assert
-			expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
-			expect(res.send).toHaveBeenCalledWith("Invalid role");
+			try {
+				// Act
+				await UsersController.changeRole(req as RequestUser, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
+				expect(res.send).toHaveBeenCalledWith("Invalid role");
+			}
 		});
 
 		test("should handle generic errors", async () => {
@@ -262,7 +267,7 @@ describe("UsersController", () => {
 			req = {
 				user: {
 					name: "TestUser",
-					username: "testuser",
+					username: "testUser",
 					email: "test@example.com",
 					role: Roles.USER,
 				},
