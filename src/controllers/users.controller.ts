@@ -82,7 +82,9 @@ class UsersController {
 				res.status(ResponseStatus.SUCCESS).send("Role changed");
 			})
 			.catch((error) => {
-				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
+				res
+					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
+					.send("Something went wrong");
 				console.error(error);
 			});
 	}
@@ -98,7 +100,9 @@ class UsersController {
 				res.status(ResponseStatus.SUCCESS).send("Profile picture uploaded");
 			})
 			.catch((error) => {
-				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
+				res
+					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
+					.send("Something went wrong");
 				console.error(error);
 			});
 	}
@@ -128,7 +132,9 @@ class UsersController {
 				res.status(ResponseStatus.SUCCESS).send("Profile updated");
 			})
 			.catch((error) => {
-				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
+				res
+					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
+					.send("Something went wrong");
 				console.error(error);
 			});
 	}
@@ -141,7 +147,9 @@ class UsersController {
 				res.status(ResponseStatus.SUCCESS).send("Profile deleted");
 			})
 			.catch((error) => {
-				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
+				res
+					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
+					.send("Something went wrong");
 				console.error(error);
 			});
 	}
