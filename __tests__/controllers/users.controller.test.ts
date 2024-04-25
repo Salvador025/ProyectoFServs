@@ -365,4 +365,67 @@ describe("UsersController", () => {
 			});
 		});
 	});
+
+	describe("updateProfile", () => {
+		let req: Partial<Request>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: {
+					email: "test@example.com",
+					username: "testUser",
+					name: "TestUser",
+					role: Roles.USER,
+					image: "profile_picture.jpg",
+				},
+				body: {
+					name: "New Name",
+					password: "new_password", // pragma: allowlist secret
+				},
+			};
+
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+			};
+		});
+
+		test("should update user profile and send a SUCCESS response", async () => {
+			(user.updateOne as jest.Mock).mockResolvedValue({});
+
+			// Act
+			await UsersController.updateProfile(req as RequestUser, res as Response);
+
+			// Assert
+			expect(user.updateOne).toHaveBeenCalledWith(
+				{ email: "test@example.com" },
+				{ name: "New Name", password: "hashed_password" }, // pragma: allowlist secret
+			);
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Profile updated");
+		});
+
+		test("should handle generic errors", async () => {
+			// Arrange
+			(user.updateOne as jest.Mock).mockRejectedValue(
+				new Error("Generic error"),
+			);
+
+			try {
+				// Act
+				await UsersController.updateProfile(
+					req as RequestUser,
+					res as Response,
+				);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(
+					ResponseStatus.INTERNAL_SERVER_ERROR,
+				);
+				expect(res.send).toHaveBeenCalledWith("Something went wrong");
+			}
+		});
+	});
 });
