@@ -68,9 +68,7 @@ describe("UsersController", () => {
 
 		test("should handle 'email already exists' error", async () => {
 			// Arrange
-
-			const createMock = user.create as jest.Mock;
-			createMock.mockRejectedValueOnce({ code: 11000 });
+			(user.create as jest.Mock).mockRejectedValue({ code: 11000 });
 
 			try {
 				// Act
@@ -84,11 +82,14 @@ describe("UsersController", () => {
 
 		test("should handle validation errors", async () => {
 			// Arrange
-
-			const createMock = user.create as jest.Mock;
 			const validationError = new Error("Validation error");
 			validationError.name = "ValidationError";
-			createMock.mockRejectedValueOnce(validationError);
+
+			(user.create as jest.Mock).mockRejectedValue(
+				new Error("Validation error"),
+			);
+			// const createMock = user.create as jest.Mock;
+			// createMock.mockRejectedValueOnce(validationError);
 
 			try {
 				// Act
