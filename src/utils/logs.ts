@@ -1,5 +1,6 @@
 export default function logs() {
-	global.consoleLog = (message: string) => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	global.consoleLog = (message: any) => {
 		const validEnvs = ["dev", "test", "local"];
 		const env = process.env.NODE_ENV;
 

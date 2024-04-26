@@ -31,6 +31,7 @@ export interface RequestUser extends Request {
 }
 
 declare global {
-	function consoleLog(msg: string): void;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	function consoleLog(msg: any): void;
 	function consoleError(msg: Error | string): void;
 }
