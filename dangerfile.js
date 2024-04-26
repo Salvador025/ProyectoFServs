@@ -10,7 +10,7 @@ function checkCommitMessageFormat(commit) {
 
 	// Regex to validate Conventional Commits format
 	const ccFormatRegex =
-		/^(feat|fix|docs|styles|refactor|test|chore|perf|build|ci|revert)(\(\w+\))?:\s/;
+		/^(feat|fix|docs|style|refactor|test|chore|perf|build|ci|revert)(\(\w+\))?:\s/;
 	const maxLength = 80;
 
 	// Check 1: Validate Conventional Commit format

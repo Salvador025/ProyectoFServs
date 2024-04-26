@@ -4,6 +4,8 @@ import ResponseStatus from "../../src/types/response-codes";
 import { decode } from "../../src/utils/create-token";
 import user from "../../src/models/user";
 import { RequestUser } from "../../src/types";
+import setUpLogs from "../../src/utils/logs";
+setUpLogs();
 
 jest.mock("../../src/utils/create-token", () => ({
 	decode: jest.fn(),
