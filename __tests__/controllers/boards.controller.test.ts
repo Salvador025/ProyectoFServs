@@ -125,4 +125,75 @@ describe("UsersController", () => {
 			}
 		});
 	});
+
+	describe("getBoards", () => {
+		let req: Partial<RequestUser>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: {
+					name: "TestUser",
+					username: "testUser",
+					email: "test@example.com",
+					role: Roles.CREATOR,
+				},
+			};
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+				json: jest.fn().mockReturnThis(),
+			};
+		});
+
+		test("should get all boards", async () => {
+			await boardController.getBoards(req as RequestUser, res as Response);
+
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.json).toHaveBeenCalledWith([
+				{
+					name: "board",
+					owner: "testUser",
+					direction: "/path/to/board.jpg",
+				},
+			]);
+			expect(board.find).toHaveBeenCalled();
+		});
+
+		test("should handle no boards found", async () => {
+			(board.find as jest.Mock).mockResolvedValue(null);
+
+			try {
+				await boardController.getBoards(req as RequestUser, res as Response);
+			} catch (error) {
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.NOT_FOUND);
+				expect(res.send).toHaveBeenCalledWith("No boards found");
+			}
+		});
+
+		test("should handle no boards found", async () => {
+			(board.find as jest.Mock).mockResolvedValue([]);
+
+			try {
+				await boardController.getBoards(req as RequestUser, res as Response);
+			} catch (error) {
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.NOT_FOUND);
+				expect(res.send).toHaveBeenCalledWith("No boards found");
+			}
+		});
+
+		test("should handle internal server error", async () => {
+			(board.find as jest.Mock).mockRejectedValue(new Error("Some error"));
+
+			try {
+				await boardController.getBoards(req as RequestUser, res as Response);
+			} catch (error) {
+				expect(res.status).toHaveBeenCalledWith(
+					ResponseStatus.INTERNAL_SERVER_ERROR,
+				);
+				expect(res.send).toHaveBeenCalledWith("Error fetching boards");
+			}
+		});
+	});
 });
