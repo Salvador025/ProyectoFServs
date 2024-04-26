@@ -8,6 +8,8 @@ import { code as createToken } from "../../src/utils/create-token";
 import { RequestUser, User } from "../../src/types";
 import Roles from "../../src/types/roles";
 import { Readable } from "stream";
+import setUpLogs from "../../src/utils/logs";
+setUpLogs();
 
 // Mock the external dependencies
 jest.mock("../../src/models/user", () => ({

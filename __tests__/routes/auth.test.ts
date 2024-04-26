@@ -3,6 +3,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import usersController from "../../src/controllers/users.controller";
 import authRouter from "../../src/routes/auth";
+import setUpLogs from "../../src/utils/logs";
+setUpLogs();
 
 // Mock del usersController
 jest.mock("../../src/controllers/users.controller");

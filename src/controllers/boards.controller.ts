@@ -32,7 +32,7 @@ class BoardsController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.json("Error creating board");
-				console.error(err);
+				consoleError(err);
 			});
 	}
 
@@ -56,7 +56,7 @@ class BoardsController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.json("Error fetching boards");
-				console.error(err);
+				consoleError(err);
 			});
 	}
 
@@ -81,7 +81,7 @@ class BoardsController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.json("Error fetching boards");
-				console.error(err);
+				consoleError(err);
 			});
 	}
 
@@ -103,7 +103,7 @@ class BoardsController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.json("Error fetching boards");
-				console.error(err);
+				consoleError(err);
 			});
 	}
 
@@ -140,7 +140,7 @@ class BoardsController {
 					res.status(ResponseStatus.FORBIDDEN).send(err.message);
 					return;
 				}
-				console.error(err);
+				consoleError(err);
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Error updating board");
@@ -172,7 +172,7 @@ class BoardsController {
 					res.status(ResponseStatus.FORBIDDEN).send(err.message);
 					return;
 				}
-				console.error(err);
+				consoleError(err);
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Error deleting board");

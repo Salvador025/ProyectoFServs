@@ -35,6 +35,6 @@ export default (req: RequestUser, res: Response, next: NextFunction) => {
 			res
 				.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 				.send("Something went wrong");
-			console.error(error);
+			consoleError(error);
 		});
 };
