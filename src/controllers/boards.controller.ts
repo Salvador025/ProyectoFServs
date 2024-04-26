@@ -18,6 +18,7 @@ class BoardsController {
 		boards
 			.create(data)
 			.then((board) => {
+				console.log("Board created");
 				res.status(ResponseStatus.CREATED).json(board);
 			})
 			.catch((err) => {
