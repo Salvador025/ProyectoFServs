@@ -11,6 +11,15 @@ setUpLogs();
 
 jest.mock("../../src/models/boards", () => ({
 	create: jest.fn().mockResolvedValue(Promise.resolve("Board created")),
+	find: jest.fn().mockResolvedValue(
+		Promise.resolve([
+			{
+				name: "board",
+				owner: "testUser",
+				direction: "/path/to/board.jpg",
+			},
+		]),
+	),
 	findOne: jest.fn().mockResolvedValue(
 		Promise.resolve({
 			name: "board",
@@ -116,27 +125,4 @@ describe("UsersController", () => {
 			}
 		});
 	});
-	/*
-	describe("getBoards", () => {
-		let req: Partial<RequestUser>;
-		let res: Partial<Response>;
-
-		// Mock the Express req and res objects before each test
-		beforeEach(() => {
-			req = {
-				user: {
-					name: "TestUser",
-					username: "testUser",
-					email: "test@example.com",
-					role: Roles.CREATOR,
-				},
-			};
-			res = {
-				status: jest.fn().mockReturnThis(),
-				send: jest.fn().mockReturnThis(),
-				json: jest.fn().mockReturnThis(),
-			};
-		});
-	});
-	*/
 });
