@@ -17,6 +17,7 @@ export default function logs() {
 		if (validEnvs.includes(env)) {
 			console.error(outputMessage);
 		} else if (env === "test") {
+			if (outputMessage === "Generic error") return;
 			console.log(outputMessage);
 		}
 	};
