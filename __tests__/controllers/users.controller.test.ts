@@ -71,7 +71,7 @@ describe("UsersController", () => {
 
 		test("should handle 'email already exists' error", async () => {
 			// Arrange
-			(user.create as jest.Mock).mockRejectedValue({ code: 11000 });
+			(user.create as jest.Mock).mockRejectedValueOnce({ code: 11000 });
 
 			try {
 				// Act
@@ -88,7 +88,7 @@ describe("UsersController", () => {
 			const validationError = new Error("Validation error");
 			validationError.name = "ValidationError";
 
-			(user.create as jest.Mock).mockRejectedValue(validationError);
+			(user.create as jest.Mock).mockRejectedValueOnce(validationError);
 
 			try {
 				// Act
@@ -102,7 +102,9 @@ describe("UsersController", () => {
 
 		test("should handle generic errors", async () => {
 			// Arrange
-			(user.create as jest.Mock).mockRejectedValue(new Error("Generic error"));
+			(user.create as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
 
 			try {
 				// Act
@@ -172,7 +174,9 @@ describe("UsersController", () => {
 
 		test("should handle generic errors", async () => {
 			// Arrange
-			(user.findOne as jest.Mock).mockRejectedValue(new Error("Generic error"));
+			(user.findOne as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
 
 			// Act
 			try {
@@ -242,7 +246,7 @@ describe("UsersController", () => {
 
 		test("should handle generic errors", async () => {
 			// Arrange
-			(user.updateOne as jest.Mock).mockRejectedValue(
+			(user.updateOne as jest.Mock).mockRejectedValueOnce(
 				new Error("Generic error"),
 			);
 			try {
@@ -312,7 +316,7 @@ describe("UsersController", () => {
 
 		test("should handle errors and send a BAD_REQUEST response", async () => {
 			// Arrange
-			(user.updateOne as jest.Mock).mockRejectedValue(
+			(user.updateOne as jest.Mock).mockRejectedValueOnce(
 				new Error("Generic error"),
 			);
 
@@ -404,7 +408,7 @@ describe("UsersController", () => {
 
 		test("should handle generic errors", async () => {
 			// Arrange
-			(user.updateOne as jest.Mock).mockRejectedValue(
+			(user.updateOne as jest.Mock).mockRejectedValueOnce(
 				new Error("Generic error"),
 			);
 
@@ -457,7 +461,7 @@ describe("UsersController", () => {
 
 		test("should handle generic errors", async () => {
 			// Arrange
-			(user.deleteOne as jest.Mock).mockRejectedValue(
+			(user.deleteOne as jest.Mock).mockRejectedValueOnce(
 				new Error("Generic error"),
 			);
 

@@ -47,7 +47,7 @@ describe("Auth Middleware", () => {
 
 	test("should respond with Unauthorized if token is invalid", async () => {
 		(mockReq.headers as { token: string }).token = "someToken";
-		(decode as jest.Mock).mockReturnValue(null);
+		(decode as jest.Mock).mockReturnValueOnce(null);
 
 		try {
 			await middleware(
@@ -65,7 +65,7 @@ describe("Auth Middleware", () => {
 	test("should respond with Unauthorized if user not found", async () => {
 		const tokenData = { email: "user@example.com" };
 		(mockReq.headers as { token: string }).token = "someToken";
-		(decode as jest.Mock).mockReturnValue(tokenData);
+		(decode as jest.Mock).mockReturnValueOnce(tokenData);
 		(user.findOne as jest.Mock).mockResolvedValue(null);
 
 		try {
@@ -85,7 +85,7 @@ describe("Auth Middleware", () => {
 		const tokenData = { email: "user@example.com" };
 		const foundUser = { email: "user@example.com", id: "123" };
 		(mockReq.headers as { token: string }).token = "someToken";
-		(decode as jest.Mock).mockReturnValue(tokenData);
+		(decode as jest.Mock).mockReturnValueOnce(tokenData);
 		(user.findOne as jest.Mock).mockResolvedValue(foundUser);
 
 		await middleware(
@@ -102,8 +102,8 @@ describe("Auth Middleware", () => {
 	test("should respond with Internal Server Error if database query fails", async () => {
 		const tokenData = { email: "user@example.com" };
 		(mockReq.headers as { token: string }).token = "someToken";
-		(decode as jest.Mock).mockReturnValue(tokenData);
-		(user.findOne as jest.Mock).mockRejectedValue(new Error("DB Error"));
+		(decode as jest.Mock).mockReturnValueOnce(tokenData);
+		(user.findOne as jest.Mock).mockRejectedValueOnce(new Error("DB Error"));
 
 		try {
 			await middleware(
