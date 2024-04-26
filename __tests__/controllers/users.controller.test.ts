@@ -87,7 +87,6 @@ describe("UsersController", () => {
 			// Arrange
 			const validationError = new Error("Validation error");
 			validationError.name = "ValidationError";
-
 			(user.create as jest.Mock).mockRejectedValueOnce(validationError);
 
 			try {

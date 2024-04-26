@@ -33,7 +33,6 @@ class BoardsController {
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Error creating board");
 				consoleError(err);
-				return err;
 			});
 	}
 
