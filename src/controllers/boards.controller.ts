@@ -18,22 +18,23 @@ class BoardsController {
 		boards
 			.create(data)
 			.then((board) => {
-				console.log("Board created");
+				consoleLog("Board created");
 				res.status(ResponseStatus.CREATED).json(board);
 			})
 			.catch((err) => {
 				if (err.code === 11000) {
 					res.status(ResponseStatus.BAD_REQUEST).send("Board already exists");
-					return;
+					return err;
 				}
 				if (err.name === "ValidationError") {
 					res.status(ResponseStatus.BAD_REQUEST).send("Invalid data");
-					return;
+					return err;
 				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Error creating board");
 				consoleError(err);
+				return err;
 			});
 	}
 
@@ -62,16 +63,19 @@ class BoardsController {
 	}
 
 	getBoardsUser(req: RequestUser, res: Response) {
+		consoleLog("Fetching boards");
 		const username = req.params.username;
 		boards
 			.find({ owner: username })
 			.then((boards) => {
+				consoleLog("Boards fetched");
 				if (!boards) {
 					throw new NotFoundError("User don't have boards");
 				}
 				if (boards.length === 0) {
 					throw new NotFoundError("User don't have boards");
 				}
+				consoleLog("Boards fetched");
 				res.status(ResponseStatus.SUCCESS).json(boards);
 			})
 			.catch((err) => {
