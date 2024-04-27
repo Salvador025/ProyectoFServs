@@ -23,11 +23,9 @@ class BoardsController {
 			.catch((err) => {
 				if (err.code === 11000) {
 					res.status(ResponseStatus.BAD_REQUEST).send("Board already exists");
-					return err;
 				}
 				if (err.name === "ValidationError") {
 					res.status(ResponseStatus.BAD_REQUEST).send("Invalid data");
-					return err;
 				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
