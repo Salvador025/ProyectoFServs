@@ -23,15 +23,13 @@ class BoardsController {
 			.catch((err) => {
 				if (err.code === 11000) {
 					res.status(ResponseStatus.BAD_REQUEST).send("Board already exists");
-					return;
 				}
 				if (err.name === "ValidationError") {
 					res.status(ResponseStatus.BAD_REQUEST).send("Invalid data");
-					return;
 				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
-					.json("Error creating board");
+					.send("Error creating board");
 				consoleError(err);
 			});
 	}
@@ -55,7 +53,7 @@ class BoardsController {
 				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
-					.json("Error fetching boards");
+					.send("Error fetching boards");
 				consoleError(err);
 			});
 	}
@@ -80,7 +78,7 @@ class BoardsController {
 				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
-					.json("Error fetching boards");
+					.send("Error fetching boards");
 				consoleError(err);
 			});
 	}
@@ -102,7 +100,7 @@ class BoardsController {
 				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
-					.json("Error fetching boards");
+					.send("Error fetching boards");
 				consoleError(err);
 			});
 	}

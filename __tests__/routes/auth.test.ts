@@ -14,12 +14,8 @@ app.use(bodyParser.json());
 app.use("/auth", authRouter);
 
 describe("Auth Routes", () => {
-	beforeEach(() => {
-		jest.clearAllMocks();
-	});
-
 	describe("POST /auth/signup", () => {
-		it("should handle signup", async () => {
+		test("should handle signup", async () => {
 			(usersController.signUp as jest.Mock).mockImplementation((req, res) =>
 				res.status(200).send(req.body),
 			);
@@ -40,7 +36,7 @@ describe("Auth Routes", () => {
 	});
 
 	describe("POST /auth/login", () => {
-		it("should handle login", async () => {
+		test("should handle login", async () => {
 			(usersController.logIn as jest.Mock).mockImplementation((req, res) =>
 				res.status(200).json({ token: "fakeToken123" }),
 			);
