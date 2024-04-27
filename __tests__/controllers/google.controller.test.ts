@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import { User } from "../../src/types";
 import Roles from "../../src/types/roles";
+import { Request, Response } from "express";
+import { UserToken } from "../../src/types";
 import setUpLogs from "../../src/utils/logs";
 import userModel from "../../src/models/user";
 import { Profile } from "passport-google-oauth20";
@@ -85,6 +87,51 @@ describe("Google Controller", () => {
 				});
 				expect(userModel.create).not.toHaveBeenCalled();
 			}
+		});
+	});
+
+	describe("googleCallback", () => {
+		test("should send the user token in the response", () => {
+			const req = {
+				user: {
+					token: "test-token",
+					profileUrl: "",
+					id: "",
+					_raw: "",
+					_json: {
+						iss: "",
+						aud: "",
+						sub: "",
+						iat: 0,
+						exp: 0,
+					},
+					provider: "",
+					displayName: "",
+				},
+			} as unknown as Request;
+			const res = {
+				send: jest.fn(),
+			} as unknown as Response;
+
+			const userToken: UserToken = {
+				token: "test-token",
+				profileUrl: "",
+				id: "",
+				_raw: "",
+				_json: {
+					iss: "",
+					aud: "",
+					sub: "",
+					iat: 0,
+					exp: 0,
+				},
+				provider: "",
+				displayName: "",
+			};
+
+			googleController.googleCallback(req, res);
+
+			expect(res.send).toHaveBeenCalledWith(userToken.token);
 		});
 	});
 });
