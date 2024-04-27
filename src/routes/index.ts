@@ -4,6 +4,7 @@ import boardsRoutes from "./boards";
 import googleRoutes from "./google";
 import settingsRoute from "./settings";
 import marketplaceRoutes from "./marketplace";
+import chatRoutes from "./chat";
 import auth from "../middlewares/auth";
 
 const router = Router();
@@ -26,5 +27,6 @@ router.use("/auth/google", googleRoutes);
 router.use("/boards", auth, boardsRoutes);
 router.use("/settings", auth, settingsRoute);
 router.use("/marketplace", auth, marketplaceRoutes);
+router.use("/chat", chatRoutes);
 
 export default router;

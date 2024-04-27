@@ -1,0 +1,61 @@
+#container {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+h2 {
+	margin-top: 20px;
+	margin-bottom: 12px;
+}
+
+#messages {
+	width: 100%;
+	height: 500px;
+	margin-bottom: 12px;
+	overflow: auto;
+}
+
+input[type="text"] {
+	width: calc(100% - 85px);
+	float: left;
+}
+
+button {
+	float: left;
+	width: 80px;
+	margin-left: 5px;
+}
+
+.new-user,
+.user-left {
+	font-style: italic;
+	text-align: center;
+	color: green;
+}
+
+.user-left {
+	color: darkred;
+}
+
+.message.mine {
+	text-align: right;
+}
+
+.message.mine p {
+	border-color: lightskyblue;
+	background-color: lightblue;
+}
+
+.message span {
+	font-weight: bold;
+	font-style: italic;
+	display: block;
+}
+
+.message p {
+	border: solid 1px #999;
+	border-radius: 4px;
+	background-color: #f0f0f0;
+	display: inline-block;
+	padding: 4px 10px;
+}
