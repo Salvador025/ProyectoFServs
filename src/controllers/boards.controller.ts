@@ -18,7 +18,6 @@ class BoardsController {
 		boards
 			.create(data)
 			.then((board) => {
-				consoleLog("Board created");
 				res.status(ResponseStatus.CREATED).json(board);
 			})
 			.catch((err) => {
@@ -63,19 +62,16 @@ class BoardsController {
 	}
 
 	getBoardsUser(req: RequestUser, res: Response) {
-		consoleLog("Fetching boards");
 		const username = req.params.username;
 		boards
 			.find({ owner: username })
 			.then((boards) => {
-				consoleLog("Boards fetched");
 				if (!boards) {
 					throw new NotFoundError("User don't have boards");
 				}
 				if (boards.length === 0) {
 					throw new NotFoundError("User don't have boards");
 				}
-				consoleLog("Boards fetched");
 				res.status(ResponseStatus.SUCCESS).json(boards);
 			})
 			.catch((err) => {
@@ -116,6 +112,7 @@ class BoardsController {
 		req: RequestUser & { file: { location: string } },
 		res: Response,
 	) {
+		debugger;
 		const name = req.params.name;
 		const data: Boards = {
 			name: req.file.originalname.replace(/\.[^/.]+$/, ""),
@@ -125,15 +122,20 @@ class BoardsController {
 		boards
 			.findOne({ name })
 			.then((board) => {
+				consoleLog(board);
 				if (!board) {
+					consoleLog("Board not found");
 					throw new NotFoundError("Board not found");
 				}
 				if (board.owner !== req.user.username) {
+					consoleLog("Not owner of the board");
 					throw new ForbiddenError("Not owner of the board");
 				}
+				consoleLog("Updating board");
 				return boards.updateOne({ name }, data);
 			})
 			.then(() => {
+				consoleLog("Board updated");
 				res.status(ResponseStatus.SUCCESS).send("Board updated");
 			})
 			.catch((err) => {
