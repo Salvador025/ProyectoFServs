@@ -32,9 +32,6 @@ jest.mock("../../src/models/boards", () => ({
 }));
 
 describe("UsersController", () => {
-	beforeAll(() => {
-		jest.clearAllMocks();
-	});
 	describe("createBoard", () => {
 		let req: Partial<RequestUser & { file: { location: string } }>;
 		let res: Partial<Response>;
@@ -343,6 +340,106 @@ describe("UsersController", () => {
 					ResponseStatus.INTERNAL_SERVER_ERROR,
 				);
 				expect(res.send).toHaveBeenCalledWith("Error fetching board");
+			}
+		});
+	});
+
+	describe("updateBoard", () => {
+		let req: Partial<RequestUser & { file: { location: string } }>;
+		let res: Partial<Response>;
+
+		beforeEach(() => {
+			req = {
+				user: {
+					name: "TestUser",
+					username: "testUser",
+					email: "test@example.com",
+					role: Roles.CREATOR,
+				},
+				params: {
+					name: "board",
+				},
+				file: {
+					fieldname: "",
+					originalname: "board.jpg",
+					encoding: "",
+					mimetype: "",
+					size: 0,
+					destination: "",
+					filename: "",
+					path: "",
+					buffer: Buffer.from([]),
+					location: "/path/to/board.jpg",
+					stream: new Readable(),
+				},
+			};
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+				json: jest.fn().mockReturnThis(),
+			};
+		});
+		test("should update a board", async () => {
+			await boardController.updateBoard(
+				req as RequestUser & { file: { location: string } },
+				res as Response,
+			);
+
+			expect(board.findOne).toHaveBeenCalledWith({ name: "board" });
+			expect(board.updateOne).toHaveBeenCalledWith(
+				{ name: "board" },
+				{
+					direction: "/path/to/board.jpg",
+					name: "board",
+					owner: "testUser",
+				},
+			);
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Board updated");
+		});
+
+		test("should handle board not found", async () => {
+			const findOneMock = jest
+				.spyOn(board, "findOne")
+				.mockResolvedValueOnce(null);
+
+			try {
+				await boardController.updateBoard(
+					req as RequestUser & { file: { location: string } },
+					res as Response,
+				);
+			} catch (error) {
+				expect(findOneMock).toHaveBeenCalledWith({ name: "board" });
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.NOT_FOUND);
+				expect(res.send).toHaveBeenCalledWith("Board not found");
+			}
+		});
+
+		test("should handle forbidden access", async () => {
+			try {
+				await boardController.updateBoard(
+					req as RequestUser & { file: { location: string } },
+					res as Response,
+				);
+			} catch (error) {
+				expect(board.findOne).toHaveBeenCalledWith({ name: "board" });
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.FORBIDDEN);
+				expect(res.send).toHaveBeenCalledWith("Not owner of the board");
+			}
+		});
+
+		test("should handle internal server error", async () => {
+			try {
+				await boardController.updateBoard(
+					req as RequestUser & { file: { location: string } },
+					res as Response,
+				);
+			} catch (error) {
+				expect(board.findOne).toHaveBeenCalledWith({ name: "board" });
+				expect(res.status).toHaveBeenCalledWith(
+					ResponseStatus.INTERNAL_SERVER_ERROR,
+				);
+				expect(res.send).toHaveBeenCalledWith("Error updating board");
 			}
 		});
 	});
