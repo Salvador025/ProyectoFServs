@@ -443,4 +443,67 @@ describe("UsersController", () => {
 			}
 		});
 	});
+
+	describe("deleteBoard", () => {
+		let req: Partial<RequestUser>;
+		let res: Partial<Response>;
+
+		beforeEach(() => {
+			req = {
+				user: {
+					name: "TestUser",
+					username: "testUser",
+					email: "test@example.com",
+					role: Roles.CREATOR,
+				},
+				params: {
+					name: "board",
+				},
+			};
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+				json: jest.fn().mockReturnThis(),
+			};
+		});
+
+		test("should delete a board", async () => {
+			await boardController.deleteBoard(req as RequestUser, res as Response);
+
+			expect(board.deleteOne).toHaveBeenCalledWith({ name: "board" });
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Board deleted");
+		});
+
+		test("should handle board not found", async () => {
+			(board.findOne as jest.Mock).mockResolvedValueOnce(null);
+
+			try {
+				await boardController.deleteBoard(req as RequestUser, res as Response);
+			} catch (error) {
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.NOT_FOUND);
+				expect(res.send).toHaveBeenCalledWith("Board not found");
+			}
+		});
+
+		test("should handle forbidden access", async () => {
+			try {
+				await boardController.deleteBoard(req as RequestUser, res as Response);
+			} catch (error) {
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.FORBIDDEN);
+				expect(res.send).toHaveBeenCalledWith("Not owner of the board");
+			}
+		});
+
+		test("should handle internal server error", async () => {
+			try {
+				await boardController.deleteBoard(req as RequestUser, res as Response);
+			} catch (error) {
+				expect(res.status).toHaveBeenCalledWith(
+					ResponseStatus.INTERNAL_SERVER_ERROR,
+				);
+				expect(res.send).toHaveBeenCalledWith("Error deleting board");
+			}
+		});
+	});
 });
