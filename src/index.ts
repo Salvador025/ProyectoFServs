@@ -8,6 +8,8 @@ import swaggerUi from "swagger-ui-express";
 import { googleAuth } from "./middlewares/google-auth";
 import { swaggerConfig } from "./../swagger.config";
 import setUpLogs from "./utils/logs";
+import socketIo from "./middlewares/socket.io";
+import path from "path";
 setUpLogs();
 
 const app = express();
@@ -16,6 +18,7 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json());
 googleAuth(app);
+app.use("/assets", express.static(path.join(__dirname, "../public")));
 app.use(routes);
 
 const swaggerDocs = swaggerJsDoc(swaggerConfig);
@@ -26,13 +29,14 @@ async function start() {
 	try {
 		await mongoose.connect(db_url);
 		console.log("Connected to db");
-		app.listen(port, () => {
+		const server = app.listen(port, () => {
 			if (process.env.NODE_ENV === "dev") {
 				consoleLog(`Server running on port ${port}`);
 			} else {
 				console.log(`Server running`);
 			}
 		});
+		socketIo(server);
 	} catch (error) {
 		consoleError("Failed to connect to db");
 		process.exit(1);
