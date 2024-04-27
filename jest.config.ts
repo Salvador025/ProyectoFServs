@@ -4,10 +4,8 @@
  */
 
 import type { Config } from "jest";
-import { jestConfig } from "@salesforce/sfdx-lwc-jest/config";
 
 const config: Config = {
-	...jestConfig,
 	// All imported modules in your tests should be mocked automatically
 	// automock: false,
 

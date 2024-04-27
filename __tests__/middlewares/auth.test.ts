@@ -103,9 +103,7 @@ describe("Auth Middleware", () => {
 		const tokenData = { email: "user@example.com" };
 		(mockReq.headers as { token: string }).token = "someToken";
 		(decode as jest.Mock).mockReturnValueOnce(tokenData);
-		(user.findOne as jest.Mock).mockRejectedValueOnce(
-			new Error("Generic error"),
-		);
+		(user.findOne as jest.Mock).mockRejectedValueOnce(new Error("DB Error"));
 
 		try {
 			await middleware(
