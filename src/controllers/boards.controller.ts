@@ -18,7 +18,6 @@ class BoardsController {
 		boards
 			.create(data)
 			.then((board) => {
-				consoleLog("Board created");
 				res.status(ResponseStatus.CREATED).json(board);
 			})
 			.catch((err) => {
@@ -63,19 +62,16 @@ class BoardsController {
 	}
 
 	getBoardsUser(req: RequestUser, res: Response) {
-		consoleLog("Fetching boards");
 		const username = req.params.username;
 		boards
 			.find({ owner: username })
 			.then((boards) => {
-				consoleLog("Boards fetched");
 				if (!boards) {
 					throw new NotFoundError("User don't have boards");
 				}
 				if (boards.length === 0) {
 					throw new NotFoundError("User don't have boards");
 				}
-				consoleLog("Boards fetched");
 				res.status(ResponseStatus.SUCCESS).json(boards);
 			})
 			.catch((err) => {
