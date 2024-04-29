@@ -4,7 +4,8 @@
 		"outDir": "./dist",
 		"module": "NodeNext",
 		"esModuleInterop": true,
-		"noImplicitAny": true
+		"noImplicitAny": true,
+		"removeComments": true
 	},
 	"include": ["./src/**/*.ts"],
 	"exclude": ["node_modules"]
