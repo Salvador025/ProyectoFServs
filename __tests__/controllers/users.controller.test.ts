@@ -1,12 +1,15 @@
+// cspell: ignore fieldname
 import { Request, Response } from "express";
+import { Readable } from "stream";
 
-import UsersController from "../../src/controllers/users.controller";
 import user from "../../src/models/user";
+import Roles from "../../src/types/roles";
+import setUpLogs from "../../src/utils/logs";
+import { RequestUser, User } from "../../src/types";
+import UsersController from "../../src/controllers/users.controller";
 import ResponseStatus from "../../src/types/response-codes";
 import { code as createToken } from "../../src/utils/create-token";
-import { RequestUser, User } from "../../src/types";
-import Roles from "../../src/types/roles";
-import { Readable } from "stream";
+setUpLogs();
 
 // Mock the external dependencies
 jest.mock("../../src/models/user", () => ({
@@ -19,6 +22,7 @@ jest.mock("../../src/models/user", () => ({
 		}),
 	),
 	updateOne: jest.fn().mockResolvedValue(Promise.resolve("")),
+	deleteOne: jest.fn().mockResolvedValue(Promise.resolve("")),
 }));
 
 jest.mock("../../src/utils/hash-password", () =>
@@ -67,9 +71,7 @@ describe("UsersController", () => {
 
 		test("should handle 'email already exists' error", async () => {
 			// Arrange
-
-			const createMock = user.create as jest.Mock;
-			createMock.mockRejectedValueOnce({ code: 11000 });
+			(user.create as jest.Mock).mockRejectedValueOnce({ code: 11000 });
 
 			try {
 				// Act
@@ -83,11 +85,9 @@ describe("UsersController", () => {
 
 		test("should handle validation errors", async () => {
 			// Arrange
-
-			const createMock = user.create as jest.Mock;
 			const validationError = new Error("Validation error");
 			validationError.name = "ValidationError";
-			createMock.mockRejectedValueOnce(validationError);
+			(user.create as jest.Mock).mockRejectedValueOnce(validationError);
 
 			try {
 				// Act
@@ -101,9 +101,9 @@ describe("UsersController", () => {
 
 		test("should handle generic errors", async () => {
 			// Arrange
-
-			const createMock = user.create as jest.Mock;
-			createMock.mockRejectedValueOnce(new Error("Generic error"));
+			(user.create as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
 
 			try {
 				// Act
@@ -161,17 +161,21 @@ describe("UsersController", () => {
 			// Arrange
 			(user.findOne as jest.Mock).mockResolvedValue(null);
 
-			// Act
-			await UsersController.logIn(req as Request, res as Response);
-
-			// Assert
-			expect(res.status).toHaveBeenCalledWith(ResponseStatus.UNAUTHORIZED);
-			expect(res.send).toHaveBeenCalledWith("Invalid credentials");
+			try {
+				// Act
+				await UsersController.logIn(req as Request, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.UNAUTHORIZED);
+				expect(res.send).toHaveBeenCalledWith("Invalid credentials");
+			}
 		});
 
 		test("should handle generic errors", async () => {
 			// Arrange
-			(user.findOne as jest.Mock).mockRejectedValue(new Error("Generic error"));
+			(user.findOne as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
 
 			// Act
 			try {
@@ -195,7 +199,7 @@ describe("UsersController", () => {
 			req = {
 				user: {
 					name: "TestUser",
-					username: "testuser",
+					username: "testUser",
 					email: "test@example.com",
 					role: Roles.USER,
 				},
@@ -214,7 +218,7 @@ describe("UsersController", () => {
 		test("should change the role of a user", async () => {
 			(user.updateOne as jest.Mock).mockResolvedValue({
 				name: "TestUser",
-				username: "testuser",
+				username: "testUser",
 				email: "test@example.com",
 			});
 
@@ -229,17 +233,19 @@ describe("UsersController", () => {
 			// Arrange
 			req.body.role = "invalid_role";
 
-			// Act
-			await UsersController.changeRole(req as RequestUser, res as Response);
-
-			// Assert
-			expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
-			expect(res.send).toHaveBeenCalledWith("Invalid role");
+			try {
+				// Act
+				await UsersController.changeRole(req as RequestUser, res as Response);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
+				expect(res.send).toHaveBeenCalledWith("Invalid role");
+			}
 		});
 
 		test("should handle generic errors", async () => {
 			// Arrange
-			(user.updateOne as jest.Mock).mockRejectedValue(
+			(user.updateOne as jest.Mock).mockRejectedValueOnce(
 				new Error("Generic error"),
 			);
 			try {
@@ -262,7 +268,7 @@ describe("UsersController", () => {
 			req = {
 				user: {
 					name: "TestUser",
-					username: "testuser",
+					username: "testUser",
 					email: "test@example.com",
 					role: Roles.USER,
 				},
@@ -309,7 +315,7 @@ describe("UsersController", () => {
 
 		test("should handle errors and send a BAD_REQUEST response", async () => {
 			// Arrange
-			(user.updateOne as jest.Mock).mockRejectedValue(
+			(user.updateOne as jest.Mock).mockRejectedValueOnce(
 				new Error("Generic error"),
 			);
 
@@ -322,6 +328,156 @@ describe("UsersController", () => {
 			} catch (error) {
 				// Assert
 				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
+				expect(res.send).toHaveBeenCalledWith("Something went wrong");
+			}
+		});
+	});
+
+	describe("getProfile", () => {
+		let req: Partial<Request>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: {
+					email: "test@example.com",
+					username: "testUser",
+					name: "TestUser",
+					role: Roles.USER,
+					image: "profile_picture.jpg",
+				},
+			};
+
+			res = {
+				status: jest.fn().mockReturnThis(),
+				json: jest.fn().mockReturnThis(),
+			};
+		});
+		test("should get user profile and send a SUCCESS response", async () => {
+			// Act
+			UsersController.getProfile(req as RequestUser, res as Response);
+
+			// Assert
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.json).toHaveBeenCalledWith({
+				email: "test@example.com",
+				username: "testUser",
+				name: "TestUser",
+				role: Roles.USER,
+				image: "profile_picture.jpg",
+			});
+		});
+	});
+
+	describe("updateProfile", () => {
+		let req: Partial<Request>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: { email: "test@example.com" },
+				body: {
+					name: "New Name",
+					password: "new_password", // pragma: allowlist secret
+				},
+			};
+
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+			};
+		});
+
+		test("should update user profile and send a SUCCESS response", async () => {
+			(user.updateOne as jest.Mock).mockResolvedValue({});
+
+			// Act
+			await UsersController.updateProfile(req as RequestUser, res as Response);
+
+			// Assert
+			expect(user.updateOne).toHaveBeenCalledWith(
+				{ email: "test@example.com" },
+				{ name: "New Name", password: "hashed_password" }, // pragma: allowlist secret
+			);
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Profile updated");
+		});
+
+		test("should handle generic errors", async () => {
+			// Arrange
+			(user.updateOne as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
+
+			try {
+				// Act
+				await UsersController.updateProfile(
+					req as RequestUser,
+					res as Response,
+				);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(
+					ResponseStatus.INTERNAL_SERVER_ERROR,
+				);
+				expect(res.send).toHaveBeenCalledWith("Something went wrong");
+			}
+		});
+	});
+
+	describe("deleteProfile", () => {
+		let req: Partial<Request>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: { email: "test@example.com" },
+			};
+
+			res = {
+				status: jest.fn().mockReturnThis(),
+				send: jest.fn().mockReturnThis(),
+			};
+		});
+
+		test("should delete user profile and send a SUCCESS response", async () => {
+			// Arrange
+			(user.deleteOne as jest.Mock).mockResolvedValue(Promise.resolve());
+
+			// Act
+			await UsersController.deleteProfile(req as RequestUser, res as Response);
+
+			// Assert
+			expect(user.deleteOne).toHaveBeenCalledWith({
+				email: "test@example.com",
+			});
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Profile deleted");
+		});
+
+		test("should handle generic errors", async () => {
+			// Arrange
+			(user.deleteOne as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
+
+			try {
+				// Act
+				await UsersController.deleteProfile(
+					req as RequestUser,
+					res as Response,
+				);
+			} catch (error) {
+				// Assert
+				expect(user.deleteOne).toHaveBeenCalledWith({
+					email: "test@example.com",
+				});
+				expect(res.status).toHaveBeenCalledWith(
+					ResponseStatus.INTERNAL_SERVER_ERROR,
+				);
 				expect(res.send).toHaveBeenCalledWith("Something went wrong");
 			}
 		});

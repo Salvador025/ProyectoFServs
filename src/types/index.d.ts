@@ -29,3 +29,9 @@ export interface UserToken extends Profile {
 export interface RequestUser extends Request {
 	user?: User;
 }
+
+declare global {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	function consoleLog(msg: any): void;
+	function consoleError(msg: Error | string): void;
+}

@@ -34,7 +34,7 @@ class UsersController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
-				console.error(error);
+				consoleError(error);
 			});
 	}
 
@@ -65,7 +65,7 @@ class UsersController {
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
-				console.error(error);
+				consoleError(error);
 			});
 	}
 
@@ -82,8 +82,10 @@ class UsersController {
 				res.status(ResponseStatus.SUCCESS).send("Role changed");
 			})
 			.catch((error) => {
-				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
-				console.error(error);
+				res
+					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
+					.send("Something went wrong");
+				consoleError(error);
 			});
 	}
 
@@ -98,8 +100,10 @@ class UsersController {
 				res.status(ResponseStatus.SUCCESS).send("Profile picture uploaded");
 			})
 			.catch((error) => {
-				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
-				console.error(error);
+				res
+					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
+					.send("Something went wrong");
+				consoleError(error);
 			});
 	}
 
@@ -120,7 +124,6 @@ class UsersController {
 			name: req.body.name,
 			password: hashPassword(req.body.password),
 		};
-		console.log(data);
 
 		user
 			.updateOne({ email }, data)
@@ -128,8 +131,10 @@ class UsersController {
 				res.status(ResponseStatus.SUCCESS).send("Profile updated");
 			})
 			.catch((error) => {
-				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
-				console.error(error);
+				res
+					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
+					.send("Something went wrong");
+				consoleError(error);
 			});
 	}
 
@@ -141,8 +146,10 @@ class UsersController {
 				res.status(ResponseStatus.SUCCESS).send("Profile deleted");
 			})
 			.catch((error) => {
-				res.status(ResponseStatus.BAD_REQUEST).send("Something went wrong");
-				console.error(error);
+				res
+					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
+					.send("Something went wrong");
+				consoleError(error);
 			});
 	}
 }
