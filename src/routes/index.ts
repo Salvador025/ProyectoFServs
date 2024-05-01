@@ -20,7 +20,7 @@ const router = Router();
  */
 router.get("/", (req: Request, res: Response) => {
 	res.render("home", {
-		layout: "main",
+		layout: "login",
 	});
 });
 
