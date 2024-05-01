@@ -59,3 +59,91 @@ button {
 	display: inline-block;
 	padding: 4px 10px;
 }
+
+.luckiest-guy-regular {
+	font-family: "Luckiest Guy", cursive;
+	font-weight: 400;
+	font-style: normal;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Arial", sans-serif;
+	line-height: 1.6;
+	color: #333;
+	background-color: #f4f4f4;
+}
+
+header {
+	background: #0066cc;
+	color: #fff;
+	padding: 10px 20px;
+	text-align: center;
+}
+
+header h1 {
+	margin: 0;
+	font-size: 2.5em;
+}
+
+header p {
+	font-size: 1.2em;
+}
+
+main {
+	width: 80%;
+	margin: 20px auto;
+	text-align: center;
+}
+
+.welcome-section h2 {
+	color: #333;
+}
+
+.welcome-section p {
+	font-size: 1.2em;
+	margin-bottom: 20px;
+}
+
+.button-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn {
+	padding: 10px 10px;
+}
+
+footer {
+	background: #333;
+	color: #fff;
+	text-align: center;
+	padding: 10px 20px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+footer ul {
+	list-style-type: none;
+}
+
+footer ul li {
+	display: inline;
+	margin-right: 20px;
+}
+
+footer a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.social-media a {
+	margin-right: 15px;
+}

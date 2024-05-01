@@ -19,7 +19,9 @@ const router = Router();
  *   description: Index route
  */
 router.get("/", (req: Request, res: Response) => {
-	res.send("Index routes works!");
+	res.render("home", {
+		layout: "main",
+	});
 });
 
 router.use("/auth", authRoutes);
