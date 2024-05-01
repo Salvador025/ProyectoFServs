@@ -99,3 +99,20 @@ document.getElementById("formLogIn").addEventListener("submit", (event) => {
 			alert(error.message);
 		});
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+	debugger;
+	const token = sessionStorage.getItem("token");
+	if (window.location.pathname === "/") {
+		if (token) {
+			window.location.href = "/home";
+			return;
+		}
+		return;
+	}
+
+	if (!token) {
+		window.location.href = "/";
+		return;
+	}
+});

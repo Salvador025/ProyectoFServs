@@ -5,6 +5,7 @@ import googleRoutes from "./google";
 import settingsRoute from "./settings";
 import marketplaceRoutes from "./marketplace";
 import chatRoutes from "./chat";
+import viewsRotes from "./views";
 import auth from "../middlewares/auth";
 
 const router = Router();
@@ -19,11 +20,12 @@ const router = Router();
  *   description: Index route
  */
 router.get("/", (req: Request, res: Response) => {
-	res.render("home", {
+	res.render("login", {
 		layout: "main",
 	});
 });
 
+router.use(viewsRotes);
 router.use("/auth", authRoutes);
 router.use("/auth/google", googleRoutes);
 router.use("/boards", auth, boardsRoutes);

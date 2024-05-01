@@ -1,0 +1,211 @@
+<div>
+	<header>
+		<h1 class="logo">INFINITYBOARDS</h1>
+		<p>Customize. Play. Connect.</p>
+	</header>
+	<main>
+		<section class="welcome-section">
+			<h2>Welcome toInfinityBoards!</h2>
+			<p>Welcome to InfinityBoards, the ultimate platform for customizing and
+				playing your favorite board games online! Explore a world where your
+				creativity brings games to life.</p>
+			<div class="button-container">
+				<button
+					type="button"
+					class="btn btn-primary"
+					data-toggle="modal"
+					data-target="#singUp"
+					id="signUpButton"
+				>Sign Up</button>
+				<button
+					type="button"
+					class="btn btn-primary"
+					data-toggle="modal"
+					data-target="#logIn"
+					id="logInButton"
+				>Log In</button>
+			</div>
+		</section>
+	</main>
+	<footer>
+		<ul>
+			<li><a href="#">About Us</a></li>
+			<li><a href="#">Support</a></li>
+			<li><a href="#">FAQs</a></li>
+		</ul>
+		<div class="social-media">
+			<!-- Insert social media links here -->
+			<a href="#">Facebook</a>
+			<a href="#">Twitter</a>
+			<a href="#">Instagram</a>
+		</div>
+	</footer>
+</div>
+
+<!-- Modal Sing Up -->
+<div
+	class="modal fade"
+	id="singUp"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="modelTitleId"
+	aria-hidden="true"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Sing Up</h5>
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="formSignUp">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="email">Username</label>
+						<input
+							class="form-control"
+							id="username_singUp"
+							name="username"
+							aria-describedby="emailHelp"
+							placeholder="Enter username"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input
+							class="form-control"
+							id="name_singUp"
+							name="name"
+							aria-describedby="emailHelp"
+							placeholder="Enter full name"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label for="email">Email address</label>
+						<input
+							type="email"
+							class="form-control"
+							id="email_singUp"
+							name="email"
+							aria-describedby="emailHelp"
+							placeholder="Enter email"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input
+							type="password"
+							class="form-control"
+							id="password_singUp"
+							name="password"
+							placeholder="Password"
+							required
+						/>
+					</div>
+					<p>
+						you already have an account?
+						<a
+							href="#"
+							data-dismiss="modal"
+							data-toggle="modal"
+							data-target="#logIn"
+						> Log In</a>.</p>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-dismiss="modal"
+					>Close</button>
+					<button
+						id="submitSignUp"
+						type="submit"
+						class="btn btn-primary"
+					>Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal log In-->
+<div
+	class="modal fade"
+	id="logIn"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="modelTitleId"
+	aria-hidden="true"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Log In</h5>
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="formLogIn">
+				<div class="modal-body">
+
+					<div class="form-group">
+						<label for="email">Email address</label>
+						<input
+							type="email"
+							class="form-control"
+							id="email_logIn"
+							name="email"
+							aria-describedby="emailHelp"
+							placeholder="Enter email"
+						/>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input
+							type="password"
+							class="form-control"
+							id="password_logIn"
+							name="password"
+							placeholder="Password"
+						/>
+					</div>
+
+					<p>
+						you don't have an account?
+						<a
+							href="#"
+							data-dismiss="modal"
+							data-toggle="modal"
+							data-target="#singUp"
+						>Register here</a>.</p>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-dismiss="modal"
+					>Close</button>
+					<button
+						id="submitLogIn"
+						type="submit"
+						class="btn btn-primary"
+					>Enter</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
