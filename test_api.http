@@ -23,10 +23,6 @@ Content-Type: application/json
     "password": "123"
 }
 
-### Get User ###
-GET {{base_url}}/users/testuser
-token : {{token}}
-
 ### Update role ###
 PUT {{base_url}}/settings/updateRole
 token : {{token}} 
