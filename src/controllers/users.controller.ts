@@ -107,6 +107,14 @@ class UsersController {
 			});
 	}
 
+	getMe(req: RequestUser, res: Response) {
+		const data = {
+			username: req.user.username,
+			image: req.user.image,
+		};
+		res.status(ResponseStatus.SUCCESS).json(data);
+	}
+
 	getProfile(req: RequestUser, res: Response) {
 		const data = {
 			email: req.user.email,
