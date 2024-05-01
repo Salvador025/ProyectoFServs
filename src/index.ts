@@ -1,20 +1,25 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
+import path from "path";
 import mongoose from "mongoose";
-import routes from "./routes";
 import swaggerJsDoc from "swagger-jsdoc";
+import { engine } from "express-handlebars";
 import swaggerUi from "swagger-ui-express";
-import { googleAuth } from "./middlewares/google-auth";
 import { swaggerConfig } from "./../swagger.config";
+import { googleAuth } from "./middlewares/google-auth";
 import setUpLogs from "./utils/logs";
 import socketIo from "./middlewares/socket.io";
-import path from "path";
+import routes from "./routes";
 setUpLogs();
 
 const app = express();
 
 const port = process.env.PORT || 4000;
+
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views", "./src/views");
 
 app.use(express.json());
 googleAuth(app);
