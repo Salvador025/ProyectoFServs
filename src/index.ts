@@ -17,7 +17,13 @@ const app = express();
 
 const port = process.env.PORT || 4000;
 
-app.engine("handlebars", engine());
+app.engine(
+	"handlebars",
+	engine({
+		layoutsDir: "./src/views/layouts/",
+		partialsDir: ["./src/views/partials/"],
+	}),
+);
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
