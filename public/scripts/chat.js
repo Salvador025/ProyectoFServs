@@ -1,6 +1,15 @@
-const socket = io("/");
+import basicLoad from "/assets/scripts/basic-load.js";
 
-const userName = prompt("What's your name?");
+const socket = io("/");
+document.addEventListener("DOMContentLoaded", function () {
+	basicLoad().then((data) => {
+		console.log(data);
+		const userName = JSON.parse(sessionStorage.getItem("user")).username;
+		document.getElementById("user").innerText = userName;
+	});
+});
+
+const userName = JSON.parse(sessionStorage.getItem("user")).username;
 
 document.getElementById("user").innerText = userName;
 

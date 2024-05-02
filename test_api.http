@@ -19,9 +19,13 @@ POST {{base_url}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "test1@test.com",
+    "email": "test@test.com",
     "password": "123"
 }
+
+### Get me ###
+GET {{base_url}}/auth/me
+token : {{token}}
 
 ### Update role ###
 PUT {{base_url}}/settings/updateRole
@@ -51,7 +55,7 @@ DELETE {{base_url}}/settings/profile/
 token : {{token}}
 
 ### Upload Profile Picture ###
-POST {{base_url}}/settings/profile/uploadProfilePicture
+PUT {{base_url}}/settings/profile/uploadProfilePicture
 token : {{token}}
 Content-Type: multipart/form-data; boundary=mi-boundary
 
