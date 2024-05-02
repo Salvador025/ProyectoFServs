@@ -84,6 +84,7 @@ header {
 	color: #fff;
 	padding: 10px 20px;
 	text-align: center;
+	margin: 10px 0;
 }
 
 header h1 {
@@ -176,6 +177,16 @@ footer a {
 	box-sizing: border-box;
 }
 
+.grid-container a {
+	color: white;
+	text-decoration: none;
+}
+
+.grid-container a:hover {
+	color: white;
+	text-decoration: none;
+}
+
 .grid-item {
 	background-color: #007bff;
 	color: white;
@@ -190,10 +201,6 @@ footer a {
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-}
-
-.grid-item:hover {
-	background-color: #0056b3;
 }
 
 .bg-primary {
