@@ -1,22 +1,30 @@
 <div class="body">
-	<header>
-		<div class="logo">INFINITYBOARDS</div>
-		<div class="tagline">Customize. Play. Connect.</div>
+	{{> navbar}}
+	<header style="display: block;">
+		<div>
+			<div class="logo">INFINITYBOARDS</div>
+			<div class="tagline">Customize. Play. Connect.</div>
+		</div>
+		<a href="">
+			<img
+				id="nav-user-profile"
+				src="path_to_your_profile_image.png"
+				alt="User Profile"
+				class="rounded-circle"
+				style="width: 40px; height: 40px"
+				onerror="this.style.display = 'none'; document.getElementById('user-circle').style.display = 'block';"
+			/>
+			<i id="user-circle" class='fas fa-user-circle' style='font-size: 40px; color: white; display: none;'></i>
+		</a>
 	</header>
-
 	<div class="grid-container">
-		<button class="grid-item" onclick="location.href='chat';">Chat</button>
-		<button
-			class="grid-item"
-			onclick="location.href='marketplace';"
-		>Marketplace</button>
-		<button class="grid-item" onclick="location.href='play';">Play</button>
-		<button
-			class="grid-item"
-			onclick="location.href='settings';"
-		>Settings</button>
+		<a class="grid-item" href="/chat">Chat</a>
+		<a
+			class="grid-item" href="/marketplace">Marketplace</a>
+		<a class="grid-item" href="/play">Play</a>
+		<a
+			class="grid-item" href="/createBoard">Create</a>
 	</div>
-
 	<footer>
 		<ul>
 			<li><a href="#">About Us</a></li>

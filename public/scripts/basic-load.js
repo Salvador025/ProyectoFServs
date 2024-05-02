@@ -1,6 +1,6 @@
+import navbarLogic from "/assets/scripts/navbar-logic.js";
 export default () => {
 	return new Promise((resolve, reject) => {
-		debugger;
 		const token = sessionStorage.getItem("token");
 		const user = sessionStorage.getItem("user");
 		if (!token) {
@@ -19,9 +19,9 @@ export default () => {
 					return response.json();
 				})
 				.then((data) => {
-					debugger;
 					console.log(data);
 					sessionStorage.setItem("user", JSON.stringify(data));
+					navbarLogic();
 					resolve(data);
 				})
 				.catch((error) => {
@@ -29,6 +29,9 @@ export default () => {
 					alert(error.message);
 					reject();
 				});
+		} else {
+			navbarLogic();
+			resolve(JSON.parse(user));
 		}
 	});
 };
