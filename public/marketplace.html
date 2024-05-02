@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tableros de Juego</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="styles/stylesBoards.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="padding-bottom: 0.3vmin; padding-top: 0.3vmin">
+        <a class="navbar-brand" href="#">INFINITYBOARDS</a>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="align-items: center"></ul>
+            <ul class="navbar-nav right mt-2 mt-lg-0" style="align-items: center">
+                <li class="nav-item" style="margin: 0vmin 3vmin">
+                    <span class="navbar-text me-2">User</span>
+                    <img src="path_to_your_profile_image.png" alt="User Profile" class="rounded-circle"
+                         style="width: 40px; height: 40px"
+                         onerror="this.onerror=null; this.src=''; this.className=''; this.outerHTML='<i class=\'fas fa-user-circle\' style=\'font-size: 40px; color: white\'></i>'">
+                </li>
+                <li class="nav-item" style="margin: 0vmin 3vmin">
+                    <a class="btn btn-secondary btn-sm" href="#" role="button">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1>Opciones de Tableros para el Juego</h1>
+    <div class="board-list">
+        <a href="/tablero-clasico" class="board-item">
+            <img src="images/boardBasic.png" alt="Tablero Clásico">
+            <h2>Tablero Clásico</h2>
+            <p>Disfruta de la versión clásica del juego, perfecta para principiantes y jugadores experimentados.</p>
+        </a>
+        <a href="/tablero-aventura" class="board-item">
+            <img src="ruta/a/imagen-aventura.jpg" alt="Tablero de Aventura">
+            <h2>Tablero de Aventura</h2>
+            <p>Un tablero lleno de sorpresas y retos, ideal para aquellos que buscan una experiencia emocionante y dinámica.</p>
+        </a>
+        <a href="/tablero-futurista" class="board-item">
+            <img src="ruta/a/imagen-futurista.jpg" alt="Tablero Futurista">
+            <h2>Tablero Futurista</h2>
+            <p>Explora un tablero con temática futurista, con elementos de ciencia ficción y tecnología avanzada.</p>
+        </a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
