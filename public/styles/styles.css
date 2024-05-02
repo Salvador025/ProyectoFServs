@@ -195,3 +195,7 @@ footer a {
 .grid-item:hover {
 	background-color: #0056b3;
 }
+
+.bg-primary {
+	background-color: #0066cc;
+}

@@ -25,3 +25,4 @@ dist/
 # extra
 .DS_Store
 testPic*
+testView*

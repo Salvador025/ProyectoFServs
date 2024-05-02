@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				email: email.value,
 				password: password.value,
 			};
-
+			debugger;
 			fetch("auth/login", {
 				method: "POST",
 				headers: {
@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				body: JSON.stringify(formData),
 			})
 				.then((response) => {
+					debugger;
 					if (!response.ok) {
 						return response.text().then((text) => {
 							throw new Error(text);
@@ -103,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					return response.json();
 				})
 				.then((data) => {
+					debugger;
 					sessionStorage.setItem("token", data.token);
 					console.log(data.token);
 					window.location.href = "/home";
