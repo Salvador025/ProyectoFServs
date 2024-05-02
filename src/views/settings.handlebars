@@ -1,4 +1,62 @@
 <div>
     {{> navbar}}
-    settings page
+    <div class="body">
+        <header style="display: block">
+            <div>
+                <div class="logo">INFINITYBOARDS</div>
+                <div class="tagline">Customize. Play. Connect.</div>
+            </div>
+        </header>
+        <div class="settings-container">
+            <div class="user-info">
+                <div class="user-details">
+                    <h3>User Information</h3>
+                    <p><strong>Name:</strong> Your Name</p>
+                    <p><strong>Username:</strong> YourUsername</p>
+                    <p><strong>Email:</strong> your.email@example.com</p>
+                    <p><strong>Role:</strong> User/Admin</p>
+                </div>
+                <div class="user-image">
+                    <img class="rounded-circle" src="https://project-servers.s3.us-east-2.amazonaws.com/profile-1714610242923-testPic1.jpg"  alt="User Image">
+                </div>
+            </div>
+            
+            <div class="boards-section">
+                <h3>Your Boards</h3>
+                <div class="board-card">
+                    <img
+                        src="path_to_board_image.png"
+                        alt="Board Name"
+                        class="board-image"
+                    />
+                    <div class="board-info">
+                        <p><strong>Board Name:</strong> Example Board</p>
+                    </div>
+                </div>
+                <div class="board-card">
+                    <img
+                        src="path_to_board_image.png"
+                        alt="Board Name"
+                        class="board-image"
+                    />
+                    <div class="board-info">
+                        <p><strong>Board Name:</strong> Example Board</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <footer>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">FAQs</a></li>
+            </ul>
+            <div class="social-media">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+        </footer>
+    </div>
 </div>
