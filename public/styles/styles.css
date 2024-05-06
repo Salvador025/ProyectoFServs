@@ -238,7 +238,6 @@ footer a {
 .user-info {
 	display: flex;
 	justify-content: space-between;
-	align-items: flex-end;
 	box-sizing: border-box;
 	background: linear-gradient(to right, #6a11cb, #2575fc);
 	color: white;
@@ -255,7 +254,8 @@ footer a {
 }
 
 .user-image {
-	flex-shrink: 0;
+	display: block;
+	padding: 10px;
 	width: 22vmax;
 	height: 22vmax;
 }
@@ -265,6 +265,16 @@ footer a {
 	height: auto;
 	max-height: 100%;
 	max-width: 100%;
+}
+
+.user-image button {
+	margin-top: 10px;
+	margin-left: 5vh;
+	background-color: #6a11cb;
+}
+
+.user-image button:hover {
+	background-color: #8d2bf5;
 }
 
 .boards-section {
