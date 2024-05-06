@@ -37,7 +37,8 @@ class googleController {
 	}
 
 	googleCallback(req: Request, res: Response) {
-		res.send((req.user as UserToken).token);
+		// res.send((req.user as UserToken).token);
+		res.redirect(`../../frontCallback/${(req.user as UserToken).token}`);
 	}
 }
 
