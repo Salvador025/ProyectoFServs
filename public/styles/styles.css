@@ -256,8 +256,8 @@ footer a {
 .user-image {
 	display: block;
 	padding: 10px;
-	width: 22vmax;
-	height: 22vmax;
+	width: 13vmax;
+	height: 13vmax;
 }
 
 .user-image img {
@@ -275,6 +275,11 @@ footer a {
 
 .user-image button:hover {
 	background-color: #8d2bf5;
+}
+
+.user-details button:focus {
+	background-color: #8d2bf5;
+	outline: none;
 }
 
 .boards-section {
