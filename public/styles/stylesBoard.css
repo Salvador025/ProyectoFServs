@@ -2,47 +2,69 @@ body {
 	font-family: Arial, sans-serif;
 	background-color: #f4f4f4;
 	margin: 0;
-	padding: 20px;
+	padding: 0;
 	color: #333;
 }
 
-h1,
-h2 {
-	color: #444;
+.navbar {
+	background-color: #007bff;
+	color: white;
+	padding: 10px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
-.board-container {
+.navbar-brand {
+	font-size: 24px;
+}
+
+.user-info span,
+.user-info a {
+	margin-left: 10px;
+}
+
+.log-out-button {
+	background-color: #dddddd;
+	color: black;
+	padding: 5px 10px;
+	text-decoration: none;
+	border-radius: 5px;
+}
+
+.board-header {
+	background-color: #0056b3;
+	color: white;
+	padding: 20px;
+	text-align: center;
+}
+
+.board-content {
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: center;
-	margin-top: 20px;
+	padding: 20px;
 }
 
 .board-image {
-	width: 100%;
-	max-width: 500px;
-	height: auto;
+	max-width: 400px;
 	margin-right: 20px;
-	border: 1px solid #ddd;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.board-info {
-	flex-grow: 1;
+.board-details {
 	max-width: 500px;
 }
 
-.board-info ul {
+.board-details ul {
 	list-style-type: none;
 	padding: 0;
 }
 
-.board-info li {
+.board-details li {
 	padding: 5px 0;
 }
 
 @media (max-width: 800px) {
-	.board-container {
+	.board-content {
 		flex-direction: column;
 		align-items: center;
 	}
