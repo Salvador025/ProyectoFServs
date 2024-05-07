@@ -3,17 +3,6 @@ import { Router, Request, Response } from "express";
 const router = Router();
 
 //swagger for marketplace
-/**
- * @swagger
- * /marketplace:
- *  get:
- *   summary: Marketplace home
- *   tags: [Marketplace]
- *   description: Marketplace home endpoint
- */
-router.get("/", (req: Request, res: Response) => {
-	res.send("Marketplace routes works!");
-});
 
 //swagger to get a specific board
 /**
