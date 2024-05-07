@@ -1,7 +1,7 @@
 import basicLoad from "/assets/scripts/basic-load.js";
 
+const token = sessionStorage.getItem("token");
 document.addEventListener("DOMContentLoaded", () => {
-	const token = sessionStorage.getItem("token");
 	if (window.location.pathname === "/") {
 		if (token) {
 			window.location.href = "/home";
@@ -116,4 +116,119 @@ document.addEventListener("DOMContentLoaded", () => {
 	basicLoad().then((data) => {
 		console.log(data);
 	});
+
+	if (window.location.pathname === "/settings") {
+		document
+			.getElementById("formEditUser")
+			.addEventListener("submit", (event) => {
+				event.preventDefault();
+
+				const username = document.getElementById("username_editUser");
+				const name = document.getElementById("name_editUser");
+				const password = document.getElementById("password_editUser");
+				const fileInput = document.getElementById("profilePicture");
+
+				const formData = {
+					username: username.value,
+					name: name.value,
+					password: password.value,
+				};
+				if (password.value === "") {
+					delete formData.password;
+				}
+				if (name.value === "") {
+					delete formData.name;
+				}
+				if (username.value === "") {
+					delete formData.username;
+				}
+				if (
+					username.value !== "" ||
+					name.value !== "" ||
+					password.value !== ""
+				) {
+					fetch("settings/profile", {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							token: token,
+						},
+						body: JSON.stringify(formData),
+					})
+						.then((response) => {
+							console.log(response);
+							if (!response.ok) {
+								return response.text().then((text) => {
+									throw new Error(text);
+								});
+							}
+							loadDashboard();
+						})
+						.catch((error) => {
+							console.error(error.message);
+							alert(error.message);
+						});
+				}
+
+				if (fileInput.files.length > 0) {
+					debugger;
+					const fileData = new FormData();
+					fileData.append("profilePicture", fileInput.files[0]);
+					fetch("settings/profile/uploadProfilePicture", {
+						method: "PUT",
+						headers: {
+							token: token,
+						},
+						body: fileData,
+					})
+						.then((response) => {
+							debugger;
+							if (!response.ok) {
+								return response.text().then((text) => {
+									throw new Error(text);
+								});
+							}
+							console.log(response);
+							sessionStorage.removeItem("user");
+							window.location.reload();
+						})
+						.catch((error) => {
+							console.error(error.message);
+							alert(error.message);
+						});
+				}
+			});
+		loadDashboard();
+	}
 });
+
+function loadDashboard() {
+	fetch("settings/profile", { headers: { token: token } })
+		.then((response) => {
+			if (!response.ok) {
+				return response.text().then((text) => {
+					throw new Error(text);
+				});
+			}
+			return response.json();
+		})
+		.then((data) => {
+			const { username, name, email, role } = data;
+			document.getElementById("username_settings").innerHTML = username;
+			document.getElementById("name_settings").innerHTML = name;
+			document.getElementById("email_settings").innerHTML = email;
+			document.getElementById("role_settings").innerHTML = role;
+
+			const img = document.getElementById("user-profile");
+			const user = JSON.parse(sessionStorage.getItem("user"));
+			if (user.image) {
+				img.src = user.image;
+				img.style.display = "block";
+				document.getElementById("user-circle-profile").style.display = "none";
+			}
+		})
+		.catch((error) => {
+			console.error(error.message);
+			alert(error.message);
+		});
+}

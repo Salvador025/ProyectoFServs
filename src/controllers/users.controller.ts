@@ -129,6 +129,7 @@ class UsersController {
 	updateProfile(req: RequestUser, res: Response) {
 		const { email } = req.user;
 		const data = {
+			username: req.body.username,
 			name: req.body.name,
 			password: hashPassword(req.body.password),
 		};
@@ -139,6 +140,16 @@ class UsersController {
 				res.status(ResponseStatus.SUCCESS).send("Profile updated");
 			})
 			.catch((error) => {
+				if (error.code === 11000) {
+					res
+						.status(ResponseStatus.BAD_REQUEST)
+						.send("Username already exists");
+					return;
+				}
+				if (error.name === "ValidationError") {
+					res.status(ResponseStatus.BAD_REQUEST).send("Invalid data");
+					return;
+				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
 					.send("Something went wrong");
