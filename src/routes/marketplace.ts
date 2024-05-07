@@ -7,7 +7,22 @@ const router = Router();
 //swagger to get a specific board
 /**
  * @swagger
- * /marketplace/:id:
+ * /marketplace/:username
+ *  get:
+ *   summary: Get the boards of a specific user
+ *   tags: [Marketplace]
+ *   description: Get a specific board
+ */
+
+//route to get a specific board
+router.get("/:username", (req: Request, res: Response) => {
+	res.send(`Marketplace route for board ${req.params.id}`);
+});
+
+//swagger to get a specific board
+/**
+ * @swagger
+ * /marketplace/:username/:name
  *  get:
  *   summary: Get a specific board
  *   tags: [Marketplace]
@@ -15,7 +30,7 @@ const router = Router();
  */
 
 //route to get a specific board
-router.get("/:id", (req: Request, res: Response) => {
+router.get("/:username/:name", (req: Request, res: Response) => {
 	res.send(`Marketplace route for board ${req.params.id}`);
 });
 
