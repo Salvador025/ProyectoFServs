@@ -24,7 +24,7 @@ h1 {
 	padding: 20px;
 	width: 80%;
 	margin-bottom: 40px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 2px 5px rgba(214, 64, 64, 0.952);
 	text-decoration: none;
 	color: #ffffff;
 	display: block;
@@ -40,7 +40,7 @@ h1 {
 }
 
 .board-item:hover {
-	box-shadow: 0 4px 8px rgba(230, 24, 161, 0.2);
+	box-shadow: 0 4px 8px rgba(21, 233, 39, 0.973);
 }
 
 .board-item h2 {

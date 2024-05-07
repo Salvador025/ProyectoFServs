@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Tablero</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Nombre del Tablero</h1>
+    <div class="board-container">
+        <img src="ruta/a/imagen-del-tablero.jpg" alt="Nombre del Tablero" class="board-image">
+        <div class="board-info">
+            <h2>Descripción</h2>
+            <p>Esta es una breve descripción del tablero, incluyendo qué lo hace especial y cómo se juega.</p>
+            <ul>
+                <li><strong>Autor:</strong> Nombre del Autor</li>
+                <li><strong>Fecha de Lanzamiento:</strong> DD/MM/YYYY</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
