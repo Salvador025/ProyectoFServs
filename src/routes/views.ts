@@ -28,4 +28,10 @@ router.get("/marketplace", (req, res) => {
 	});
 });
 
+router.get("/frontCallback/:token", (req, res) => {
+	res.render("empty", {
+		layout: "frontCallback",
+	});
+});
+
 export default router;
