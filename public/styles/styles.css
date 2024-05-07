@@ -122,30 +122,6 @@ main {
 	padding: 10px 10px;
 }
 
-footer {
-	background: #333;
-	color: #fff;
-	text-align: center;
-	padding: 10px 20px;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-}
-
-footer ul {
-	list-style-type: none;
-}
-
-footer ul li {
-	display: inline;
-	margin-right: 20px;
-}
-
-footer a {
-	color: #fff;
-	text-decoration: none;
-}
-
 .navbar {
 	position: fixed;
 	color: #fff;
