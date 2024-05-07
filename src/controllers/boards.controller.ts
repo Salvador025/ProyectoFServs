@@ -48,7 +48,15 @@ class BoardsController {
 				if (boards.length === 0) {
 					throw new NotFoundError("No boards found");
 				}
-				res.status(ResponseStatus.SUCCESS).json(boards);
+				const boardsData = boards.map((board) => {
+					return {
+						name: board.name,
+						owner: board.owner,
+						direction: board.direction,
+						description: board.description,
+					};
+				});
+				res.status(ResponseStatus.SUCCESS).json(boardsData);
 			})
 			.catch((err) => {
 				if (err instanceof NotFoundError) {
@@ -73,7 +81,15 @@ class BoardsController {
 				if (boards.length === 0) {
 					throw new NotFoundError("User don't have boards");
 				}
-				res.status(ResponseStatus.SUCCESS).json(boards);
+				const boardsData = boards.map((board) => {
+					return {
+						name: board.name,
+						owner: board.owner,
+						direction: board.direction,
+						description: board.description,
+					};
+				});
+				res.status(ResponseStatus.SUCCESS).json(boardsData);
 			})
 			.catch((err) => {
 				if (err instanceof NotFoundError) {
@@ -95,7 +111,13 @@ class BoardsController {
 				if (!board) {
 					throw new NotFoundError("Board not found");
 				}
-				res.status(ResponseStatus.SUCCESS).json(board);
+				const boardData = {
+					name: board.name,
+					owner: board.owner,
+					direction: board.direction,
+					description: board.description,
+				};
+				res.status(ResponseStatus.SUCCESS).json(boardData);
 			})
 			.catch((err) => {
 				if (err instanceof NotFoundError) {
