@@ -1,11 +1,10 @@
 import basicLoad from "/assets/scripts/basic-load.js";
 
 const boardList = document.getElementById("boardList");
-basicLoad();
 
 function generateBoard(data) {
 	return `
-	<a href="marketplace/${data.name}" class="board-item">
+	<a href="marketplace/${data.owner}/${data.name}" class="board-item">
 		<img src="${data.direction}" alt="${data.name}" />
 		<h2>Classic Board</h2>
 		<p>
@@ -14,3 +13,19 @@ function generateBoard(data) {
 	</a>;
     `;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+	basicLoad();
+	const token = sessionStorage.getItem("token");
+	const pageUrlSegments = window.location.href.split("/");
+	const lastSegment = pageUrlSegments[pageUrlSegments.length - 1];
+	if (lastSegment === "marketplace") {
+		fetch("/api/boards")
+			.then((response) => response.json())
+			.then((data) => {
+				boardList.innerHTML = data
+					.map((board) => generateBoard(board))
+					.join("");
+			});
+	}
+});
