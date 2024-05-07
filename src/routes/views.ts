@@ -8,4 +8,10 @@ router.get("/home", (req, res) => {
 	});
 });
 
+router.get("/settings", (req, res) => {
+	res.render("settings", {
+		layout: "main",
+	});
+});
+
 export default router;
