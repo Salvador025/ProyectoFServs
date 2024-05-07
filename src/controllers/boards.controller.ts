@@ -11,10 +11,12 @@ class BoardsController {
 		res: Response,
 	) {
 		const data: Boards = {
-			name: req.file.originalname.replace(/\.[^/.]+$/, ""),
+			name: req.body.name,
 			owner: req.user.username,
 			direction: req.file.location,
+			description: req.body.description,
 		};
+		consoleLog(data);
 		boards
 			.create(data)
 			.then((board) => {
@@ -23,9 +25,11 @@ class BoardsController {
 			.catch((err) => {
 				if (err.code === 11000) {
 					res.status(ResponseStatus.BAD_REQUEST).send("Board already exists");
+					return;
 				}
 				if (err.name === "ValidationError") {
 					res.status(ResponseStatus.BAD_REQUEST).send("Invalid data");
+					return;
 				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
@@ -111,9 +115,10 @@ class BoardsController {
 	) {
 		const name = req.params.name;
 		const data: Boards = {
-			name: req.file.originalname.replace(/\.[^/.]+$/, ""),
+			name: req.body.name,
 			owner: req.user.username,
-			direction: req.file.location,
+			direction: req.file?.location,
+			description: req.body.description,
 		};
 		return boards
 			.findOne({ name })

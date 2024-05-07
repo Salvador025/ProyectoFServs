@@ -79,7 +79,16 @@ Content-Disposition: form-data; name="Board"; filename="{{file}}"
 Content-Type: image/jpeg
 
 < ./{{file}}
+--mi-boundary
+Content-Disposition: form-data; name="description"
+
+Description of the board
+--mi-boundary
+Content-Disposition: form-data; name="name"
+
+tableroPrueba
 --mi-boundary--
+
 
 ###Get All Boards ###
 GET {{base_url}}/boards
@@ -90,19 +99,18 @@ GET {{base_url}}/boards/testUser
 token : {{token}}
 
 ### Get board ###
-GET {{base_url}}/boards/testUser/testPic1
+GET {{base_url}}/boards/testUser/tableroPrueba2
 token : {{token}}
 
 ### Update board ###
-PUT {{base_url}}/boards/testPic1
+PUT {{base_url}}/boards/tableroPrueba2
 token : {{token}}
 Content-Type: multipart/form-data; boundary=mi-boundary
 
 --mi-boundary
-Content-Disposition: form-data; name="Board"; filename="{{file}}"
-Content-Type: image/jpeg
+Content-Disposition: form-data; name="description"
 
-< ./{{file}}
+Description of the board
 --mi-boundary--
 
 ### Delete board ###
