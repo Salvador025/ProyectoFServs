@@ -1,8 +1,6 @@
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f4f4f4;
-	margin: 0;
-	padding: 20px;
 	color: #000000;
 }
 
@@ -40,7 +38,8 @@ h1 {
 }
 
 .board-item:hover {
-	box-shadow: 0 4px 8px rgba(21, 233, 39, 0.973);
+	color: #ffffff;
+	box-shadow: 0 8px 8px rgba(169, 15, 216, 0.973);
 }
 
 .board-item h2 {

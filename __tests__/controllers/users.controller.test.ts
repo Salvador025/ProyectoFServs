@@ -405,6 +405,42 @@ describe("UsersController", () => {
 			expect(res.send).toHaveBeenCalledWith("Profile updated");
 		});
 
+		test("should handle 'email already exists' error", async () => {
+			// Arrange
+			(user.updateOne as jest.Mock).mockRejectedValueOnce({ code: 11000 });
+
+			try {
+				// Act
+				await UsersController.updateProfile(
+					req as RequestUser,
+					res as Response,
+				);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
+				expect(res.send).toHaveBeenCalledWith("Email already exists");
+			}
+		});
+
+		test("should handle validation errors", async () => {
+			// Arrange
+			const validationError = new Error("Validation error");
+			validationError.name = "ValidationError";
+			(user.updateOne as jest.Mock).mockRejectedValueOnce(validationError);
+
+			try {
+				// Act
+				await UsersController.updateProfile(
+					req as RequestUser,
+					res as Response,
+				);
+			} catch (error) {
+				// Assert
+				expect(res.status).toHaveBeenCalledWith(ResponseStatus.BAD_REQUEST);
+				expect(res.send).toHaveBeenCalledWith("Invalid data");
+			}
+		});
+
 		test("should handle generic errors", async () => {
 			// Arrange
 			(user.updateOne as jest.Mock).mockRejectedValueOnce(
@@ -480,6 +516,37 @@ describe("UsersController", () => {
 				);
 				expect(res.send).toHaveBeenCalledWith("Something went wrong");
 			}
+		});
+	});
+
+	describe("getMe", () => {
+		let req: Partial<Request>;
+		let res: Partial<Response>;
+
+		// Mock the Express req and res objects before each test
+		beforeEach(() => {
+			req = {
+				user: {
+					username: "TestUser",
+					image: "profile_picture.jpg",
+				},
+			};
+
+			res = {
+				status: jest.fn().mockReturnThis(),
+				json: jest.fn().mockReturnThis(),
+			};
+		});
+		test("should get user's own profile and send a SUCCESS response", () => {
+			// Act
+			UsersController.getMe(req as RequestUser, res as Response);
+
+			// Assert
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.json).toHaveBeenCalledWith({
+				username: "TestUser",
+				image: "profile_picture.jpg",
+			});
 		});
 	});
 });
