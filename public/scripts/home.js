@@ -175,7 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
 				}
 
 				if (fileInput.files.length > 0) {
-					debugger;
 					const fileData = new FormData();
 					fileData.append("profilePicture", fileInput.files[0]);
 					fetch("settings/profile/uploadProfilePicture", {
@@ -186,7 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
 						body: fileData,
 					})
 						.then((response) => {
-							debugger;
 							if (!response.ok) {
 								return response.text().then((text) => {
 									throw new Error(text);
