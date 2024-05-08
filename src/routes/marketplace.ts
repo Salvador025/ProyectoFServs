@@ -3,18 +3,25 @@ import { Router, Request, Response } from "express";
 const router = Router();
 
 //swagger for marketplace
+
+//swagger to get a specific board
 /**
  * @swagger
- * /marketplace:
+ * /marketplace/:username:
  *  get:
- *   summary: Marketplace home
+ *   summary: Get the boards of a specific user
  *   tags: [Marketplace]
- *   description: Marketplace home endpoint
+ *   description: Get a specific board
  */
 router.get("/", (req, res) => {
 	res.render("board-list", {
 		layout: "marketplace",
 	});
+});
+
+//route to get a specific board
+router.get("/:username", (req: Request, res: Response) => {
+	res.send(`Marketplace route for board ${req.params.id}`);
 });
 
 //swagger to get a specific board
