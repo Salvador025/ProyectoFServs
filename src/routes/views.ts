@@ -34,6 +34,12 @@ router.get("/frontCallback/:token", (req, res) => {
 	});
 });
 
+router.get("/play", (req, res) => {
+	res.render("play", {
+		layout: "main",
+	});
+});
+
 router.get("/createBoard", (req, res) => {
 	res.render("create-data", {
 		layout: "createBoard",
