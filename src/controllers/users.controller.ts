@@ -111,6 +111,7 @@ class UsersController {
 		const data = {
 			username: req.user.username,
 			image: req.user.image,
+			role: req.user.role,
 		};
 		res.status(ResponseStatus.SUCCESS).json(data);
 	}

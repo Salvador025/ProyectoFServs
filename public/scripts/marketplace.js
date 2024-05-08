@@ -6,7 +6,7 @@ function generateBoard(data) {
 	return `
 	<a href="/marketplace/${data.owner}/${data.name}" class="board-item">
 		<img src="${data.direction}" alt="${data.name}" />
-		<h2>Classic Board</h2>
+		<h2>${data.name}</h2>
 		<p>
         ${data.description}
 		</p>

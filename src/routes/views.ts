@@ -34,4 +34,10 @@ router.get("/frontCallback/:token", (req, res) => {
 	});
 });
 
+router.get("/createBoard", (req, res) => {
+	res.render("create-data", {
+		layout: "createBoard",
+	});
+});
+
 export default router;
