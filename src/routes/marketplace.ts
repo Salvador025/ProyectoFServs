@@ -7,7 +7,7 @@ const router = Router();
 //swagger to get a specific board
 /**
  * @swagger
- * /marketplace/:username
+ * /marketplace/:username:
  *  get:
  *   summary: Get the boards of a specific user
  *   tags: [Marketplace]
@@ -22,7 +22,7 @@ router.get("/:username", (req: Request, res: Response) => {
 //swagger to get a specific board
 /**
  * @swagger
- * /marketplace/:username/:name
+ * /marketplace/:username/:name:
  *  get:
  *   summary: Get a specific board
  *   tags: [Marketplace]
