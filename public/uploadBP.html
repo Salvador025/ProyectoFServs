@@ -1,76 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subir Nuevo Tablero</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/styleUpBP.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="navbar-brand">INFINITYBOARDS</div>
-        <div class="user-info">
-            <span>User</span>
-            <a href="#" class="log-out-button">Log Out</a>
-        </div>
-    </nav>
-    <div class="form-header">
-        <h1>Subir Nuevo Tablero</h1>
-    </div>
-    <div class="upload-form">
-        <form action="/submit-your-form-handler" method="POST" enctype="multipart/form-data">
-            <label for="boardName">Nombre del Tablero:</label>
-            <input type="text" id="boardName" name="boardName" required>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Subir Nuevo Tablero</title>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		/>
+		<link rel="stylesheet" href="styles/styleUpBP.css" />
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<nav class="navbar">
+			<div class="navbar-brand">INFINITYBOARDS</div>
+			<div class="user-info">
+				<span>User</span>
+				<a href="#" class="log-out-button">Log Out</a>
+			</div>
+		</nav>
+		<div class="form-header">
+			<h1>Subir Nuevo Tablero</h1>
+		</div>
+		<div class="upload-form">
+			<form
+				action="/submit-your-form-handler"
+				method="POST"
+				enctype="multipart/form-data"
+			>
+				<label for="boardName">Nombre del Tablero:</label>
+				<input type="text" id="boardName" name="boardName" required />
 
-            <label for="description">Descripción:</label>
-            <textarea id="description" name="description" required placeholder="Escribe aquí la descripción del tablero..."></textarea>
+				<label for="description">Descripción:</label>
+				<textarea
+					id="description"
+					name="description"
+					required
+					placeholder="Escribe aquí la descripción del tablero..."
+				></textarea>
 
-            <label for="file-upload" class="file-upload">
-                <div class="drop-area">
-                    Arrastra y suelta una imagen aquí o clic para seleccionar archivo
-                </div>
-                <input type="file" id="file-upload" name="file" accept="image/*" style="display: none;" required>
-            </label>
+				<label for="file-upload" class="file-upload">
+					<div class="drop-area">
+						Arrastra y suelta una imagen aquí o clic para seleccionar archivo
+					</div>
+					<input
+						type="file"
+						id="file-upload"
+						name="file"
+						accept="image/*"
+						style="display: none"
+						required
+					/>
+				</label>
 
-            <button type="submit" class="submit-btn">Subir Tablero</button>
-        </form>
-    </div>
+				<button type="submit" class="submit-btn">Subir Tablero</button>
+			</form>
+		</div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="creatorModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Hazte Creador</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ¿Quieres convertirte en un creador y comenzar a subir tus propios tableros?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No gracias</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Hazte Creador</button>
-                </div>
-            </div>
-        </div>
-    </div>
+		<!-- Modal -->
+		<div
+			class="modal fade"
+			id="creatorModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="modalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalLabel">Hazte Creador</h5>
+						<button
+							type="button"
+							class="close"
+							data-dismiss="modal"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						¿Quieres convertirte en un creador y comenzar a subir tus propios
+						tableros?
+					</div>
+					<div class="modal-footer">
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-dismiss="modal"
+						>
+							No gracias
+						</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">
+							Hazte Creador
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <script>
-        // Inicializa el modal
-        $(document).ready(function() {
-            $('#creatorModal').modal('show');
-        });
+		<script>
+			// Inicializa el modal
+			$(document).ready(function () {
+				$("#creatorModal").modal("show");
+			});
 
-        // Redirige a 'home' si el usuario elige 'No gracias'
-        $('.btn-secondary').click(function() {
-            window.location.href = '/home';
-        });
-    </script>
-</body>
+			// Redirige a 'home' si el usuario elige 'No gracias'
+			$(".btn-secondary").click(function () {
+				window.location.href = "/home";
+			});
+		</script>
+	</body>
 </html>
