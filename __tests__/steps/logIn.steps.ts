@@ -18,6 +18,11 @@ defineFeature(feature, (test) => {
 
 		when(/^I click on the "(.*)" button$/, async (arg0) => {
 			await driver.findElement(webdriver.By.id(arg0)).click();
+			await driver.wait(
+				webdriver.until.elementIsVisible(
+					driver.findElement(webdriver.By.id("logIn")),
+				),
+			);
 		});
 
 		and(/^I enter the email "(.*)" in the email field$/, async (arg0) => {

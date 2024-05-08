@@ -18,6 +18,11 @@ defineFeature(feature, (test) => {
 
 		when("I click on the sign Up button", async () => {
 			await driver.findElement(webdriver.By.id("signUpButton")).click();
+			await driver.wait(
+				webdriver.until.elementIsVisible(
+					driver.findElement(webdriver.By.id("singUp")),
+				),
+			);
 		});
 
 		and("I enter a username in the username field", async () => {
