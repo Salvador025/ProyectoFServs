@@ -1,0 +1,46 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+
+.log-out-button {
+	background-color: #dddddd;
+	color: black;
+	padding: 5px 10px;
+	text-decoration: none;
+	border-radius: 5px;
+}
+
+.board_header {
+	background-color: #0056b3;
+	color: white;
+	padding: 20px;
+	text-align: center;
+}
+
+.board_content {
+	display: flex;
+	justify-content: center;
+	padding: 20px;
+}
+
+.board_image {
+	max-width: 400px;
+	margin-right: 20px;
+}
+
+.board-details {
+	max-width: 500px;
+}
+
+.board-details ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.board-details li {
+	padding: 5px 0;
+}

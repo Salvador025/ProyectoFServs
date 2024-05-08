@@ -10,8 +10,17 @@ function checkCommitMessageFormat(commit) {
 
 	// Regex to validate Conventional Commits format
 	const ccFormatRegex =
-		/^(feat|fix|docs|styles|refactor|test|chore|perf|build|ci|revert)(\(\w+\))?:\s/;
+		/^(feat|fix|docs|style|refactor|test|chore|perf|build|ci|revert)(\(\w+\))?:\s/;
 	const maxLength = 80;
+
+	// Check if commit is a merge commit
+	if (title.includes("Merge pull request")) {
+		return;
+	}
+	// Check if commit message contains ignore pattern
+	if (title.match(/\(#\d+\)/)) {
+		return;
+	}
 
 	// Check 1: Validate Conventional Commit format
 	if (!ccFormatRegex.test(title)) {

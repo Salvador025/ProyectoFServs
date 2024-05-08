@@ -1,0 +1,36 @@
+<nav
+	id="navbar"
+	class="navbar navbar-expand-lg navbar-dark bg-primary"
+	style="padding-bottom: 0.3vmin; padding-top: 0.3vmin"
+>
+	<a class="navbar-brand" href="/home">INFINITYBOARDS</a>
+	<div class=" navbar-collapse" id="collapsibleNavId">
+		<ul
+			class="navbar-nav mr-auto mt-2 mt-lg-0"
+			style="align-items: center"
+		></ul>
+		<ul
+			class="navbar-nav reigth mt-2 mt-lg-0"
+			style="align-items: center"
+		>
+			<li class="nav-item" style="margin: 0vmin 3vmin">
+				<a href="/settings">
+					<img
+						id="nav-user-profile"
+						src=""
+						alt="User Profile"
+						class="rounded-circle"
+						style="width: 40px; height: 40px"
+						onerror="this.style.display = 'none'; document.getElementById('user-circle').style.display = 'block';"
+					/>
+					<i id="user-circle" class='fas fa-user-circle' style='font-size: 40px; color: white; display: none;'></i>
+				</a>
+			</li>
+			<li class="nav-item" style="margin: 0vmin 3vmin">
+				<a id="nav-logout" class="btn btn-secondary btn-sm" role="button"
+					>log Out
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>

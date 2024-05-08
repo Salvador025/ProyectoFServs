@@ -1,13 +1,28 @@
 # Node.js
 node_modules/
 
+#npm
+package-lock.json
+
 # pnpm
 .pnpm/
 .pnpm-debug.log
 pnpm-lock.yaml
 
+# vscode
 .vscode/
 
+# environment
 .env
-
 .venv/
+
+# coverage
+coverage/
+
+# build
+dist/
+
+# extra
+.DS_Store
+testPic*
+testView*

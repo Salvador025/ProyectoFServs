@@ -3,7 +3,10 @@
 		"target": "ES2016",
 		"outDir": "./dist",
 		"module": "NodeNext",
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"noImplicitAny": true,
+		"removeComments": true
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["./src/**/*.ts"],
+	"exclude": ["node_modules"]
 }

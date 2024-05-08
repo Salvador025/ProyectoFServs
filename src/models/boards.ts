@@ -1,5 +1,23 @@
 import { Schema, model } from "mongoose";
 
-const boardsSchema = new Schema({});
+const schema = new Schema({
+	name: {
+		type: String,
+		required: true,
+		unique: true,
+	},
+	owner: {
+		type: String,
+		required: true,
+	},
+	direction: {
+		type: String,
+		required: true,
+	},
+	description: {
+		type: String,
+		required: true,
+	},
+});
 
-export default model("users", boardsSchema);
+export default model("board", schema);
