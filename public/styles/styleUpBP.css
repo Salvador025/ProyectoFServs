@@ -1,100 +1,101 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    color: #333;
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 0;
+	color: #333;
 }
 
 .navbar {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	background-color: #007bff;
+	color: white;
+	padding: 10px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .navbar-brand {
-    font-size: 24px;
+	font-size: 24px;
 }
 
-.user-info span, .user-info a {
-    margin-left: 10px;
+.user-info span,
+.user-info a {
+	margin-left: 10px;
 }
 
 .log-out-button {
-    background-color: #dddddd;
-    color: black;
-    padding: 5px 10px;
-    text-decoration: none;
-    border-radius: 5px;
+	background-color: #dddddd;
+	color: black;
+	padding: 5px 10px;
+	text-decoration: none;
+	border-radius: 5px;
 }
 
 .form-header {
-    background-color: #0056b3;
-    color: white;
-    padding: 20px;
-    text-align: center;
+	background-color: #0056b3;
+	color: white;
+	padding: 20px;
+	text-align: center;
 }
 
 .upload-form {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .upload-form form {
-    width: 50%;
-    max-width: 500px;
+	width: 50%;
+	max-width: 500px;
 }
 
-input[type="text"], textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+input[type="text"],
+textarea {
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
 textarea {
-    height: 150px;
-    resize: vertical;
+	height: 150px;
+	resize: vertical;
 }
 
 .file-upload {
-    width: 150%; /* Ajusta esto según el diseño de tu página */
-    height: auto;
-    border: 2px dashed #ccc;
-    padding: 0px;
-    text-align: center;
-    cursor: pointer;
-    background-color: #fafafa;
-    margin-bottom: 20px;
+	width: 150%; /* Ajusta esto según el diseño de tu página */
+	height: auto;
+	border: 2px dashed #ccc;
+	padding: 0px;
+	text-align: center;
+	cursor: pointer;
+	background-color: #fafafa;
+	margin-bottom: 20px;
 }
 
 .drop-area {
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f8f8f8;
-    cursor: pointer;
-    min-height: 100px; /* Establece una altura mínima */
+	padding: 10px;
+	border: 1px solid #ccc;
+	background-color: #f8f8f8;
+	cursor: pointer;
+	min-height: 100px; /* Establece una altura mínima */
 }
 
-
 .submit-btn {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+	background-color: #28a745;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 @media (max-width: 600px) {
-    .upload-form form {
-        width: 80%;
-    }
+	.upload-form form {
+		width: 80%;
+	}
 }
