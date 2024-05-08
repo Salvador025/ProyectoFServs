@@ -144,7 +144,6 @@ class BoardsController {
 		return boards
 			.findOne({ name })
 			.then((board) => {
-				consoleLog("start update board");
 				if (!board) {
 					throw new NotFoundError("Board not found");
 				}
@@ -154,7 +153,6 @@ class BoardsController {
 				return boards.updateOne({ name }, data);
 			})
 			.then(async () => {
-				consoleLog("board updated");
 				res.status(ResponseStatus.SUCCESS).send("Board updated");
 			})
 			.catch((err) => {

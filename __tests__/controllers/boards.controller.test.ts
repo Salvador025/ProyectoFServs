@@ -397,6 +397,7 @@ describe("BoardsController", () => {
 				json: jest.fn().mockReturnThis(),
 			};
 		});
+
 		test("should update a board", async () => {
 			await boardController.updateBoard(
 				req as RequestUser & { file: { location: string } },
@@ -408,6 +409,28 @@ describe("BoardsController", () => {
 				{ name: "board" },
 				{
 					direction: "/path/to/board.jpg",
+					name: "board",
+					owner: "testUser",
+					description: "description",
+				},
+			);
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Board updated");
+		});
+
+		test("should update a board without file", async () => {
+			if (req.file) {
+				delete req.file;
+			}
+			await boardController.updateBoard(
+				req as RequestUser & { file: { location: string } },
+				res as Response,
+			);
+
+			expect(board.findOne).toHaveBeenCalledWith({ name: "board" });
+			expect(board.updateOne).toHaveBeenCalledWith(
+				{ name: "board" },
+				{
 					name: "board",
 					owner: "testUser",
 					description: "description",
@@ -435,6 +458,9 @@ describe("BoardsController", () => {
 		});
 
 		test("should handle forbidden access", async () => {
+			if (req.user) {
+				req.user.username = "anotherUser";
+			}
 			try {
 				await boardController.updateBoard(
 					req as RequestUser & { file: { location: string } },
@@ -448,6 +474,9 @@ describe("BoardsController", () => {
 		});
 
 		test("should handle internal server error", async () => {
+			(board.updateOne as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
 			try {
 				await boardController.updateBoard(
 					req as RequestUser & { file: { location: string } },
@@ -506,6 +535,9 @@ describe("BoardsController", () => {
 		});
 
 		test("should handle forbidden access", async () => {
+			if (req.user) {
+				req.user.username = "anotherUser";
+			}
 			try {
 				await boardController.deleteBoard(req as RequestUser, res as Response);
 			} catch (error) {
@@ -515,6 +547,9 @@ describe("BoardsController", () => {
 		});
 
 		test("should handle internal server error", async () => {
+			(board.deleteOne as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
 			try {
 				await boardController.deleteBoard(req as RequestUser, res as Response);
 			} catch (error) {
