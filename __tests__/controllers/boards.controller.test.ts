@@ -17,6 +17,7 @@ jest.mock("../../src/models/boards", () => ({
 				name: "board",
 				owner: "testUser",
 				direction: "/path/to/board.jpg",
+				description: "description",
 			},
 		]),
 	),
@@ -25,19 +26,24 @@ jest.mock("../../src/models/boards", () => ({
 			name: "board",
 			owner: "testUser",
 			direction: "/path/to/board.jpg",
+			description: "description",
 		}),
 	),
 	updateOne: jest.fn().mockResolvedValue(Promise.resolve("")),
 	deleteOne: jest.fn().mockResolvedValue(Promise.resolve("")),
 }));
 
-describe("UsersController", () => {
+describe("BoardsController", () => {
 	describe("createBoard", () => {
 		let req: Partial<RequestUser & { file: { location: string } }>;
 		let res: Partial<Response>;
 
 		beforeEach(() => {
 			req = {
+				body: {
+					name: "board",
+					description: "description",
+				},
 				user: {
 					name: "TestUser",
 					username: "testUser",
@@ -76,6 +82,7 @@ describe("UsersController", () => {
 				name: "board",
 				owner: "testUser",
 				direction: "/path/to/board.jpg",
+				description: "description",
 			});
 		});
 
@@ -156,6 +163,7 @@ describe("UsersController", () => {
 					name: "board",
 					owner: "testUser",
 					direction: "/path/to/board.jpg",
+					description: "description",
 				},
 			]);
 			expect(board.find).toHaveBeenCalled();
@@ -230,6 +238,7 @@ describe("UsersController", () => {
 					name: "board",
 					owner: "testUser",
 					direction: "/path/to/board.jpg",
+					description: "description",
 				},
 			]);
 			expect(board.find).toHaveBeenCalledWith({ owner: "testUser" });
@@ -288,6 +297,10 @@ describe("UsersController", () => {
 
 		beforeEach(() => {
 			req = {
+				body: {
+					name: "board",
+					description: "description",
+				},
 				user: {
 					name: "TestUser",
 					username: "testUser",
@@ -313,6 +326,7 @@ describe("UsersController", () => {
 				name: "board",
 				owner: "testUser",
 				direction: "/path/to/board.jpg",
+				description: "description",
 			});
 			expect(board.findOne).toHaveBeenCalledWith({ name: "board" });
 		});
@@ -350,6 +364,10 @@ describe("UsersController", () => {
 
 		beforeEach(() => {
 			req = {
+				body: {
+					name: "board",
+					description: "description",
+				},
 				user: {
 					name: "TestUser",
 					username: "testUser",
@@ -392,6 +410,7 @@ describe("UsersController", () => {
 					direction: "/path/to/board.jpg",
 					name: "board",
 					owner: "testUser",
+					description: "description",
 				},
 			);
 			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);

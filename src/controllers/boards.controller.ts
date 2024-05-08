@@ -16,8 +16,7 @@ class BoardsController {
 			direction: req.file.location,
 			description: req.body.description,
 		};
-		consoleLog(data);
-		boards
+		return boards
 			.create(data)
 			.then((board) => {
 				res.status(ResponseStatus.CREATED).json(board);
@@ -39,7 +38,7 @@ class BoardsController {
 	}
 
 	getBoards(req: RequestUser, res: Response) {
-		boards
+		return boards
 			.find()
 			.then((boards) => {
 				if (!boards) {
@@ -72,7 +71,7 @@ class BoardsController {
 
 	getBoardsUser(req: RequestUser, res: Response) {
 		const username = req.params.username;
-		boards
+		return boards
 			.find({ owner: username })
 			.then((boards) => {
 				if (!boards) {
@@ -105,7 +104,7 @@ class BoardsController {
 
 	getBoard(req: RequestUser, res: Response) {
 		const name = req.params.name;
-		boards
+		return boards
 			.findOne({ name })
 			.then((board) => {
 				if (!board) {

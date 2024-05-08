@@ -110,7 +110,7 @@ describe("Google Controller", () => {
 				},
 			} as unknown as Request;
 			const res = {
-				send: jest.fn(),
+				redirect: jest.fn(),
 			} as unknown as Response;
 
 			const userToken: UserToken = {
@@ -131,7 +131,9 @@ describe("Google Controller", () => {
 
 			googleController.googleCallback(req, res);
 
-			expect(res.send).toHaveBeenCalledWith(userToken.token);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`../../frontCallback/${userToken.token}`,
+			);
 		});
 	});
 });
