@@ -83,6 +83,25 @@ router.post("/signup", usersController.signUp);
  */
 router.post("/login", usersController.logIn);
 
+/**
+ * @swagger
+ * /auth/me:
+ *  get:
+ *   description: get current user
+ *   tags: [Auth]
+ *   security:
+ *    - bearerAuth: []
+ *   responses:
+ *    200:
+ *     description: current user
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/User'
+ *    401:
+ *     description: unauthorized
+ */
+
 router.get("/me", auth, usersController.getMe);
 
 export default router;
