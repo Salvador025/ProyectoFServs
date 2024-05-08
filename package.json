@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test jest",
+    "test:ci": "jest --coverage --ci --runInBand --coverageThreshold='{\"global\": {\"branches\": 80, \"functions\": 80, \"lines\": 80, \"statements\": 80}}'",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon src/index.ts",
     "local": "cross-env NODE_ENV=local ts-node src/index.ts",
