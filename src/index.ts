@@ -40,6 +40,11 @@ async function start() {
 	try {
 		await mongoose.connect(db_url);
 		console.log("Connected to db");
+		if (process.env.NODE_ENV === "dev") {
+			app.use("/assets", express.static(path.join(__dirname, "../public")));
+		} else {
+			app.use("/assets", express.static(path.join(__dirname, "../../public")));
+		}
 		const server = app.listen(port, () => {
 			if (process.env.NODE_ENV === "dev") {
 				consoleLog(`Server running on port ${port}`);
