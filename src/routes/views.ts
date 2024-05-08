@@ -14,20 +14,6 @@ router.get("/settings", (req, res) => {
 	});
 });
 
-/**
- * @swagger
- * /marketplace:
- *  get:
- *   summary: Marketplace home
- *   tags: [Marketplace]
- *   description: Marketplace home endpoint
- */
-router.get("/marketplace", (req, res) => {
-	res.render("board-list", {
-		layout: "marketplace",
-	});
-});
-
 router.get("/frontCallback/:token", (req, res) => {
 	res.render("empty", {
 		layout: "frontCallback",

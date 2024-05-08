@@ -10,7 +10,7 @@ function generateBoard(data) {
 		<p>
         ${data.description}
 		</p>
-	</a>;
+	</a>
     `;
 }
 
@@ -20,12 +20,29 @@ document.addEventListener("DOMContentLoaded", () => {
 	const pageUrlSegments = window.location.href.split("/");
 	const lastSegment = pageUrlSegments[pageUrlSegments.length - 1];
 	if (lastSegment === "marketplace") {
-		fetch("/api/boards")
+		debugger;
+		fetch("/boards", { headers: { token: token } })
 			.then((response) => response.json())
 			.then((data) => {
-				boardList.innerHTML = data
-					.map((board) => generateBoard(board))
-					.join("");
+				debugger;
+				while (boardList.firstChild) {
+					boardList.removeChild(boardList.firstChild);
+				}
+				data.map((board) =>
+					boardList.insertAdjacentHTML("beforeend", generateBoard(board)),
+				);
+			});
+	} else {
+		const owner = lastSegment;
+		fetch(`/boards/${owner}`, { headers: { token: token } })
+			.then((response) => response.json())
+			.then((data) => {
+				while (boardList.firstChild) {
+					boardList.removeChild(boardList.firstChild);
+				}
+				data.map((board) =>
+					boardList.insertAdjacentHTML("beforeend", generateBoard(board)),
+				);
 			});
 	}
 });
