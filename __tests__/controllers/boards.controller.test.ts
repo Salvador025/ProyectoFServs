@@ -17,6 +17,7 @@ jest.mock("../../src/models/boards", () => ({
 				name: "board",
 				owner: "testUser",
 				direction: "/path/to/board.jpg",
+				description: "description",
 			},
 		]),
 	),
@@ -25,19 +26,24 @@ jest.mock("../../src/models/boards", () => ({
 			name: "board",
 			owner: "testUser",
 			direction: "/path/to/board.jpg",
+			description: "description",
 		}),
 	),
 	updateOne: jest.fn().mockResolvedValue(Promise.resolve("")),
 	deleteOne: jest.fn().mockResolvedValue(Promise.resolve("")),
 }));
 
-describe("UsersController", () => {
+describe("BoardsController", () => {
 	describe("createBoard", () => {
 		let req: Partial<RequestUser & { file: { location: string } }>;
 		let res: Partial<Response>;
 
 		beforeEach(() => {
 			req = {
+				body: {
+					name: "board",
+					description: "description",
+				},
 				user: {
 					name: "TestUser",
 					username: "testUser",
@@ -76,6 +82,7 @@ describe("UsersController", () => {
 				name: "board",
 				owner: "testUser",
 				direction: "/path/to/board.jpg",
+				description: "description",
 			});
 		});
 
@@ -156,6 +163,7 @@ describe("UsersController", () => {
 					name: "board",
 					owner: "testUser",
 					direction: "/path/to/board.jpg",
+					description: "description",
 				},
 			]);
 			expect(board.find).toHaveBeenCalled();
@@ -230,6 +238,7 @@ describe("UsersController", () => {
 					name: "board",
 					owner: "testUser",
 					direction: "/path/to/board.jpg",
+					description: "description",
 				},
 			]);
 			expect(board.find).toHaveBeenCalledWith({ owner: "testUser" });
@@ -288,6 +297,10 @@ describe("UsersController", () => {
 
 		beforeEach(() => {
 			req = {
+				body: {
+					name: "board",
+					description: "description",
+				},
 				user: {
 					name: "TestUser",
 					username: "testUser",
@@ -313,6 +326,7 @@ describe("UsersController", () => {
 				name: "board",
 				owner: "testUser",
 				direction: "/path/to/board.jpg",
+				description: "description",
 			});
 			expect(board.findOne).toHaveBeenCalledWith({ name: "board" });
 		});
@@ -350,6 +364,10 @@ describe("UsersController", () => {
 
 		beforeEach(() => {
 			req = {
+				body: {
+					name: "board",
+					description: "description",
+				},
 				user: {
 					name: "TestUser",
 					username: "testUser",
@@ -379,6 +397,7 @@ describe("UsersController", () => {
 				json: jest.fn().mockReturnThis(),
 			};
 		});
+
 		test("should update a board", async () => {
 			await boardController.updateBoard(
 				req as RequestUser & { file: { location: string } },
@@ -392,6 +411,29 @@ describe("UsersController", () => {
 					direction: "/path/to/board.jpg",
 					name: "board",
 					owner: "testUser",
+					description: "description",
+				},
+			);
+			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
+			expect(res.send).toHaveBeenCalledWith("Board updated");
+		});
+
+		test("should update a board without file", async () => {
+			if (req.file) {
+				delete req.file;
+			}
+			await boardController.updateBoard(
+				req as RequestUser & { file: { location: string } },
+				res as Response,
+			);
+
+			expect(board.findOne).toHaveBeenCalledWith({ name: "board" });
+			expect(board.updateOne).toHaveBeenCalledWith(
+				{ name: "board" },
+				{
+					name: "board",
+					owner: "testUser",
+					description: "description",
 				},
 			);
 			expect(res.status).toHaveBeenCalledWith(ResponseStatus.SUCCESS);
@@ -416,6 +458,9 @@ describe("UsersController", () => {
 		});
 
 		test("should handle forbidden access", async () => {
+			if (req.user) {
+				req.user.username = "anotherUser";
+			}
 			try {
 				await boardController.updateBoard(
 					req as RequestUser & { file: { location: string } },
@@ -429,6 +474,9 @@ describe("UsersController", () => {
 		});
 
 		test("should handle internal server error", async () => {
+			(board.updateOne as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
 			try {
 				await boardController.updateBoard(
 					req as RequestUser & { file: { location: string } },
@@ -487,6 +535,9 @@ describe("UsersController", () => {
 		});
 
 		test("should handle forbidden access", async () => {
+			if (req.user) {
+				req.user.username = "anotherUser";
+			}
 			try {
 				await boardController.deleteBoard(req as RequestUser, res as Response);
 			} catch (error) {
@@ -496,6 +547,9 @@ describe("UsersController", () => {
 		});
 
 		test("should handle internal server error", async () => {
+			(board.deleteOne as jest.Mock).mockRejectedValueOnce(
+				new Error("Generic error"),
+			);
 			try {
 				await boardController.deleteBoard(req as RequestUser, res as Response);
 			} catch (error) {

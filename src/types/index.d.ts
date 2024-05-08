@@ -20,6 +20,7 @@ export interface Boards {
 	name: string;
 	owner: string;
 	direction: string;
+	description: string;
 }
 
 export interface UserToken extends Profile {

@@ -11,11 +11,12 @@ class BoardsController {
 		res: Response,
 	) {
 		const data: Boards = {
-			name: req.file.originalname.replace(/\.[^/.]+$/, ""),
+			name: req.body.name,
 			owner: req.user.username,
 			direction: req.file.location,
+			description: req.body.description,
 		};
-		boards
+		return boards
 			.create(data)
 			.then((board) => {
 				res.status(ResponseStatus.CREATED).json(board);
@@ -23,9 +24,11 @@ class BoardsController {
 			.catch((err) => {
 				if (err.code === 11000) {
 					res.status(ResponseStatus.BAD_REQUEST).send("Board already exists");
+					return;
 				}
 				if (err.name === "ValidationError") {
 					res.status(ResponseStatus.BAD_REQUEST).send("Invalid data");
+					return;
 				}
 				res
 					.status(ResponseStatus.INTERNAL_SERVER_ERROR)
@@ -35,7 +38,7 @@ class BoardsController {
 	}
 
 	getBoards(req: RequestUser, res: Response) {
-		boards
+		return boards
 			.find()
 			.then((boards) => {
 				if (!boards) {
@@ -44,7 +47,15 @@ class BoardsController {
 				if (boards.length === 0) {
 					throw new NotFoundError("No boards found");
 				}
-				res.status(ResponseStatus.SUCCESS).json(boards);
+				const boardsData = boards.map((board) => {
+					return {
+						name: board.name,
+						owner: board.owner,
+						direction: board.direction,
+						description: board.description,
+					};
+				});
+				res.status(ResponseStatus.SUCCESS).json(boardsData);
 			})
 			.catch((err) => {
 				if (err instanceof NotFoundError) {
@@ -60,7 +71,7 @@ class BoardsController {
 
 	getBoardsUser(req: RequestUser, res: Response) {
 		const username = req.params.username;
-		boards
+		return boards
 			.find({ owner: username })
 			.then((boards) => {
 				if (!boards) {
@@ -69,7 +80,15 @@ class BoardsController {
 				if (boards.length === 0) {
 					throw new NotFoundError("User don't have boards");
 				}
-				res.status(ResponseStatus.SUCCESS).json(boards);
+				const boardsData = boards.map((board) => {
+					return {
+						name: board.name,
+						owner: board.owner,
+						direction: board.direction,
+						description: board.description,
+					};
+				});
+				res.status(ResponseStatus.SUCCESS).json(boardsData);
 			})
 			.catch((err) => {
 				if (err instanceof NotFoundError) {
@@ -85,13 +104,19 @@ class BoardsController {
 
 	getBoard(req: RequestUser, res: Response) {
 		const name = req.params.name;
-		boards
+		return boards
 			.findOne({ name })
 			.then((board) => {
 				if (!board) {
 					throw new NotFoundError("Board not found");
 				}
-				res.status(ResponseStatus.SUCCESS).json(board);
+				const boardData = {
+					name: board.name,
+					owner: board.owner,
+					direction: board.direction,
+					description: board.description,
+				};
+				res.status(ResponseStatus.SUCCESS).json(boardData);
 			})
 			.catch((err) => {
 				if (err instanceof NotFoundError) {
@@ -111,14 +136,14 @@ class BoardsController {
 	) {
 		const name = req.params.name;
 		const data: Boards = {
-			name: req.file.originalname.replace(/\.[^/.]+$/, ""),
+			name: req.body.name,
 			owner: req.user.username,
-			direction: req.file.location,
+			direction: req.file?.location,
+			description: req.body.description,
 		};
 		return boards
 			.findOne({ name })
 			.then((board) => {
-				consoleLog("start update board");
 				if (!board) {
 					throw new NotFoundError("Board not found");
 				}
@@ -128,7 +153,6 @@ class BoardsController {
 				return boards.updateOne({ name }, data);
 			})
 			.then(async () => {
-				consoleLog("board updated");
 				res.status(ResponseStatus.SUCCESS).send("Board updated");
 			})
 			.catch((err) => {
