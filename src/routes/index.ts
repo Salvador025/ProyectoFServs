@@ -30,7 +30,7 @@ router.use("/auth", authRoutes);
 router.use("/auth/google", googleRoutes);
 router.use("/boards", auth, boardsRoutes);
 router.use("/settings", auth, settingsRoute);
-router.use("/marketplace", auth, marketplaceRoutes);
+router.use("/marketplace", marketplaceRoutes);
 router.use("/chat", chatRoutes);
 
 export default router;
