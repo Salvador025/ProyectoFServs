@@ -1,5 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { defineFeature, loadFeature } from "jest-cucumber";
 import webdriver from "selenium-webdriver";
+import mongoose from "mongoose";
+import userModel from "../../src/models/user";
 import path from "path";
 
 const feature = loadFeature(
@@ -59,5 +63,9 @@ defineFeature(feature, (test) => {
 	});
 	afterAll(async () => {
 		await driver.quit();
+		const db_url = process.env.DB_IRL || "";
+		await mongoose.connect(db_url);
+		await userModel.deleteOne({ email: "email@email.com" });
+		await mongoose.disconnect();
 	});
 });
