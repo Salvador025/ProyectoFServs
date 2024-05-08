@@ -40,4 +40,10 @@ router.get("/play", (req, res) => {
 	});
 });
 
+router.get("/createBoard", (req, res) => {
+	res.render("create-data", {
+		layout: "createBoard",
+	});
+});
+
 export default router;

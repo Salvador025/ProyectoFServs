@@ -529,6 +529,7 @@ describe("UsersController", () => {
 				user: {
 					username: "TestUser",
 					image: "profile_picture.jpg",
+					role: Roles.USER,
 				},
 			};
 
@@ -546,6 +547,7 @@ describe("UsersController", () => {
 			expect(res.json).toHaveBeenCalledWith({
 				username: "TestUser",
 				image: "profile_picture.jpg",
+				role: Roles.USER,
 			});
 		});
 	});

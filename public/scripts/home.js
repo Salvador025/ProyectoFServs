@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 						password.value = "";
 						return response.text();
 					})
-					.then((data) => {
+					.then(() => {
 						return fetch("auth/login", {
 							method: "POST",
 							headers: {
