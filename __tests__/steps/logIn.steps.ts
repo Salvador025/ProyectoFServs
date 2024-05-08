@@ -3,7 +3,7 @@ import webdriver from "selenium-webdriver";
 import path from "path";
 
 const feature = loadFeature(
-	path.resolve(__dirname, "../features/search.feature"),
+	path.resolve(__dirname, "../features/logIn.feature"),
 );
 
 defineFeature(feature, (test) => {
@@ -21,7 +21,7 @@ defineFeature(feature, (test) => {
 		});
 
 		and(/^I enter the email "(.*)" in the email field$/, async (arg0) => {
-			await driver.findElement(webdriver.By.id("email_logIn")).sendKeys(arg0);
+			await driver.findElement(webdriver.By.name("email")).sendKeys(arg0);
 		});
 
 		and(/^I enter the password "(.*)" in the password field$/, async (arg0) => {
