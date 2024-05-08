@@ -163,6 +163,10 @@ document.addEventListener("DOMContentLoaded", () => {
 								});
 							}
 							loadDashboard();
+							$("#editUserModal").modal("hide");
+							username.value = "";
+							name.value = "";
+							password.value = "";
 						})
 						.catch((error) => {
 							console.error(error.message);
