@@ -26,7 +26,7 @@ defineFeature(feature, (test) => {
 		});
 
 		and(/^I enter the email "(.*)" in the email field$/, async (arg0) => {
-			await driver.findElement(webdriver.By.name("email")).sendKeys(arg0);
+			await driver.findElement(webdriver.By.id("email_logIn")).sendKeys(arg0);
 		});
 
 		and(/^I enter the password "(.*)" in the password field$/, async (arg0) => {
