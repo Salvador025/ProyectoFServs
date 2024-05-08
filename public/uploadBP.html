@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Nuevo Tablero</title>
+    <link rel="stylesheet" href="styles/styleUpBP.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">INFINITYBOARDS</div>
+        <div class="user-info">
+            <span>User</span>
+            <a href="#" class="log-out-button">Log Out</a>
+        </div>
+    </nav>
+    <div class="form-header">
+        <h1>Subir Nuevo Tablero</h1>
+    </div>
+    <div class="upload-form">
+        <form action="/submit-your-form-handler" method="POST" enctype="multipart/form-data">
+            <label for="boardName">Nombre del Tablero:</label>
+            <input type="text" id="boardName" name="boardName" required>
+
+            <label for="description">Descripción:</label>
+            <textarea id="description" name="description" required placeholder="Escribe aquí la descripción del tablero..."></textarea>
+            
+            <label for="file-upload" class="file-upload">
+                <div class="drop-area">
+                    Arrastra y suelta una imagen aquí o clic para seleccionar archivo
+                </div>
+                <input type="file" id="file-upload" name="file" accept="image/*" style="display: none;" required>
+            </label>            
+
+            <button type="submit" class="submit-btn">Subir Tablero</button>
+        </form>
+    </div>
+</body>
+</html>
