@@ -19,11 +19,6 @@ router.get("/", (req, res) => {
 	});
 });
 
-//route to get a specific board
-router.get("/:username", (req: Request, res: Response) => {
-	res.send(`Marketplace route for board ${req.params.id}`);
-});
-
 //swagger to get a specific board
 /**
  * @swagger
@@ -53,7 +48,9 @@ router.get("/:username", (req: Request, res: Response) => {
 
 //route to get a specific board
 router.get("/:username/:name", (req: Request, res: Response) => {
-	res.send(`Marketplace route for board ${req.params.id}`);
+	res.render("board-data", {
+		layout: "boardPage",
+	});
 });
 
 export default router;
