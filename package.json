@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test jest",
     "test:ci": "jest --coverage --ci --runInBand --coverageThreshold='{\"global\": {\"branches\": 80, \"functions\": 80, \"lines\": 80, \"statements\": 80}}'",
-    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "start": "cross-env NODE_ENV=production node dist/src/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon src/index.ts",
     "local": "cross-env NODE_ENV=local ts-node src/index.ts",
     "build": "rimraf dist && tsc",
@@ -50,7 +50,7 @@
     "nodemon": "3.1.0",
     "prettier": "3.2.5",
     "prettier-eslint": "^16.3.0",
-    "rimraf": "5.0.5",
+    "rimraf": "^5.0.5",
     "selenium-webdriver": "^4.20.0",
     "supertest": "7.0.0",
     "ts-jest": "29.1.2",
