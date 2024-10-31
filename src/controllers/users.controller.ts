@@ -1,11 +1,11 @@
-import user from "../models/user";
 import { Request, Response } from "express";
-import hashPassword from "../utils/hash-password";
-import ResponseStatus from "../types/response-codes";
-import { code as createToken } from "../utils/create-token";
+import user from "../models/user";
 import { InputToken, RequestUser } from "../types";
+import ResponseStatus from "../types/response-codes";
 import Roles from "../types/roles";
 import UnauthorizedError from "../utils/UnauthorizedError";
+import { code as createToken } from "../utils/create-token";
+import hashPassword from "../utils/hash-password";
 
 class UsersController {
 	signUp(req: Request, res: Response) {

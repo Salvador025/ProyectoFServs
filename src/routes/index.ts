@@ -1,12 +1,12 @@
-import { Router, Request, Response } from "express";
+import { Request, Response, Router } from "express";
+import auth from "../middlewares/auth";
 import authRoutes from "./auth";
 import boardsRoutes from "./boards";
-import googleRoutes from "./google";
-import settingsRoute from "./settings";
-import marketplaceRoutes from "./marketplace";
 import chatRoutes from "./chat";
+import googleRoutes from "./google";
+import marketplaceRoutes from "./marketplace";
+import settingsRoute from "./settings";
 import viewsRotes from "./views";
-import auth from "../middlewares/auth";
 
 const router = Router();
 

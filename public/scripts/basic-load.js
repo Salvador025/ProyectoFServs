@@ -1,4 +1,5 @@
 import navbarLogic from "/assets/scripts/navbar-logic.js";
+
 export default () => {
 	return new Promise((resolve, reject) => {
 		const token = sessionStorage.getItem("token");

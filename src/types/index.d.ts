@@ -1,6 +1,6 @@
 import { Request } from "express";
-import Roles from "./roles";
 import { Profile } from "passport-google-oauth20";
+import Roles from "./roles";
 
 export type InputToken = {
 	name: string;
@@ -32,7 +32,7 @@ export interface RequestUser extends Request {
 }
 
 declare global {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// biome-ignore lint/suspicious/noExplicitAny: <this function is used to log any type of message>
 	function consoleLog(msg: any): void;
 	function consoleError(msg: Error | string): void;
 }

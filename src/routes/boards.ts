@@ -1,8 +1,8 @@
 import { Router } from "express";
-import roles from "../middlewares/roles";
-import Roles from "../types/roles";
 import boardsController from "../controllers/boards.controller";
+import roles from "../middlewares/roles";
 import { uploadBoard } from "../middlewares/upload-s3";
+import Roles from "../types/roles";
 
 const router = Router();
 

@@ -1,9 +1,9 @@
 import { Response } from "express";
 import boards from "../models/boards";
-import { RequestUser, Boards } from "../types";
+import { Boards, RequestUser } from "../types";
 import ResponseStatus from "../types/response-codes";
-import NotFoundError from "../utils/NotFoundError";
 import ForbiddenError from "../utils/ForbiddenError";
+import NotFoundError from "../utils/NotFoundError";
 
 class BoardsController {
 	createBoard(

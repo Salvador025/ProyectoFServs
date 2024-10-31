@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 	const parts = window.location.href.split("/");
 	const token = parts[parts.length - 1];
 	if (!token) {

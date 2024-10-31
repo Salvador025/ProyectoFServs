@@ -1,14 +1,14 @@
+import { Readable } from "node:stream";
 // cspell: ignore fieldname
 import { Request, Response } from "express";
-import { Readable } from "stream";
 
-import user from "../../src/models/user";
-import Roles from "../../src/types/roles";
-import setUpLogs from "../../src/utils/logs";
-import { RequestUser, User } from "../../src/types";
 import UsersController from "../../src/controllers/users.controller";
+import user from "../../src/models/user";
+import { RequestUser, User } from "../../src/types";
 import ResponseStatus from "../../src/types/response-codes";
+import Roles from "../../src/types/roles";
 import { code as createToken } from "../../src/utils/create-token";
+import setUpLogs from "../../src/utils/logs";
 setUpLogs();
 
 // Mock the external dependencies

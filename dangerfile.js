@@ -1,7 +1,7 @@
-import { message, danger, fail, warn } from "danger";
+import { danger, fail, message, warn } from "danger";
 
 const modifiedMD = danger.git.modified_files.join("- ");
-message("Changed Files in this PR: \n - " + modifiedMD);
+message(`Changed·Files·in·this·PR:·\n·-·${modifiedMD}`);
 
 // Function to check the commit message format according to Conventional Commits.
 function checkCommitMessageFormat(commit) {

@@ -134,13 +134,13 @@ document.addEventListener("DOMContentLoaded", () => {
 					password: password.value,
 				};
 				if (password.value === "") {
-					delete formData.password;
+					formData.password = undefined;
 				}
 				if (name.value === "") {
-					delete formData.name;
+					formData.name = undefined;
 				}
 				if (username.value === "") {
-					delete formData.username;
+					formData.username = undefined;
 				}
 				if (
 					username.value !== "" ||

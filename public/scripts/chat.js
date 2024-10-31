@@ -1,7 +1,7 @@
 import basicLoad from "/assets/scripts/basic-load.js";
 
 const socket = io("/");
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 	basicLoad().then((data) => {
 		console.log(data);
 		const userName = JSON.parse(sessionStorage.getItem("user")).username;
