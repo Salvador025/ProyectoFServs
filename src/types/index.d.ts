@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { Profile } from "passport-google-oauth20";
+import { Socket } from "socket.io";
 import Roles from "./roles";
 
 export type InputToken = {
@@ -29,6 +30,21 @@ export interface UserToken extends Profile {
 
 export interface RequestUser extends Request {
 	user?: User;
+}
+
+export interface SocketUser extends Socket {
+	username: string;
+}
+
+export interface Player {
+	id: string;
+	username: string;
+	playerNumber: number;
+}
+
+export interface Room {
+	players: Player[];
+	turn: number;
 }
 
 declare global {
