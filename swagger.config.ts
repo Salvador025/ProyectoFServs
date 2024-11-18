@@ -1,17 +1,20 @@
+import { components } from "./src/swagger/components";
+// swagger.config.ts
+import { paths } from "./src/swagger/paths";
+
 export const swaggerConfig = {
-	swaggerDefinition: {
-		openapi: "3.1.0",
-		info: {
-			version: "1.0.0",
-			description: "Swagger API",
-			title: "Swagger API",
-		},
-		servers: [
-			{
-				url: "http://localhost:3000",
-				description: "Local server",
-			},
-		],
+	openapi: "3.1.0",
+	info: {
+		version: "1.0.0",
+		description: "Documentación de la API",
+		title: "API",
 	},
-	apis: ["src/**/*.ts"],
+	servers: [
+		{
+			url: "http://localhost:3000",
+			description: "Servidor local",
+		},
+	],
+	paths: paths,
+	components: components,
 };

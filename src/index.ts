@@ -5,7 +5,6 @@ import path from "node:path";
 import cors from "cors";
 import { engine } from "express-handlebars";
 import mongoose from "mongoose";
-import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { swaggerConfig } from "./../swagger.config";
 import { googleAuth } from "./middlewares/google-auth";
@@ -33,8 +32,7 @@ googleAuth(app);
 app.use("/assets", express.static(path.join(__dirname, "../public")));
 app.use(routes);
 
-const swaggerDocs = swaggerJsDoc(swaggerConfig);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 
 async function start() {
 	const db_url = process.env.DB_IRL;
