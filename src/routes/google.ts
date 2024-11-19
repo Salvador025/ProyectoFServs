@@ -3,13 +3,6 @@ import passport from "passport";
 import googleController from "../controllers/google.controller";
 const router = Router();
 
-/**
- * @swagger
- * tags:
- *  name: Google
- *  description: Google authentication
- */
-
 router.get(
 	"/",
 	passport.authenticate("google", { scope: ["profile", "email"] }),
