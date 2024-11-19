@@ -1,6 +1,6 @@
 import { Server as HttpServer } from "node:http";
 import { Server as IOServer } from "socket.io";
-import { Player, Room, SocketUser } from "../types";
+import { Room, SocketUser } from "../types";
 import { decode } from "../utils/create-token";
 
 const rooms: { [id: string]: Room } = {};
@@ -16,16 +16,16 @@ function initializeSocket(server: HttpServer) {
 				socket.username = username as string;
 				next();
 			} else {
+				consoleError("Invalid token");
 				next(new Error("Invalid token"));
 			}
 		} else {
+			consoleError("Token is required");
 			next(new Error("Token is required"));
 		}
 	});
 
 	io.on("connection", (socket: SocketUser) => {
-		console.log("User connected:", socket.id, "Username:", socket.username);
-
 		// Let others know that you joined
 		socket.on("newUser", (data: { user: string }) => {
 			socket.data.user = data.user; // Save the data for when the user disconnects
@@ -45,6 +45,7 @@ function initializeSocket(server: HttpServer) {
 			let partyId = null;
 
 			// Find an available room or create a new one
+			console.log("rooms: ", rooms);
 			for (const id in rooms) {
 				if (rooms[id].players.length < 2) {
 					partyId = id;
@@ -52,6 +53,7 @@ function initializeSocket(server: HttpServer) {
 				}
 			}
 
+			console.log("partyId: ", partyId);
 			if (!partyId) {
 				partyId = `room-${Math.random().toString(36).substring(2, 11)}`;
 				rooms[partyId] = {
@@ -91,7 +93,7 @@ function initializeSocket(server: HttpServer) {
 		});
 
 		// Handle piece movement
-		socket.on("movePiece", ({ partyId, piece, targetCell }) => {
+		socket.on("movePiece", ({ partyId, piece, targetCell, isCapturing }) => {
 			const room = rooms[partyId];
 			if (!room) {
 				socket.emit("error", "Room not found");
@@ -109,7 +111,17 @@ function initializeSocket(server: HttpServer) {
 				return;
 			}
 
-			io.to(partyId).emit("updateBoard", {
+			if (!isCapturing) {
+				room.turn = room.turn === 1 ? 2 : 1;
+			}
+
+			const otherPlayer = room.players.find((p) => p.id !== socket.id);
+			if (!otherPlayer) {
+				socket.emit("error", "Other player not found");
+				return;
+			}
+
+			io.to(otherPlayer.id).emit("updateBoard", {
 				piece,
 				targetCell,
 				turn: room.turn,
@@ -117,13 +129,40 @@ function initializeSocket(server: HttpServer) {
 		});
 
 		socket.on("invalidMove", (partyId) => {
-			io.to(partyId).emit("invalidMove");
+			const room = rooms[partyId];
+			if (room) {
+				const otherPlayer = room.players.find((p) => p.id !== socket.id);
+				if (otherPlayer) {
+					io.to(otherPlayer.id).emit("invalidMove");
+				}
+			}
+		});
+
+		socket.on("exitRoom", (partyId) => {
+			console.log("exitRoom: ", partyId);
+			console.log("rooms: ", rooms);
+			console.log("rooms[partyId]: ", rooms[partyId]);
+			for (const id in rooms) {
+				console.log("id: ", id);
+			}
+			const room = rooms[partyId];
+			console.log("room: ", room);
+			if (room) {
+				console.log("room: ", room.players);
+				const otherPlayer = room.players.find((p) => p.id !== socket.id);
+				if (otherPlayer) {
+					rooms[partyId] = null;
+					console.log("rooms: ", rooms);
+					io.to(otherPlayer.id).emit(
+						"playerDisconnected",
+						"Other player disconnected. You win!",
+					);
+				}
+			}
 		});
 
 		// Handle player disconnect
 		socket.on("disconnect", () => {
-			console.log("User disconnected:", socket.id);
-
 			for (const partyId in rooms) {
 				const room = rooms[partyId];
 				room.players = room.players.filter((p) => p.id !== socket.id);
@@ -132,8 +171,8 @@ function initializeSocket(server: HttpServer) {
 					delete rooms[partyId];
 				} else {
 					io.to(partyId).emit(
-						"waiting",
-						"Other player disconnected. Waiting for a new player...",
+						"playerDisconnected",
+						"Other player disconnected. You win!",
 					);
 				}
 			}
