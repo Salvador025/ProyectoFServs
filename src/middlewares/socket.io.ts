@@ -139,7 +139,7 @@ function initializeSocket(server: HttpServer) {
 		});
 
 		socket.on("exitRoom", (partyId) => {
-			console.log("exitRoom: ", partyId);
+			console.log(partyId);
 			console.log("rooms: ", rooms);
 			console.log("rooms[partyId]: ", rooms[partyId]);
 			for (const id in rooms) {

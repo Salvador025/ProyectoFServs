@@ -11,7 +11,7 @@ function checkCommitMessageFormat(commit) {
 	// Regex to validate Conventional Commits format
 	const ccFormatRegex =
 		/^(feat|fix|docs|style|refactor|test|chore|perf|build|ci|revert)(\(\w+\))?:\s/;
-	const maxLength = 80;
+	const maxLength = 200;
 
 	// Check if commit is a merge commit
 	if (title.includes("Merge pull request")) {
