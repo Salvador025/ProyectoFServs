@@ -45,7 +45,6 @@ function initializeSocket(server: HttpServer) {
 			let partyId = null;
 
 			// Find an available room or create a new one
-			console.log("rooms: ", rooms);
 			for (const id in rooms) {
 				if (rooms[id].players.length < 2) {
 					partyId = id;
@@ -53,7 +52,6 @@ function initializeSocket(server: HttpServer) {
 				}
 			}
 
-			console.log("partyId: ", partyId);
 			if (!partyId) {
 				partyId = `room-${Math.random().toString(36).substring(2, 11)}`;
 				rooms[partyId] = {
@@ -139,25 +137,26 @@ function initializeSocket(server: HttpServer) {
 		});
 
 		socket.on("exitRoom", (partyId) => {
-			console.log(partyId);
-			console.log("rooms: ", rooms);
-			console.log("rooms[partyId]: ", rooms[partyId]);
-			for (const id in rooms) {
-				console.log("id: ", id);
-			}
-			const room = rooms[partyId];
-			console.log("room: ", room);
-			if (room) {
-				console.log("room: ", room.players);
-				const otherPlayer = room.players.find((p) => p.id !== socket.id);
-				if (otherPlayer) {
-					rooms[partyId] = null;
-					console.log("rooms: ", rooms);
-					io.to(otherPlayer.id).emit(
-						"playerDisconnected",
-						"Other player disconnected. You win!",
-					);
+			try {
+				socket.leave(partyId);
+
+				const room = rooms[partyId];
+				console.log(`party id exitRoom-${partyId}:`);
+				console.log(`room on exitRoom-${socket.id}:`, room);
+				if (room && !!room.players) {
+					console.log("room players: ", room.players);
+					const otherPlayer = room.players.find((p) => p.id !== socket.id);
+					if (otherPlayer) {
+						delete rooms[partyId];
+						console.log("rooms: ", rooms);
+						io.to(otherPlayer.id).emit(
+							"playerDisconnected",
+							"Other player disconnected. You win!",
+						);
+					}
 				}
+			} catch (error) {
+				console.error("Error exiting room: ", error);
 			}
 		});
 
@@ -165,6 +164,9 @@ function initializeSocket(server: HttpServer) {
 		socket.on("disconnect", () => {
 			for (const partyId in rooms) {
 				const room = rooms[partyId];
+				if (!room) {
+					continue;
+				}
 				room.players = room.players.filter((p) => p.id !== socket.id);
 
 				if (room.players.length === 0) {
