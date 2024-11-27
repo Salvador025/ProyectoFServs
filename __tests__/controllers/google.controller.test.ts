@@ -1,14 +1,14 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { User } from "../../src/types";
-import Roles from "../../src/types/roles";
 import { Request, Response } from "express";
-import { UserToken } from "../../src/types";
-import setUpLogs from "../../src/utils/logs";
-import userModel from "../../src/models/user";
 import { Profile } from "passport-google-oauth20";
 import googleController from "../../src/controllers/google.controller";
+import userModel from "../../src/models/user";
+import { User } from "../../src/types";
+import { UserToken } from "../../src/types";
+import Roles from "../../src/types/roles";
 import { code as createToken } from "../../src/utils/create-token";
+import setUpLogs from "../../src/utils/logs";
 setUpLogs();
 
 jest.mock("../../src/models/user", () => ({

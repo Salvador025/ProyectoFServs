@@ -1,6 +1,6 @@
 import basicLoad from "/assets/scripts/basic-load.js";
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 	basicLoad();
 	const token = sessionStorage.getItem("token");
 	const user = JSON.parse(sessionStorage.getItem("user"));
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					return response;
 				})
 				.then(() => {
-					delete sessionStorage.user;
+					sessionStorage.user = undefined;
 					window.location.reload();
 				})
 				.catch((error) => {
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	document
 		.getElementById("createBoardForm")
-		.addEventListener("submit", function (event) {
+		.addEventListener("submit", (event) => {
 			event.preventDefault();
 
 			const formData = new FormData();
@@ -77,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
 					return response.json();
 				})
 				.then((data) => {
-					debugger;
 					alert("Board created successfully");
 					window.location.href = `/marketplace/${data.owner}/${data.name}`;
 				})

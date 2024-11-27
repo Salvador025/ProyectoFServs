@@ -1,22 +1,22 @@
-import express from "express";
 import dotenv from "dotenv";
+import express from "express";
 dotenv.config();
-import path from "path";
-import mongoose from "mongoose";
-import swaggerJsDoc from "swagger-jsdoc";
+import path from "node:path";
+import cors from "cors";
 import { engine } from "express-handlebars";
+import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import { swaggerConfig } from "./../swagger.config";
 import { googleAuth } from "./middlewares/google-auth";
-import setUpLogs from "./utils/logs";
 import socketIo from "./middlewares/socket.io";
 import routes from "./routes";
+import setUpLogs from "./utils/logs";
 setUpLogs();
 
 const app = express();
 
 const port = process.env.PORT || 4000;
-
+app.use(cors());
 app.engine(
 	"handlebars",
 	engine({
@@ -32,8 +32,7 @@ googleAuth(app);
 app.use("/assets", express.static(path.join(__dirname, "../public")));
 app.use(routes);
 
-const swaggerDocs = swaggerJsDoc(swaggerConfig);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 
 async function start() {
 	const db_url = process.env.DB_IRL;
@@ -49,7 +48,7 @@ async function start() {
 			if (process.env.NODE_ENV === "dev") {
 				consoleLog(`Server running on port ${port}`);
 			} else {
-				console.log(`Server running`);
+				console.log("Server running");
 			}
 		});
 		socketIo(server);

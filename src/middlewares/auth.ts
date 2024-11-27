@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
-import ResponseStatus from "../types/response-codes";
-import { decode } from "../utils/create-token";
+import { NextFunction, Request, Response } from "express";
+import { JwtPayload } from "jsonwebtoken";
 import user from "../models/user";
 import { RequestUser } from "../types";
-import { JwtPayload } from "jsonwebtoken";
+import ResponseStatus from "../types/response-codes";
 import UnauthorizedError from "../utils/UnauthorizedError";
+import { decode } from "../utils/create-token";
 
 export default (req: RequestUser, res: Response, next: NextFunction) => {
 	const token: string = (req as Request).headers.token as string;

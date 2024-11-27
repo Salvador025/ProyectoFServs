@@ -1,12 +1,12 @@
+import { Readable } from "node:stream";
 import { Response } from "express";
-import { Readable } from "stream";
 
-import Roles from "../../src/types/roles";
+import boardController from "../../src/controllers/boards.controller";
 import board from "../../src/models/boards";
-import setUpLogs from "../../src/utils/logs";
 import { RequestUser } from "../../src/types";
 import ResponseStatus from "../../src/types/response-codes";
-import boardController from "../../src/controllers/boards.controller";
+import Roles from "../../src/types/roles";
+import setUpLogs from "../../src/utils/logs";
 setUpLogs();
 
 jest.mock("../../src/models/boards", () => ({
@@ -420,7 +420,7 @@ describe("BoardsController", () => {
 
 		test("should update a board without file", async () => {
 			if (req.file) {
-				delete req.file;
+				req.file = undefined;
 			}
 			await boardController.updateBoard(
 				req as RequestUser & { file: { location: string } },
