@@ -27,6 +27,16 @@ app.engine(
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
+app.engine(
+	"handlebars",
+	engine({
+		layoutsDir: "./src/views/layouts/",
+		partialsDir: ["./src/views/partials/"],
+	}),
+);
+app.set("view engine", "handlebars");
+app.set("views", "./src/views");
+
 app.use(express.json());
 googleAuth(app);
 app.use("/assets", express.static(path.join(__dirname, "../public")));

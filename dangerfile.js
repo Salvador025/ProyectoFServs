@@ -22,6 +22,15 @@ function checkCommitMessageFormat(commit) {
 		return;
 	}
 
+	// Check if commit is a merge commit
+	if (title.includes("Merge pull request")) {
+		return;
+	}
+	// Check if commit message contains ignore pattern
+	if (title.match(/\(#\d+\)/)) {
+		return;
+	}
+
 	// Check 1: Validate Conventional Commit format
 	if (!ccFormatRegex.test(title)) {
 		fail(
