@@ -1,7 +1,7 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 export default (password: string): string => {
-	password = password ?? "";
-	const hash = crypto.scryptSync(password, process.env.SECRET_KEY, 24);
+	const valid_password = password ?? "";
+	const hash = crypto.scryptSync(valid_password, process.env.SECRET_KEY, 24);
 	return hash.toString("hex");
 };

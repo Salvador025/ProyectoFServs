@@ -1,6 +1,6 @@
-import passport from "passport";
 import { Express } from "express";
 import session from "express-session";
+import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import googleController from "../controllers/google.controller";
 

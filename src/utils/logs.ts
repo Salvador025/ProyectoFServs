@@ -1,5 +1,5 @@
 export default function logs() {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// biome-ignore lint/suspicious/noExplicitAny: <this function is used to log any type of message>
 	global.consoleLog = (message: any) => {
 		const validEnvs = ["dev", "test", "local"];
 		const env = process.env.NODE_ENV;

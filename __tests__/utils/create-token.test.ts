@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { decode, code } from "../../src/utils/create-token";
 import { InputToken } from "../../src/types";
+import { code, decode } from "../../src/utils/create-token";
 import setUpLogs from "../../src/utils/logs";
 setUpLogs();
 
@@ -14,9 +14,8 @@ jest.mock("jsonwebtoken", () => ({
 				email: "test@test.com",
 				iat: 1712188804,
 			};
-		} else {
-			throw new Error("Invalid token");
 		}
+		throw new Error("Invalid token");
 	}),
 }));
 

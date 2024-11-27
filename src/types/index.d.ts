@@ -1,6 +1,7 @@
 import { Request } from "express";
-import Roles from "./roles";
 import { Profile } from "passport-google-oauth20";
+import { Socket } from "socket.io";
+import Roles from "./roles";
 
 export type InputToken = {
 	name: string;
@@ -31,8 +32,23 @@ export interface RequestUser extends Request {
 	user?: User;
 }
 
+export interface SocketUser extends Socket {
+	username: string;
+}
+
+export interface Player {
+	id: string;
+	username: string;
+	playerNumber: number;
+}
+
+export interface Room {
+	players: Player[];
+	turn: number;
+}
+
 declare global {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// biome-ignore lint/suspicious/noExplicitAny: <this function is used to log any type of message>
 	function consoleLog(msg: any): void;
 	function consoleError(msg: Error | string): void;
 }

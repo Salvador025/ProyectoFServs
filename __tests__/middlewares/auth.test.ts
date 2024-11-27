@@ -1,9 +1,9 @@
-import { Response, NextFunction } from "express";
+import { NextFunction, Response } from "express";
 import middleware from "../../src/middlewares/auth";
-import ResponseStatus from "../../src/types/response-codes";
-import { decode } from "../../src/utils/create-token";
 import user from "../../src/models/user";
 import { RequestUser } from "../../src/types";
+import ResponseStatus from "../../src/types/response-codes";
+import { decode } from "../../src/utils/create-token";
 import setUpLogs from "../../src/utils/logs";
 setUpLogs();
 
