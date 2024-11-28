@@ -130,9 +130,9 @@ describe("Google Controller", () => {
 			};
 
 			googleController.googleCallback(req, res);
-
+			const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
 			expect(res.redirect).toHaveBeenCalledWith(
-				`../../frontCallback/${userToken.token}`,
+				`${frontendUrl}/frontCallback/${(req.user as UserToken).token}`,
 			);
 		});
 	});
