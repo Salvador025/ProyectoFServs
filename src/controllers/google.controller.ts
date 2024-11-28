@@ -36,8 +36,10 @@ class googleController {
 	}
 
 	googleCallback(req: Request, res: Response) {
-		// res.send((req.user as UserToken).token);
-		res.redirect(`../../frontCallback/${(req.user as UserToken).token}`);
+		const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+		res.redirect(
+			`${frontendUrl}/frontCallback/${(req.user as UserToken).token}`,
+		);
 	}
 }
 
